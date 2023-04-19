@@ -3,16 +3,15 @@
     <div class="container">
       <div class="row">
         <div class="wrap flex-container padding-small">
-          <div class="contact-block">
+          <div class="contact-block d-flex align-items-center">
             <span class="pr-50"><i class="icon icon-phone"></i>5555-00-444</span>
             <span class="color-secondary"><i class="icon icon-envelope-o"></i><a href="#"> healthydrink@gmail.com</a></span>
           </div>
 
           <div class="header-top-right">
-            <ul class="list-unstyled d-flex color-secondary">
-              <li class="pr-50"><a href="#">My Account</a></li>
-              <li class="pr-50"><a href="#">FAQs</a></li>
-              <li><a href="#">Help</a></li>
+            <ul class="d-flex list-unstyled color-secondary">
+              <li class="d-flex align-items-center mr-5"><i class="fs-4 pr-2 bi bi-person-circle"></i><a routerLink="/account">My Account</a></li>
+              <li class="d-flex align-items-center"><i class="fs-4 pr-2 bi bi-cart-plus"></i><a (click)="openCart()">Card <i class="color-red bi bi-2-circle-fill"></i></a></li>
             </ul>
           </div>
         </div>
@@ -65,5 +64,5 @@
     </div>
 
   </header>
-
 </div>
+<app-cart #cart></app-cart>

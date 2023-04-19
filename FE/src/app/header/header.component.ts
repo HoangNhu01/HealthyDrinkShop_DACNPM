@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {CartComponent} from "../cart/cart.component";
 
 @Component({
   selector: 'app-header',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent {
+  @ViewChild('cart') cartComp! : CartComponent;
 
+  openCart() {
+    this.cartComp.openCart();
+  }
 }
