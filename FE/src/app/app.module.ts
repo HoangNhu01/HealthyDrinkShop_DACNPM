@@ -24,6 +24,10 @@ import {ImageProductComponent} from "./image-product/image-product.component";
 import {HomeComponent} from "./home/home.component";
 import {DetailProductComponent} from "./detail-product/detail-product.component";
 import {AllProductComponent} from "./all-product/all-product.component";
+import {AccountComponent} from "./account/account.component";
+import {NzSpinModule} from "ng-zorro-antd/spin";
+import {CartComponent} from "./cart/cart.component";
+import {NzDrawerModule} from "ng-zorro-antd/drawer";
 
 registerLocaleData(en);
 
@@ -38,7 +42,9 @@ registerLocaleData(en);
     ImageProductComponent,
     HomeComponent,
     DetailProductComponent,
-    AllProductComponent
+    AllProductComponent,
+    AccountComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +57,8 @@ registerLocaleData(en);
     NzMenuModule,
     NzButtonModule,
     NzDropDownModule,
+    NzSpinModule,
+    NzDrawerModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }
