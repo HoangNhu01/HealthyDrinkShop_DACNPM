@@ -1,9 +1,14 @@
 <nz-drawer
-  [nzClosable]="false"
   [nzWidth]="520"
   [nzVisible]="visible"
   [nzTitle]="title"
-  nzClosable="true"
-  (nzOnClose)="close()"
+  [nzClosable]="false"
+  (nzOnClose)="closeDrawer()"
 >
+  <ng-container *nzDrawerContent>
+    <div class="d-flex align-items-center flex-column">
+      <img src="assets/product/empty_cart.png">
+      <button (click)="closeDrawer()" routerLink="/" nzSize="large" nzShape="round" nz-button nzDanger>Keep buying</button>
+    </div>
+  </ng-container>
 </nz-drawer>

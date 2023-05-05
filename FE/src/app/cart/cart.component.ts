@@ -7,12 +7,14 @@ import {Component, Input} from '@angular/core';
 })
 export class CartComponent {
   @Input() visible = false;
-  title = 'Giỏ hành (1)';
+  @Input() products = [];
+  title = 'Cart';
 
-  close() {
+  closeDrawer() {
     this.visible = !this.visible;
   }
   openCart() {
     this.visible = true;
   }
+
 }
