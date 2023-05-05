@@ -1,0 +1,12 @@
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\bin\Debug\net6.0\eShopSolution.Utilities.deps.json
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\bin\Debug\net6.0\eShopSolution.Utilities.dll
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\bin\Debug\net6.0\eShopSolution.Utilities.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.csproj.AssemblyReference.cache
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.AssemblyInfoInputs.cache
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.AssemblyInfo.cs
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.csproj.CoreCompileInputs.cache
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.dll
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\refint\eShopSolution.Utilities.dll
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\eShopSolution.Utilities.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.Utilities\obj\Debug\net6.0\ref\eShopSolution.Utilities.dll

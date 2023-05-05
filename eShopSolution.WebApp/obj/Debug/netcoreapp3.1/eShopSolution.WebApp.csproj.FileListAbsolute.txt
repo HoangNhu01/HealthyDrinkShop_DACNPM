@@ -1,0 +1,74 @@
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\appsettings.Development.json
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\appsettings.json
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.exe
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.deps.json
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.runtimeconfig.json
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.runtimeconfig.dev.json
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.dll
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.Views.dll
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.Views.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.csproj.AssemblyReference.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.AssemblyInfoInputs.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.AssemblyInfo.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.csproj.CoreCompileInputs.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.MvcApplicationPartsAssemblyInfo.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorAssemblyInfo.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorAssemblyInfo.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\staticwebassets\eShopSolution.WebApp.StaticWebAssets.Manifest.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.TagHelpers.input.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.TagHelpers.output.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorCoreGenerate.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorTargetAssemblyInfo.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorTargetAssemblyInfo.cs
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.Views.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.dll
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.genruntimeconfig.cache
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.csproj.CopyComplete
+D:\New folder (2)\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.exe
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.deps.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.runtimeconfig.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.runtimeconfig.dev.json
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.dll
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.pdb
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.Views.dll
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\bin\Debug\netcoreapp3.1\eShopSolution.WebApp.Views.pdb
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.AssemblyInfo.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorAssemblyInfo.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorAssemblyInfo.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\staticwebassets\eShopSolution.WebApp.StaticWebAssets.Manifest.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.TagHelpers.input.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.TagHelpers.output.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorCoreGenerate.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorTargetAssemblyInfo.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.RazorTargetAssemblyInfo.cs
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.Views.pdb
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.dll
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.pdb
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.genruntimeconfig.cache
+C:\Users\Admin\Desktop\eShopSolution\eShopSolution.WebApp\obj\Debug\netcoreapp3.1\eShopSolution.WebApp.csproj.CopyComplete

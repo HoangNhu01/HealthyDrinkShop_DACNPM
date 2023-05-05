@@ -1,0 +1,17 @@
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.ApiIntegration.deps.json
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.ApiIntegration.dll
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.ApiIntegration.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.Utilities.dll
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.ViewModels.dll
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.Utilities.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\bin\Debug\net6.0\eShopSolution.ViewModels.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.csproj.AssemblyReference.cache
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.GeneratedMSBuildEditorConfig.editorconfig
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.AssemblyInfoInputs.cache
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.AssemblyInfo.cs
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.csproj.CoreCompileInputs.cache
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.csproj.CopyComplete
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.dll
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\refint\eShopSolution.ApiIntegration.dll
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\eShopSolution.ApiIntegration.pdb
+D:\New folder (2)\eShopSolution\eShopSolution.ApiIntegration\obj\Debug\net6.0\ref\eShopSolution.ApiIntegration.dll
