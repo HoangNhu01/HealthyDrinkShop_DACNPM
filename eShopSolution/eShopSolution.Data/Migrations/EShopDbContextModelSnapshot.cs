@@ -180,7 +180,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "b8538e4e-2535-450c-bcd4-1211f875a8a8",
+                            ConcurrencyStamp = "0457500a-397b-4a1e-8926-b3f11cb01dc9",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,16 +257,16 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e349ca08-fe4b-487b-b2f6-4b0ecc4d2951",
+                            ConcurrencyStamp = "83a3458c-cb13-476d-82d5-bc7b711a90a0",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "tedu.international@gmail.com",
+                            Email = "hoangnhu300901@gmail.com",
                             EmailConfirmed = true,
-                            FirstName = "Toan",
-                            LastName = "Bach",
+                            FirstName = "Nhu",
+                            LastName = "Hoang",
                             LockoutEnabled = false,
-                            NormalizedEmail = "tedu.international@gmail.com",
+                            NormalizedEmail = "hoang123@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEUywyt0020P0x+9C9xm7BLxHuPaxy+p2qBbJs7eLYMz0yUwhanPc3PrlI8WcvKjVw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFyOEhkpE4I8du7GFqxQwkU6lNPNQ9QEe2JNLLmMxJXTsjy6ogjQd0F9MqMM4QMF6A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -401,40 +401,10 @@ namespace eShopSolution.Data.Migrations
                             Id = 1,
                             CategoryId = 1,
                             LanguageId = "vi-VN",
-                            Name = "Áo nam",
-                            SeoAlias = "ao-nam",
-                            SeoDescription = "Sản phẩm áo thời trang nam",
-                            SeoTitle = "Sản phẩm áo thời trang nam"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            LanguageId = "en-US",
-                            Name = "Men Shirt",
-                            SeoAlias = "men-shirt",
-                            SeoDescription = "The shirt products for men",
-                            SeoTitle = "The shirt products for men"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            LanguageId = "vi-VN",
-                            Name = "Áo nữ",
-                            SeoAlias = "ao-nu",
-                            SeoDescription = "Sản phẩm áo thời trang nữ",
-                            SeoTitle = "Sản phẩm áo thời trang women"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryId = 2,
-                            LanguageId = "en-US",
-                            Name = "Women Shirt",
-                            SeoAlias = "women-shirt",
-                            SeoDescription = "The shirt products for women",
-                            SeoTitle = "The shirt products for women"
+                            Name = "Cafe",
+                            SeoAlias = "ca-phe",
+                            SeoDescription = "Cà phê Việt Nam chất lượng cao",
+                            SeoTitle = "Cà phê Việt Nam chất lượng cao"
                         });
                 });
 
@@ -611,7 +581,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2020, 3, 5, 21, 29, 33, 73, DateTimeKind.Local).AddTicks(6902),
+                            DateCreated = new DateTime(2023, 5, 6, 2, 13, 59, 463, DateTimeKind.Local).AddTicks(8113),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -734,26 +704,14 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Áo sơ mi nam trắng Việt Tiến",
-                            Details = "Áo sơ mi nam trắng Việt Tiến",
+                            Description = "Cà phê đen nguyên chất Việt Nam",
+                            Details = "Cà phê đen nguyên chất Việt Nam",
                             LanguageId = "vi-VN",
-                            Name = "Áo sơ mi nam trắng Việt Tiến",
+                            Name = "Cà Phê Đen",
                             ProductId = 1,
-                            SeoAlias = "ao-so-mi-nam-trang-viet-tien",
-                            SeoDescription = "Áo sơ mi nam trắng Việt Tiến",
-                            SeoTitle = "Áo sơ mi nam trắng Việt Tiến"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Viet Tien Men T-Shirt",
-                            Details = "Viet Tien Men T-Shirt",
-                            LanguageId = "en-US",
-                            Name = "Viet Tien Men T-Shirt",
-                            ProductId = 1,
-                            SeoAlias = "viet-tien-men-t-shirt",
-                            SeoDescription = "Viet Tien Men T-Shirt",
-                            SeoTitle = "Viet Tien Men T-Shirt"
+                            SeoAlias = "ca-phe-den-nguyen-chat-viet-nam",
+                            SeoDescription = "Cà phê đen nguyên chất Việt Nam",
+                            SeoTitle = "Cà phê đen nguyên chất Việt Nam"
                         });
                 });
 

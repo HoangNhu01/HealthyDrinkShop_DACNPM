@@ -40,10 +40,7 @@ namespace eShopSolution.Data.Extensions
                  });
 
             modelBuilder.Entity<CategoryTranslation>().HasData(
-                  new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Áo nam", LanguageId = "vi-VN", SeoAlias = "ao-nam", SeoDescription = "Sản phẩm áo thời trang nam", SeoTitle = "Sản phẩm áo thời trang nam" },
-                  new CategoryTranslation() { Id = 2, CategoryId = 1, Name = "Men Shirt", LanguageId = "en-US", SeoAlias = "men-shirt", SeoDescription = "The shirt products for men", SeoTitle = "The shirt products for men" },
-                  new CategoryTranslation() { Id = 3, CategoryId = 2, Name = "Áo nữ", LanguageId = "vi-VN", SeoAlias = "ao-nu", SeoDescription = "Sản phẩm áo thời trang nữ", SeoTitle = "Sản phẩm áo thời trang women" },
-                  new CategoryTranslation() { Id = 4, CategoryId = 2, Name = "Women Shirt", LanguageId = "en-US", SeoAlias = "women-shirt", SeoDescription = "The shirt products for women", SeoTitle = "The shirt products for women" }
+                  new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Cafe", LanguageId = "vi-VN", SeoAlias = "ca-phe", SeoDescription = "Cà phê Việt Nam chất lượng cao", SeoTitle = "Cà phê Việt Nam chất lượng cao" }
                     );
 
             modelBuilder.Entity<Product>().HasData(
@@ -61,26 +58,14 @@ namespace eShopSolution.Data.Extensions
                  {
                      Id = 1,
                      ProductId = 1,
-                     Name = "Áo sơ mi nam trắng Việt Tiến",
+                     Name = "Cà Phê Đen",
                      LanguageId = "vi-VN",
-                     SeoAlias = "ao-so-mi-nam-trang-viet-tien",
-                     SeoDescription = "Áo sơ mi nam trắng Việt Tiến",
-                     SeoTitle = "Áo sơ mi nam trắng Việt Tiến",
-                     Details = "Áo sơ mi nam trắng Việt Tiến",
-                     Description = "Áo sơ mi nam trắng Việt Tiến"
-                 },
-                    new ProductTranslation()
-                    {
-                        Id = 2,
-                        ProductId = 1,
-                        Name = "Viet Tien Men T-Shirt",
-                        LanguageId = "en-US",
-                        SeoAlias = "viet-tien-men-t-shirt",
-                        SeoDescription = "Viet Tien Men T-Shirt",
-                        SeoTitle = "Viet Tien Men T-Shirt",
-                        Details = "Viet Tien Men T-Shirt",
-                        Description = "Viet Tien Men T-Shirt"
-                    });
+                     SeoAlias = "ca-phe-den-nguyen-chat-viet-nam",
+                     SeoDescription = "Cà phê đen nguyên chất Việt Nam",
+                     SeoTitle = "Cà phê đen nguyên chất Việt Nam",
+                     Details = "Cà phê đen nguyên chất Việt Nam",
+                     Description = "Cà phê đen nguyên chất Việt Nam"
+                 });
             modelBuilder.Entity<ProductInCategory>().HasData(
                 new ProductInCategory() { ProductId = 1, CategoryId = 1 }
                 );
@@ -102,13 +87,13 @@ namespace eShopSolution.Data.Extensions
                 Id = adminId,
                 UserName = "admin",
                 NormalizedUserName = "admin",
-                Email = "tedu.international@gmail.com",
-                NormalizedEmail = "tedu.international@gmail.com",
+                Email = "hoangnhu300901@gmail.com",
+                NormalizedEmail = "hoang123@gmail.com",
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
                 SecurityStamp = string.Empty,
-                FirstName = "Toan",
-                LastName = "Bach",
+                FirstName = "Nhu",
+                LastName = "Hoang",
                 Dob = new DateTime(2020,01,31)
             });
 
