@@ -19,6 +19,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request)
         {
+            var qr = _context.ProductTranslations.Where(s => s.LanguageId == languageId);
             //1. Select join
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
