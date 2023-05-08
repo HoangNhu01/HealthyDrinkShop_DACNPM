@@ -15,4 +15,8 @@ export class ProductService {
       + `&PageIndex=${page}` + `&PageSize=${size}`;
     return this.http.get(url);
   }
+  getDetailProductById(id: string, langId: string) {
+    const url = environment.urlAPI + 'api/Products/' + id + `/${langId}`;
+    return this.http.get(url);
+  }
 }

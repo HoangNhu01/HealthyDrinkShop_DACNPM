@@ -25,6 +25,7 @@ namespace eShopSolution.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.Id
+                        //join pimg in _context.ProductImages on p.Id equals pimg.ProductId
                         where pt.LanguageId == languageId
                         select new { p, pt, pic };
             //2. filter
@@ -51,7 +52,9 @@ namespace eShopSolution.Application.Catalog.Products
                     SeoDescription = x.pt.SeoDescription,
                     SeoTitle = x.pt.SeoTitle,
                     Stock = x.p.Stock,
-                    ViewCount = x.p.ViewCount
+                    ViewCount = x.p.ViewCount,
+                    //FilePath = x.pimg.ImagePath
+
                 }).ToListAsync();
 
             //4. Select and projection

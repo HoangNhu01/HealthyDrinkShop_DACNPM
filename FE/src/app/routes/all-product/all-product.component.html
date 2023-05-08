@@ -19,101 +19,11 @@
 <section class="our-team bg-sand padding-large">
   <div class="container">
     <div class="row">
-
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
+      <div *ngFor="let item of listProducts" class="product-item col-md-3 pb-4">
+        <a routerLink="/detail-product" class="product-image"><img [src]="item.filePath ? (urlImage + item.filePath) : (emptyImage)"></a>
         <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Black Forest Pastry</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Sprinkled Donuts</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Black Forest Cupcake</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Macarons with Berries</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Macarons with Berries</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Black Forest Pastry</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Sprinkled Donuts</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Black Forest Cupcake</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Macarons with Berries</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Macarons with Berries</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Macarons with Berries</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
-        </div>
-      </div>
-      <div class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a routerLink="/detail-product">Macarons with Berries</a></h5>
-          <p>VEGETABLE JUICE</p>
-          <span class="price colored">$12</span>
+          <h5 class="pt-4"><a (click)="getDetailProduct(item.id)">{{item.name}}</a></h5>
+          <span class="price colored">{{item.price}}VNĐ</span>
         </div>
       </div>
     </div>

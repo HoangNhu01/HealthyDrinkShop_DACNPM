@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
+import {Router, Routes} from "@angular/router";
+import en from "@angular/common/locales/en";
+import {environment} from "@env/env";
 
 @Component({
   selector: 'app-all-product',
@@ -7,15 +10,24 @@ import {ProductService} from "../../services/product.service";
   styleUrls: ['./all-product.component.less']
 })
 export class AllProductComponent implements OnInit{
+  listProducts : any[] = []
+  urlImage: string = './assets/product/';
+  emptyImage: string = './assets/product/empty.png';
   constructor(
-    protected productService: ProductService
+    protected productService: ProductService,
+    protected router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this.productService.getListProduct('vi-VN', '1', 1, 10).toPromise().then(res => {
-      console.log(res);
+    this.productService.getListProduct(environment.language, '1', 1, 10).toPromise().then((res: any) => {
+      if (res) {
+        this.listProducts = res.items;
+      }
     })
-
     }
+
+  getDetailProduct(id: string) {
+    this.router.navigate(['detail-product', {id: id}]);
+  }
 }

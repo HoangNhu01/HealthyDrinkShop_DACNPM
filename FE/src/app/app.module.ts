@@ -28,6 +28,17 @@ import {AccountComponent} from "./routes/account/account.component";
 import {NzSpinModule} from "ng-zorro-antd/spin";
 import {CartComponent} from "./routes/cart/cart.component";
 import {NzDrawerModule} from "ng-zorro-antd/drawer";
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzCardModule} from "ng-zorro-antd/card";
+import {NzAvatarModule} from "ng-zorro-antd/avatar";
+import {NzSkeletonModule} from "ng-zorro-antd/skeleton";
+import {NzInputModule} from "ng-zorro-antd/input";
+import {NzTableModule} from "ng-zorro-antd/table";
+import {NzInputNumberModule} from "ng-zorro-antd/input-number";
+import {NzCommentModule} from "ng-zorro-antd/comment";
+import {NzFormModule} from "ng-zorro-antd/form";
+import {NzListModule} from "ng-zorro-antd/list";
+import {NzBackTopModule} from "ng-zorro-antd/back-top";
 
 registerLocaleData(en);
 
@@ -59,6 +70,17 @@ registerLocaleData(en);
     NzDropDownModule,
     NzSpinModule,
     NzDrawerModule,
+    NzDividerModule,
+    NzCardModule,
+    NzAvatarModule,
+    NzSkeletonModule,
+    NzInputModule,
+    NzTableModule,
+    NzInputNumberModule,
+    NzCommentModule,
+    NzFormModule,
+    NzListModule,
+    NzBackTopModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

@@ -10,7 +10,7 @@ import {BlogComponent} from "./routes/blog/blog.component";
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'about-us', component: AboutUsComponent},
-  {path: 'detail-product', component: DetailProductComponent},
+  {path: 'detail-product', component: DetailProductComponent, data: {id: ''}},
   {path: 'all-product', component: AllProductComponent},
   {path: 'account', component: AccountComponent},
   {
