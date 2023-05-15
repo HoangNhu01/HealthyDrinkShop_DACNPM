@@ -60,6 +60,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   }
 
   addToCart(data: any, quantity: number) {
+    data.quantity = quantity;
     this.cart.product.next(data);
     this.cart.openCart();
   }
