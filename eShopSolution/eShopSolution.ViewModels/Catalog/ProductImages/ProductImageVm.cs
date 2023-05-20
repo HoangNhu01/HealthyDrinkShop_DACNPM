@@ -5,7 +5,7 @@ using System.Text;
 
 namespace eShopSolution.ViewModels.Catalog.ProductImages
 {
-    public class ProductImageViewModel
+    public class ProductImageVm
     {
         public int Id { get; set; }
 

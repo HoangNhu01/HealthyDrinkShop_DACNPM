@@ -1,0 +1,69 @@
+﻿@model eShopSolution.ViewModels.Catalog.Products.IngredientAssignRequest
+
+@{
+    ViewData["Title"] = "Gán nguyên liệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            
+        })
+        let checkboxEvent = (checkbox) => {
+            console.log(checkbox)
+            $(`#${checkbox}`).prop('checked', true);
+        }
+        let checkinputEvent = (el,input) => {
+            
+            // Check if the checkbox is unchecked
+            if ($(el).is(':checked')) {
+                $(`#${input}`).attr('required', true);
+                $(`#${input}`).attr('placeholder', '');
+                
+            } else {
+                $(`#${input}`).val('');
+                $(`#${input}`).attr('placeholder', 'Please click again to select your ingredient');
+            }
+        }
+    </script>
+}
+<div class="container-fluid">
+    <h1 class="mt-4">Gán quyền</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Gán danh mục</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Product">Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+                <form asp-action="IngredientAssign">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                @for (var i = 0; i < Model.Ingredients.Count; i++)
+                {
+                    <div class="form-group">
+                        <label>
+                            @Model.Ingredients[i].Name
+                            <input type="checkbox" 
+                                   asp-for="Ingredients[i].Selected" 
+                                   id="checkbox-@Model.Ingredients[i].Id"
+                                   onchange="checkinputEvent(this,`input-@Model.Ingredients[i].Id`)" />
+                            <input type="number" 
+                                   asp-for="Ingredients[i].UpdateStock"
+                                   id="input-@Model.Ingredients[i].Id" 
+                                   onclick="checkboxEvent(`checkbox-@Model.Ingredients[i].Id`)" />
+                            <input type="hidden" asp-for="Ingredients[i].Id" />
+                            <input type="hidden" asp-for="Ingredients[i].Name" />
+                        </label>
+                    </div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Lưu lại" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
