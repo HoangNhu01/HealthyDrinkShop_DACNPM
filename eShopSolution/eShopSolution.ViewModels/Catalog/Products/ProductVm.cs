@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
+using eShopSolution.Data.Entities;
+
 
 namespace eShopSolution.ViewModels.Catalog.Products
 {
-    public class ProductViewModel
+    public class ProductVm
     {
         public int Id { set; get; }
         public decimal Price { set; get; }
@@ -21,5 +24,12 @@ namespace eShopSolution.ViewModels.Catalog.Products
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+        public string Image { set; get; }
+        [JsonIgnore]
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<ProductInCategory> ProductInCategories { get; set; } = new List<ProductInCategory>();
+        [JsonIgnore]
+        public virtual ICollection<IngredientInProduct> IngredientInProducts { get; set; } = new List<IngredientInProduct>();
     }
 }

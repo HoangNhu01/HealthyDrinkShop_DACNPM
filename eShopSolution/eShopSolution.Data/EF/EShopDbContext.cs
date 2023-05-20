@@ -24,8 +24,12 @@ namespace eShopSolution.Data.EF
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+
             modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new IngredientConfiguration());
+
+            modelBuilder.ApplyConfiguration(new IngredientInProductConfiguration());
 
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryTranslationConfiguration());
@@ -60,6 +64,7 @@ namespace eShopSolution.Data.EF
         public DbSet<Cart> Carts { get; set; }
 
         public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
+
         public DbSet<ProductInCategory> ProductInCategories { get; set; }
 
         public DbSet<Contact> Contacts { get; set; }
@@ -69,10 +74,14 @@ namespace eShopSolution.Data.EF
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
 
         public DbSet<Promotion> Promotions { get; set; }
 
+        public DbSet<Ingredient> Ingredients { get; set; }
+
+        public DbSet<IngredientInProduct> IngredientInProducts { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
 

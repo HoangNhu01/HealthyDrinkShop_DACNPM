@@ -10,6 +10,6 @@ namespace eShopSolution.ViewModels.Common
 
         public string Message { get; set; }
 
-        public T ResultObj { get; set; }
+        public virtual T ResultObj { get; set; }
     }
 }
