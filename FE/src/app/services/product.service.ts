@@ -11,7 +11,7 @@ export class ProductService {
     private http: HttpClient) { }
 
   getListProduct(lang: String, cateId: String, page: number, size: number): Observable<any> {
-    const url = environment.urlAPI + 'api/Products/' + environment.language + `?CategoryId=${cateId}`
+    const url = environment.urlAPI + 'api/Products/paging?' + "LanguageId=" + environment.language + `&CategoryId=${cateId}`
       + `&PageIndex=${page}` + `&PageSize=${size}`;
     return this.http.get(url);
   }

@@ -20,7 +20,7 @@
   <div class="container">
     <div class="row">
       <div *ngFor="let item of listProducts" class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img [src]="item.filePath ? (urlImage + item.filePath) : (emptyImage)"></a>
+        <a routerLink="/detail-product" class="product-image"><img [src]='getImage(item.listImg[3])'></a>
         <div class="text-comtent text-center">
           <h5 class="pt-4"><a (click)="getDetailProduct(item.id)">{{item.name}}</a></h5>
           <span class="price colored">{{item.price}}VNĐ</span>

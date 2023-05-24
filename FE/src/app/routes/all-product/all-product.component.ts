@@ -22,12 +22,16 @@ export class AllProductComponent implements OnInit{
   ngOnInit(): void {
     this.productService.getListProduct(environment.language, '1', 1, 10).toPromise().then((res: any) => {
       if (res) {
-        this.listProducts = res.items;
+        this.listProducts = res.resultObj.items;
       }
     })
     }
 
   getDetailProduct(id: string) {
     this.router.navigate(['detail-product', {id: id}]);
+  }
+
+  getImage(base64: any): any {
+    return `data:image/jpeg;base64, ${base64} `;
   }
 }

@@ -22,14 +22,11 @@ namespace eShopSolution.Application.Common
             return $"/{USER_CONTENT_FOLDER_NAME}/{fileName}";
         }
 
-        public async Task<byte[]> SaveFileAsync(Stream mediaBinaryStream, string fileName)
+        public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)
         {
             var filePath = Path.Combine(_userContentFolder, fileName);
             using var output = new FileStream(filePath, FileMode.Create);
             await mediaBinaryStream.CopyToAsync(output);
-            using var memStream = new MemoryStream();
-            await mediaBinaryStream.CopyToAsync(memStream);
-            return memStream.ToArray(); ;
         }
 
         public async Task DeleteFileAsync(string fileName)
