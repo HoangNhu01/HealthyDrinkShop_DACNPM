@@ -120,6 +120,7 @@ namespace eShopSolution.Application.Catalog.Products
 
             return await _context.SaveChangesAsync();
         }
+        //<img src="data:image/jpeg;base64,{resultObj.items.listImg[1]}" alt="File Image" />
 
         public async Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request)
         {
