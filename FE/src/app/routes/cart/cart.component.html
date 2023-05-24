@@ -1,0 +1,55 @@
+<nz-drawer
+  [nzWidth]="520"
+  [nzVisible]="visible"
+  [nzTitle]="title"
+  [nzClosable]="false"
+  (nzOnClose)="closeDrawer()"
+>
+  <ng-container *nzDrawerContent>
+    <div *ngIf="(listProductCarts.length === 0 )" class="d-flex align-items-center flex-column">
+      <img src="../../../assets/product/empty_cart.png">
+      <button (click)="closeDrawer()" routerLink="/" nzSize="large" nzShape="round" nz-button nzDanger>Keep buying
+      </button>
+    </div>
+    <div *ngIf="(listProductCarts.length !== 0 )">
+      <div class="position-absolute w-91 top-79">
+        <nz-divider></nz-divider>
+        <div class="d-flex justify-content-lg-between">
+          <label class="text-black fw-2 fs-4">Tổng tiền:</label>
+          <label class="color-main text-black fw-2 fs-4">{{total + unit}}</label>
+        </div>
+        <button (click)="test()" class="w-100" style="background-color: #CE3C83" nzSize="large" nzType="primary"
+                nz-button nzShape="round">Thanh toán
+        </button>
+      </div>
+      <nz-table nzShowPagination="false" #basicTable [nzData]="listProductCarts">
+        <thead>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of listProductCarts; index as i">
+          <td
+            [nzChecked]="setOfCheckedId.has(data.id)"
+            [nzDisabled]="data.disabled"
+            (nzCheckedChange)="onItemChecked(data.id, $event)"
+          ></td>
+          <td class="fw-bold" style="width: auto">
+            <div>
+              <label class="fw-bold color-primary">{{data.name}}</label>
+              <div class="d-flex justify-content-lg-between">
+                <div class="d-inline-flex">
+                  <label>Số lượng: </label>
+                  <nz-input-number (ngModelChange)="changeQuantiny($event, data)" [ngModel]="data.quantity" class="ml-2" nzSize="small" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                </div>
+                <label class="color-main">{{data.price + unit}}</label>
+              </div>
+            </div>
+          </td>
+          <td style="width: 10%" (click)="removeFromCart(i)">
+            <span class="fs-5" nz-icon nzType="close" nzTheme="outline"></span>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </ng-container>
+</nz-drawer>

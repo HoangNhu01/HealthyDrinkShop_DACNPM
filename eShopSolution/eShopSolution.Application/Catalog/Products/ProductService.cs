@@ -120,6 +120,7 @@ namespace eShopSolution.Application.Catalog.Products
 
             return await _context.SaveChangesAsync();
         }
+        //<img src="data:image/jpeg;base64,{resultObj.items.listImg[1]}" alt="File Image" />
 
         public async Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request)
         {
@@ -161,6 +162,7 @@ namespace eShopSolution.Application.Catalog.Products
                     ViewCount = x.Product.ViewCount,
                     ProductInCategories = x.Product.ProductInCategories,
                     IngredientInProducts = x.Product.IngredientInProducts,
+                    ListImg = x.Product.ProductImages.Select(x => Convert.ToBase64String(x.Data)).ToList(),
                 }).ToListAsync();
 
             //4. Select and projection
@@ -225,7 +227,8 @@ namespace eShopSolution.Application.Catalog.Products
                 ImagePath = image.ImagePath,
                 IsDefault = image.IsDefault,
                 ProductId = image.ProductId,
-                SortOrder = image.SortOrder
+                SortOrder = image.SortOrder,
+                Data = image.Data,
             };
             return viewModel;
         }
@@ -321,8 +324,15 @@ namespace eShopSolution.Application.Catalog.Products
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-            var photoData = await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return new ImageFileSave{ FileName = fileName, Data = photoData };
+            byte[] content;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                content = memoryStream.ToArray();
+            }
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return new ImageFileSave{ FileName = fileName, Data = content };
         }
 
         public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)

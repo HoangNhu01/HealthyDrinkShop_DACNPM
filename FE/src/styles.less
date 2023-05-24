@@ -51,6 +51,9 @@ This is main CSS file that contains custom style rules used in this template
 /*--------------------------------------------------------------
 /** 1. Normalize
 --------------------------------------------------------------*/
+*{
+  font-family: "Times New Roman";
+}
 html, body {
   position: relative;
   width: 100%;
@@ -58,7 +61,6 @@ html, body {
 }
 html {
   font-size: 100%;
-  font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -6451,6 +6453,9 @@ a.nav-link {
 .nav.nav-tabs .nav-link.active {
   color: #ce3c83;
 }
+.color-main{
+  color: #CE3C83 !important;
+}
 
 /* -- Best Products Section
 --------------------------------------------------------------*/
@@ -6515,7 +6520,6 @@ a.magnific-popup{
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgb(0,0,0,0.4);
   overflow: hidden;
   width: 100%;
   height: 430px;
@@ -6646,7 +6650,7 @@ a.magnific-popup:hover .overlay {
 --------------------------------------------------------------*/
 .site-banner{
   //background: url(assets/product/banner.jpg) no-repeat;
-  height: 267px;
+  height: 185px;
 }
 .site-banner .banner-content {
   display: flex;

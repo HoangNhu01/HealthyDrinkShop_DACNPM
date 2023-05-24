@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "^3.0.0-beta.0",
     "@angular/animations": "^15.2.0",
     "@angular/common": "^15.2.0",
     "@angular/compiler": "^15.2.0",
@@ -22,6 +23,7 @@
     "@service-work/is-loading": "^6.2.3",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.4",
+    "cors": "^2.8.5",
     "local-storage": "^2.0.0",
     "ng-zorro-antd": "^15.1.0",
     "rxjs": "~7.8.0",

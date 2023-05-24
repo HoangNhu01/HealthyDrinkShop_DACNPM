@@ -1,0 +1,129 @@
+<div id="main-wrapper" class="overflow-hidden">
+
+  <section class="bg-sand padding-large">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6">
+          <a class="product-image"><img [src]="detailProduct.filePath ? (urlImage + detailProduct.filePath) : (emptyImage)"></a>
+        </div>
+
+        <div class="col-md-6 pl-5">
+          <div class="product-detail">
+            <h5 class="pt-4"><a>{{detailProduct.name}}</a></h5>
+            <span class="price colored">{{detailProduct.price}}</span>
+
+            <p>
+              {{detailProduct.description}}
+            </p>
+
+            <label class="screen-reader-text" for="qty">Black Forest Pastry Quantity</label>
+            <input [(ngModel)]="quantity" type="number" id="qty" class="input-text qty text" step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric">
+            <button type="submit" name="add-to-cart" value="27545" class="button" (click)="addToCart(detailProduct, quantity)">Add to cart</button>
+          </div>
+        </div>
+
+      </div>
+
+<!--      comment-->
+      <nz-list *ngIf="data.length" [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+        <ng-template #item let-item>
+          <nz-comment [nzAuthor]="item.author" [nzDatetime]="item.displayTime">
+            <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="item.avatar"></nz-avatar>
+            <nz-comment-content>
+              <p>{{ item.content }}</p>
+            </nz-comment-content>
+          </nz-comment>
+        </ng-template>
+      </nz-list>
+      <nz-comment class="pt-5">
+        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+        <nz-comment-content>
+          <nz-form-item>
+            <textarea maxlength="4" placeholder="Mời nhập bình luận của bạn" [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+          </nz-form-item>
+          <nz-form-item>
+            <button style="background-color: #CE3C83" class="color-white button mt-0" nz-button [nzLoading]="submitting" [disabled]="!inputValue">
+              Add Comment
+            </button>
+          </nz-form-item>
+        </nz-comment-content>
+      </nz-comment>
+      <nz-divider nzText="Bình luận" nzOrientation="left"></nz-divider>
+<!--      list comment-->
+      <nz-comment nzAuthor="Han Solo">
+        <nz-avatar
+          nz-comment-avatar
+          nzIcon="user"
+          nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        ></nz-avatar>
+        <nz-comment-content>
+          <p>
+            We supply a series of design principles, practical patterns and high quality design resources (Sketch and
+            Axure), to help people create their product prototypes beautifully and efficiently.
+          </p>
+        </nz-comment-content>
+        <nz-comment-action>
+        <span
+          nz-tooltip
+          nzTitle="Like"
+          nz-icon
+          nzType="like"
+          [nzTheme]="likes > 0 ? 'twotone' : 'outline'"
+          (click)="like()"
+        ></span>
+          <span class="count like">{{ likes }}</span>
+        </nz-comment-action>
+        <nz-comment-action>
+        <span
+          nz-tooltip
+          nzTitle="Dislike"
+          nz-icon
+          nzType="dislike"
+          [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'"
+          (click)="dislike()"
+        ></span>
+          <span class="count dislike">{{ dislikes }}</span>
+        </nz-comment-action>
+        <nz-comment-action>Reply to</nz-comment-action>
+      </nz-comment>
+      <nz-comment nzAuthor="Tân kiều">
+        <nz-avatar
+          nz-comment-avatar
+          nzIcon="user"
+          nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        ></nz-avatar>
+        <nz-comment-content>
+          <p>
+            I like it!
+          </p>
+        </nz-comment-content>
+        <nz-comment-action>
+        <span
+          nz-tooltip
+          nzTitle="Like"
+          nz-icon
+          nzType="like"
+          [nzTheme]="likes > 0 ? 'twotone' : 'outline'"
+          (click)="like()"
+        ></span>
+          <span class="count like">{{ likes }}</span>
+        </nz-comment-action>
+        <nz-comment-action>
+        <span
+          nz-tooltip
+          nzTitle="Dislike"
+          nz-icon
+          nzType="dislike"
+          [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'"
+          (click)="dislike()"
+        ></span>
+          <span class="count dislike">{{ dislikes }}</span>
+        </nz-comment-action>
+        <nz-comment-action>Reply to</nz-comment-action>
+      </nz-comment>
+    </div>
+  </section>
+</div>
+<app-cart #cart></app-cart>
+

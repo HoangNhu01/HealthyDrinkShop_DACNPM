@@ -6,6 +6,7 @@ using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -25,7 +26,7 @@ namespace eShopSolution.BackendApi.Controllers
             _cache = cache;
         }
         [HttpPost("{id}/{languageId}")]
-        public async Task<IActionResult> AddToCart(int id, string languageId)
+        public async Task<IActionResult> AddToCart(int id, string languageId, int clientQuantity)
         {
             var product = await _productService.GetById(id, languageId);
             var cartItems = _cache.Get<List<CartItemViewModel>>(SystemConstants.CartCaching) 
@@ -35,10 +36,12 @@ namespace eShopSolution.BackendApi.Controllers
             //if (session != null)
             //    currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
 
-            int quantity = 1;
+            int quantity = clientQuantity;
             if (cartItems.Any(x => x.ProductId == id))
             {
-                quantity = cartItems.First(x => x.ProductId == id).Quantity + 1;
+                var cart = cartItems.First(x => x.ProductId == id);
+                quantity = cart.Quantity + clientQuantity;
+                cartItems.Remove(cart);
             }
 
             var cartItem = new CartItemViewModel()
@@ -86,7 +89,11 @@ namespace eShopSolution.BackendApi.Controllers
         {
             // Get the cart items from the cache or return an empty cart
             var cartItems = _cache.Get<List<CartItemViewModel>>(SystemConstants.CartCaching) ?? new List<CartItemViewModel>();
-            return Ok();
+            return Ok(cartItems);
         }
+
+        //[HttpPost]
+        //[Authorize]
+        //public IActionResult CheckOut() { }
     }
 }
