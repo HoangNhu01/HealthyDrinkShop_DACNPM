@@ -10,7 +10,6 @@ namespace eShopSolution.BackendApi.Controllers
     //api/products
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -22,7 +21,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         //http://localhost:port/products?pageIndex=1&pageSize=10&CategoryId=
-        [HttpGet("{languageId}")]
+        [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
             var products = await _productService.GetAllPaging(request);
@@ -104,7 +103,7 @@ namespace eShopSolution.BackendApi.Controllers
             return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
 
-        [HttpPut("{productId}/images/{imageId}")]
+        [HttpPut("images/{imageId}")]
         public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -118,7 +117,7 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("{productId}/images/{imageId}")]
+        [HttpDelete("images/{imageId}")]
         public async Task<IActionResult> RemoveImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -132,8 +131,8 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok();
         }
 
-        [HttpGet("{productId}/images/{imageId}")]
-        public async Task<IActionResult> GetImageById(int productId, int imageId)
+        [HttpGet("images/{imageId}")]
+        public async Task<IActionResult> GetImageById(int imageId)
         {
             var image = await _productService.GetImageById(imageId);
             if (image == null)

@@ -10,7 +10,7 @@ namespace eShopSolution.Application.Common
     {
         string GetFileUrl(string fileName);
 
-        Task SaveFileAsync(Stream mediaBinaryStream, string fileName);
+        Task<byte[]> SaveFileAsync(Stream mediaBinaryStream, string fileName);
 
         Task DeleteFileAsync(string fileName);
     }

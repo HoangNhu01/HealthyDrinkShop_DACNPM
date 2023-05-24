@@ -73,9 +73,11 @@ namespace eShopSolution.AdminApp.Services
         }
         public async Task<ApiResult<PagedResult<ProductVm>>> GetPagings(GetManageProductPagingRequest request)
         {
+            var cate = request.CategoryIds.Count > 0 ? $"&CategoryIds={request.CategoryIds.First().ToString()}" : "";
             var data = await GetAsync<ApiResult<PagedResult<ProductVm>>>(
                 $"/api/products/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
+                cate +
                 $"&keyword={request.Keyword}&languageId={request.LanguageId}");
 
             return data;

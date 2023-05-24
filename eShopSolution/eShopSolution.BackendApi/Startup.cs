@@ -66,7 +66,7 @@ namespace eShopSolution.BackendApi
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             })
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
-              
+            services.AddMemoryCache();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger eShop Solution", Version = "v1" });
@@ -104,7 +104,14 @@ namespace eShopSolution.BackendApi
             string issuer = Configuration.GetValue<string>("Tokens:Issuer");
             string signingKey = Configuration.GetValue<string>("Tokens:Key");
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("corspolicy",
+                    policy =>
+                    {
+                        policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -146,6 +153,8 @@ namespace eShopSolution.BackendApi
 
             app.UseAuthentication();
             app.UseRouting();
+
+            app.UseCors("corspolicy");
 
             app.UseAuthorization();
 

@@ -48,12 +48,12 @@ namespace eShopSolution.AdminApp.Controllers
             ViewBag.Keyword = keyword;
 
             var categories = await _categoryApiClient.GetAll(languageId);
-            //ViewBag.Categories = categories.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString(),
-            //    Selected = categoryId.HasValue && categoryId.Value == x.Id
-            //});
+            ViewBag.Categories = categories.ResultObj.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = categoryId.Contains(x.Id)
+            });
 
             if (TempData["result"] != null)
             {
