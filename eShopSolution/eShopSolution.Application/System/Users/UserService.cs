@@ -38,7 +38,7 @@ namespace eShopSolution.Application.System.Users
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password, true, true);
             if (!result.Succeeded)
             {
                 return new ApiErrorResult<string>("Đăng nhập không đúng");
@@ -70,6 +70,8 @@ namespace eShopSolution.Application.System.Users
             {
                 return new ApiErrorResult<bool>("User không tồn tại");
             }
+            var role = await _userManager.GetRolesAsync(user);
+            var remove = await _userManager.RemoveFromRolesAsync(user,role);
             var reult = await _userManager.DeleteAsync(user);
             if (reult.Succeeded)
                 return new ApiSuccessResult<bool>();

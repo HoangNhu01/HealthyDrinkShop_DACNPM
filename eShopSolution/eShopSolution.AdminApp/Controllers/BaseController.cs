@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminOnly")]
     public class BaseController : Controller
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // sessions = context.HttpContext.Session.GetString("Token");
-            //if (sessions == null)
-            //{
-            //    context.Result = new RedirectToActionResult("Index", "Login", null);
-            //}
+            var sessions = context.HttpContext.Session.GetString("Token");
+            if (sessions == null)
+            {
+                context.Result = new RedirectToActionResult("Index", "Login", null);
+            }
             base.OnActionExecuting(context);
         }
     }

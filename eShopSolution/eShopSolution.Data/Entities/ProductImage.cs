@@ -22,6 +22,8 @@ namespace eShopSolution.Data.Entities
 
         public long FileSize { get; set; }
 
+        public byte[] Data { get; set; }
+
         public Product Product { get; set; }
     }
 }

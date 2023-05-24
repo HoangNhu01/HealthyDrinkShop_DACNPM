@@ -15,7 +15,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<int> Delete(int productId);
 
-        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ProductVm> GetById(int productId, string languageId);
 
         Task<bool> UpdatePrice(int productId, decimal newPrice);
 
@@ -23,7 +23,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task AddViewcount(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request);
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
@@ -31,10 +31,13 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
 
-        Task<ProductImageViewModel> GetImageById(int imageId);
+        Task<ProductImageVm> GetImageById(int imageId);
 
-        Task<List<ProductImageViewModel>> GetListImages(int productId);
+        Task<List<ProductImageVm>> GetListImages(int productId);
 
-        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string languageId, GetPublicProductPagingRequest request);
+        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
+
+        Task<ApiResult<bool>> IngredientAssign(int id, IngredientAssignRequest request);
+
     }
 }

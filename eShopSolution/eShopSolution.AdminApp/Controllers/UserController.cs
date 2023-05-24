@@ -10,6 +10,7 @@ using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -49,7 +50,12 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return View(data.ResultObj);
         }
-
+        [AllowAnonymous]
+        public IActionResult Forbidden()
+        {
+            ViewBag.Forbidden = User.Identity.Name ?? "User";
+            return View();
+        }
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
