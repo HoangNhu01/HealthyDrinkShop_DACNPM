@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eShopSolution.AdminApp.Services;
+using eShopSolution.Security;
+using eShopSolution.Security.FeatureBuilder;
 using eShopSolution.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -38,7 +40,8 @@ namespace eShopSolution.AdminApp
                 });
 
             services.AddControllersWithViews()
-                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+                     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); services.AddSecurityFeature(Configuration).AddManagers();
+            services.AddSecurityFeature(Configuration).AddManagers();
 
             services.AddSession(options =>
             {
@@ -52,7 +55,11 @@ namespace eShopSolution.AdminApp
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<IIngredientApiClient, IngredientApiClient>();
-
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                    policy.Requirements.Add(new AdminRoleRequirement()));
+            });
 
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

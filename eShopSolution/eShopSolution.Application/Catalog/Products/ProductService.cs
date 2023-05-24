@@ -44,7 +44,8 @@ namespace eShopSolution.Application.Catalog.Products
 
             if (request.ImageFile != null)
             {
-                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.ImagePath = this.SaveFile(request.ImageFile).Result.FileName;
+                productImage.Data = this.SaveFile(request.ImageFile).Result.Data;
                 productImage.FileSize = request.ImageFile.Length;
             }
             _context.ProductImages.Add(productImage);
@@ -92,7 +93,8 @@ namespace eShopSolution.Application.Catalog.Products
                         Caption = "Thumbnail image",
                         DateCreated = DateTime.Now,
                         FileSize = request.ThumbnailImage.Length,
-                        ImagePath = await this.SaveFile(request.ThumbnailImage),
+                        ImagePath = this.SaveFile(request.ThumbnailImage).Result.FileName,
+                        Data = this.SaveFile(request.ThumbnailImage).Result.Data,
                         IsDefault = true,
                         SortOrder = 1
                     }
@@ -120,13 +122,13 @@ namespace eShopSolution.Application.Catalog.Products
         }
 
         public async Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request)
-        { 
+        {
             var query = _context.ProductTranslations.Include(x => x.Product).ThenInclude(p => p.ProductInCategories)
                                                                             .ThenInclude(pc => pc.Category)
                                                     .Include(x => x.Product).ThenInclude(p => p.ProductImages)
                                                     .Include(x => x.Product).ThenInclude(i => i.IngredientInProducts)
                                                                             .ThenInclude(i => i.Ingredient)
-                                                    .Where(x => x.Name.Contains(request.Keyword ?? "") 
+                                                    .Where(x => x.Name.Contains(request.Keyword ?? "")
                                                                     && x.LanguageId == request.LanguageId);
 
 
@@ -134,10 +136,10 @@ namespace eShopSolution.Application.Catalog.Products
             {
                 query = query.Where(x => x.Product.ProductInCategories
                                         .Where(c => request.CategoryIds
-                                        .Contains(c.ProductId)).Count() > 0);
+                                        .Contains(c.CategoryId)).Count() > 0);
             }
 
-        //3. Paging
+            //3. Paging
             int totalRow = await query.CountAsync();
 
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
@@ -178,13 +180,13 @@ namespace eShopSolution.Application.Catalog.Products
         public async Task<ProductVm> GetById(int productId, string languageId)
         {
             var productTranslation = await _context.ProductTranslations.Include(x => x.Product)
-                                                                       .ThenInclude(x=>x.ProductInCategories)
-                                                                       .ThenInclude(x =>x.Category)
+                                                                       .ThenInclude(x => x.ProductInCategories)
+                                                                       .ThenInclude(x => x.Category)
                                                                        .ThenInclude(x => x.CategoryTranslations)
                                                                        .Include(x => x.Product)
                                                                        .ThenInclude(i => i.IngredientInProducts)
                                                                        .ThenInclude(x => x.Ingredient)
-                                                                       .FirstOrDefaultAsync(x => x.ProductId == productId   
+                                                                       .FirstOrDefaultAsync(x => x.ProductId == productId
                                                                                             && x.LanguageId == languageId);
 
             var productViewModel = new ProductVm()
@@ -240,7 +242,8 @@ namespace eShopSolution.Application.Catalog.Products
                     ImagePath = i.ImagePath,
                     IsDefault = i.IsDefault,
                     ProductId = i.ProductId,
-                    SortOrder = i.SortOrder
+                    SortOrder = i.SortOrder,
+                    Data = i.Data
                 }).ToListAsync();
         }
 
@@ -274,7 +277,8 @@ namespace eShopSolution.Application.Catalog.Products
                 if (thumbnailImage != null)
                 {
                     thumbnailImage.FileSize = request.ThumbnailImage.Length;
-                    thumbnailImage.ImagePath = await this.SaveFile(request.ThumbnailImage);
+                    thumbnailImage.ImagePath =  this.SaveFile(request.ThumbnailImage).Result.FileName;
+                    thumbnailImage.Data = this.SaveFile(request.ThumbnailImage).Result.Data;
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }
@@ -290,7 +294,7 @@ namespace eShopSolution.Application.Catalog.Products
 
             if (request.ImageFile != null)
             {
-                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.ImagePath = this.SaveFile(request.ImageFile).Result.FileName;
                 productImage.FileSize = request.ImageFile.Length;
             }
             _context.ProductImages.Update(productImage);
@@ -313,12 +317,12 @@ namespace eShopSolution.Application.Catalog.Products
             return await _context.SaveChangesAsync() > 0;
         }
 
-        private async Task<string> SaveFile(IFormFile file)
+        private async Task<ImageFileSave> SaveFile(IFormFile file)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return fileName;
+            var photoData = await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return new ImageFileSave{ FileName = fileName, Data = photoData };
         }
 
         public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)

@@ -24,7 +24,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
-        public string Image { set; get; }
+        public string ThumbnailImage { set; get; }
         [JsonIgnore]
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         [JsonIgnore]

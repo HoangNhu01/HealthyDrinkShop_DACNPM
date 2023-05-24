@@ -22,5 +22,7 @@ namespace eShopSolution.ViewModels.Catalog.ProductImages
         public int SortOrder { get; set; }
 
         public long FileSize { get; set; }
+
+        public byte[] Data { get; set; }
     }
 }

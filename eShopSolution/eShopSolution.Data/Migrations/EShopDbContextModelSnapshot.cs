@@ -180,7 +180,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "0457500a-397b-4a1e-8926-b3f11cb01dc9",
+                            ConcurrencyStamp = "ffbccf27-42a7-4210-a6fe-30220551b539",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +257,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "83a3458c-cb13-476d-82d5-bc7b711a90a0",
+                            ConcurrencyStamp = "bd56b593-5c7f-448f-a755-668a34365a1b",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hoangnhu300901@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +266,7 @@ namespace eShopSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "hoang123@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFyOEhkpE4I8du7GFqxQwkU6lNPNQ9QEe2JNLLmMxJXTsjy6ogjQd0F9MqMM4QMF6A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIaDTMgkjer53QE69FIPWeVTu1fYfjpJ0hhywQ32U6CgkNnx9NgnMLVYuo9BWzzbDQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -444,6 +444,47 @@ namespace eShopSolution.Data.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("eShopSolution.Data.Entities.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("eShopSolution.Data.Entities.IngredientInProduct", b =>
+                {
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IngredientId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("IngredientInProducts");
+                });
+
             modelBuilder.Entity("eShopSolution.Data.Entities.Language", b =>
                 {
                     b.Property<string>("Id")
@@ -581,7 +622,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 5, 6, 2, 13, 59, 463, DateTimeKind.Local).AddTicks(8113),
+                            DateCreated = new DateTime(2023, 5, 24, 20, 29, 29, 474, DateTimeKind.Local).AddTicks(3972),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -601,6 +642,9 @@ namespace eShopSolution.Data.Migrations
                     b.Property<string>("Caption")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -826,6 +870,21 @@ namespace eShopSolution.Data.Migrations
                     b.HasOne("eShopSolution.Data.Entities.Language", "Language")
                         .WithMany("CategoryTranslations")
                         .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("eShopSolution.Data.Entities.IngredientInProduct", b =>
+                {
+                    b.HasOne("eShopSolution.Data.Entities.Ingredient", "Ingredient")
+                        .WithMany("IngredientInProducts")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eShopSolution.Data.Entities.Product", "Product")
+                        .WithMany("IngredientInProducts")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

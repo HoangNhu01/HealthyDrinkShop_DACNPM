@@ -25,7 +25,8 @@ namespace eShopSolution.AdminApp.Controllers
         public IActionResult Index()
         {
             var user = User.Identity.Name;
-            var img = User.Claims;
+            var img = User.Claims.Select(x => x.Value);
+            var jwt = HttpContext.Request.Cookies["Token"];
             return View();
         }
 
