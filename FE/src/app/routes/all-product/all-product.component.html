@@ -1,31 +1,33 @@
-<div class="site-banner">
-  <div class="banner-content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="colored">
-            <h1>Shop</h1>
-            <div class="breadcum-items">
-              <span class="item"><a href="../../../index.html">Home /</a></span>
-              <span class="item colored">Shop</span>
+<nz-spin [nzSpinning]="isLoading">
+  <div class="site-banner">
+    <div class="banner-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="colored">
+              <h1>Shop</h1>
+              <div class="breadcum-items">
+                <span class="item"><a href="../../../index.html">Home /</a></span>
+                <span class="item colored">Shop</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div><!--site-banner-->
-
-<section class="our-team bg-sand padding-large">
-  <div class="container">
-    <div class="row">
-      <div *ngFor="let item of listProducts" class="product-item col-md-3 pb-4">
-        <a routerLink="/detail-product" class="product-image"><img [src]='getImage(item.listImg[3])'></a>
-        <div class="text-comtent text-center">
-          <h5 class="pt-4"><a (click)="getDetailProduct(item.id)">{{item.name}}</a></h5>
-          <span class="price colored">{{item.price}}VNĐ</span>
+  <!--site-banner-->
+  <section class="our-team bg-sand padding-large">
+    <div class="container">
+      <div class="row">
+        <div *ngFor="let item of listProducts" class="product-item col-md-3 pb-4">
+          <a (click)="getDetailProduct(item.id)" class="product-image"><img [src]='getImage(item.listImg[3])'></a>
+          <div class="text-comtent text-center">
+            <h5 class="pt-4"><a (click)="getDetailProduct(item.id)">{{item.name}}</a></h5>
+            <span class="price colored">{{item.price}}VNĐ</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</nz-spin>

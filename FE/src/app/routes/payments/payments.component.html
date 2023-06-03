@@ -1,0 +1,134 @@
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  nzTitle="Thanh toán"
+  (nzOnClose)="close()"
+  [nzWidth]="'80%'"
+  xmlns="http://www.w3.org/1999/html">
+  <ng-container *nzDrawerContent>
+    <form nz-form [formGroup]="form" [nzLayout]="'vertical'">
+      <div nz-row>
+        <div class="pr-5" nz-col nzSpan="8">
+          <nz-divider class="fw-bold fs-5" nzText="Thông tin nhận hàng"></nz-divider>
+          <nz-form-item>
+            <nz-form-label>Email</nz-form-label>
+            <nz-form-control nzErrorTip="Email không đúng định dạng">
+              <input nz-input formControlName="email" placeholder="Nhập email"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Họ và tên</nz-form-label>
+            <nz-form-control nzErrorTip="Họ và tên không được để trống">
+              <input nz-input formControlName="name" placeholder="Nhập họ và tên"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Số điện thoại</nz-form-label>
+            <nz-form-control nzErrorTip="Số điện thoại trống hoặc không hợp lệ">
+              <input nz-input formControlName="sdt" placeholder="Nhập số điện thoại"/>
+            </nz-form-control>
+          </nz-form-item>
+<!--          <nz-form-item>-->
+<!--            <nz-form-label [nzRequired]="true">Tỉnh thành</nz-form-label>-->
+<!--            <nz-form-control nzErrorTip="Tỉnh thành không được để trống">-->
+<!--              <input nz-input formControlName="province" placeholder="Nhập tỉnh thành"/>-->
+<!--            </nz-form-control>-->
+<!--          </nz-form-item>-->
+<!--          <nz-form-item>-->
+<!--            <nz-form-label [nzRequired]="true">Quận/huyện</nz-form-label>-->
+<!--            <nz-form-control nzErrorTip="Quận/huyện không được để trống">-->
+<!--              <input nz-input formControlName="district" placeholder="Nhập quận/huyện"/>-->
+<!--            </nz-form-control>-->
+<!--          </nz-form-item>-->
+<!--          <nz-form-item>-->
+<!--            <nz-form-label [nzRequired]="true">Phường/Xã</nz-form-label>-->
+<!--            <nz-form-control nzErrorTip="Phường/Xã không được để trống">-->
+<!--              <input nz-input formControlName="ward" placeholder="Nhập phường/Xã"/>-->
+<!--            </nz-form-control>-->
+<!--          </nz-form-item>-->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Địa chỉ</nz-form-label>
+            <nz-form-control nzErrorTip="Địa chỉ không được để trống">
+              <input nz-input formControlName="address" placeholder="Nhập địa chỉ"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Tùy chọn</nz-form-label>
+            <nz-form-control>
+              <textarea nz-input formControlName="option" placeholder="Nhập tùy chọn">
+              </textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="pr-5" nz-col nzSpan="8">
+          <nz-divider class="fw-bold fs-5" nzText="Vận chuyển"></nz-divider>
+          <div *ngIf="form.get('address')?.invalid; then notAddress else haveAddress">
+          </div>
+          <ng-template #notAddress>
+            <div class="d-flex justify-content-center">
+              <button nz-button nzType="primary" nzDanger >Mời nhập đầy đủ thông tin giao hàng</button>
+            </div>
+          </ng-template>
+          <ng-template #haveAddress>
+            <div class="justify-content-sm-between d-flex">
+              <label class="fs-6 fw-bold" nz-radio formControlName="ship">Giao hàng tận nơi</label>
+              <label class="fs-6 fw-bold">25.000vnđ</label>
+            </div>
+          </ng-template>
+          <nz-divider class="mt-5 fw-bold fs-5" nzText="Thanh toán"></nz-divider>
+          <nz-radio-group class="d-flex flex-column" formControlName="payments">
+            <label  class="fs-6 fw-bold pb-4" nz-radio nzValue="normal">Thanh toán khi nhận hàng</label>
+            <div class="d-flex justify-content-sm-between">
+              <label class="fs-6 fw-bold" nz-radio nzValue="eWallet">Ví điện tử</label>
+              <span class="fs-4" nz-icon nzType="wallet" nzTheme="twotone"></span>
+            </div>
+            <label class="pt-2 text-danger" *ngIf="form.get('payments')!.errors">Vui lòng chọn phương thức thanh toán</label>
+          </nz-radio-group>
+        </div>
+        <div class="pr-5" nz-col nzSpan="8">
+          <nz-divider class="fw-bold fs-5" nzText="Đơn hàng"></nz-divider>
+          <div *ngIf="(productPayment.length !== 0 )">
+            <nz-table class="pb-5" nzShowPagination="false" #basicTable [nzData]="productPayment">
+              <thead>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of productPayment; index as i">
+                <td style="width: 5%">{{i+1}}</td>
+                <td class="fw-bold" style="width: auto">
+                    <label class="fw-bold">{{data.name}}</label>
+                </td>
+                <td class="fw-bold" style="width: 5%">
+                  <label class="fw-bold">{{data.quantity}}</label>
+                </td>
+                <td style="width: 10%">
+                  <div class="text-right">
+                    <label>{{data.price.toString() + unit}}</label>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </nz-table>
+            <div class="d-flex justify-content-sm-between">
+              <label class="fs-6">Tạm tính</label>
+              <label class="fs-6">{{totalMoney + unit}}</label>
+            </div>
+            <div class="d-flex justify-content-sm-between">
+              <label class="fs-6">Phí giao dịch</label>
+              <label class="fs-6">25{{unit}}</label>
+            </div>
+            <nz-divider class="mt-2 mb-2"></nz-divider>
+            <div class="d-flex justify-content-sm-between">
+              <label class="fs-5 color-primary">Tổng cộng</label>
+              <label class="fs-5 color-primary">{{ getSum(totalMoney, 25) + unit}}</label>
+            </div>
+            <div class="d-flex justify-content-sm-between align-items-center">
+              <a style="color: blue !important; text-decoration: revert;" routerLink="./all-product" (click)="close()"><span class="fs-5" nz-icon nzType="rollback" nzTheme="outline"></span>Quay lại mua hàng</a>
+              <button class="color-white" (click)="payment()">Đặt hàng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-drawer>

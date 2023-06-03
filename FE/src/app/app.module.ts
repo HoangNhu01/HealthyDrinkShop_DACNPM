@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {Injectable, NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {NZ_I18N} from 'ng-zorro-antd/i18n';
+import {en_US} from 'ng-zorro-antd/i18n';
+import {registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IconsProviderModule } from './icons-provider.module';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {IconsProviderModule} from './icons-provider.module';
+import {NzLayoutModule} from 'ng-zorro-antd/layout';
+import {NzMenuModule} from 'ng-zorro-antd/menu';
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {HeaderComponent} from "./routes/header/header.component";
@@ -39,8 +39,20 @@ import {NzCommentModule} from "ng-zorro-antd/comment";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzBackTopModule} from "ng-zorro-antd/back-top";
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
+import {PaymentsComponent} from "./routes/payments/payments.component";
+import {NzModalModule} from "ng-zorro-antd/modal";
+import {NotFoundComponent} from "./routes/not-found/not-found.component";
+import {NzBadgeModule} from "ng-zorro-antd/badge";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 
 registerLocaleData(en);
+
+@Injectable({
+  providedIn: 'root',
+})
 
 @NgModule({
   declarations: [
@@ -55,36 +67,47 @@ registerLocaleData(en);
     DetailProductComponent,
     AllProductComponent,
     AccountComponent,
-    CartComponent
+    CartComponent,
+    PaymentsComponent,
+    NotFoundComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    IconsProviderModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzButtonModule,
-    NzDropDownModule,
-    NzSpinModule,
-    NzDrawerModule,
-    NzDividerModule,
-    NzCardModule,
-    NzAvatarModule,
-    NzSkeletonModule,
-    NzInputModule,
-    NzTableModule,
-    NzInputNumberModule,
-    NzCommentModule,
-    NzFormModule,
-    NzListModule,
-    NzBackTopModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        IconsProviderModule,
+        NzLayoutModule,
+        NzMenuModule,
+        NzButtonModule,
+        NzDropDownModule,
+        NzSpinModule,
+        NzDrawerModule,
+        NzDividerModule,
+        NzCardModule,
+        NzAvatarModule,
+        NzSkeletonModule,
+        NzInputModule,
+        NzTableModule,
+        NzInputNumberModule,
+        NzCommentModule,
+        NzFormModule,
+        NzListModule,
+        NzBackTopModule,
+        ReactiveFormsModule,
+        NzCheckboxModule,
+        NzMessageModule,
+        NzModalModule,
+        NzBadgeModule,
+        NzRadioModule,
+    ],
   providers: [
-    { provide: NZ_I18N, useValue: en_US }
+    {provide: NZ_I18N, useValue: en_US},
+    JwtHelperService,
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

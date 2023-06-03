@@ -38,6 +38,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   detailProduct : any = {}
   quantity = 1;
   urlImage: string = './assets/product/';
+  unit = environment.unitMoney;
   constructor(
     private route: ActivatedRoute,
     protected productService: ProductService
@@ -61,7 +62,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
 
   addToCart(data: any, quantity: number) {
     data.quantity = quantity;
-    this.cart.product.next(data);
-    this.cart.openCart();
+    this.cart.openCart(data);
   }
 }

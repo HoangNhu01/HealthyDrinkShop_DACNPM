@@ -19,4 +19,20 @@ export class ProductService {
     const url = environment.urlAPI + 'api/Products/' + id + `/${langId}`;
     return this.http.get(url);
   }
+  addProductToCart(id: string, langId: string, quantity: number){
+    const url = environment.urlAPI + 'api/Orders/' + id + `/${langId}` + '?clientQuantity=' + quantity;
+    return this.http.post(url, {});
+  }
+  getOrder() {
+    const url = environment.urlAPI + 'api/Orders/' ;
+    return this.http.get(url);
+  }
+  patchOrder(id: string, quantity: number) {
+    const url = environment.urlAPI + 'api/Orders/' + id + "/" + quantity ;
+    return this.http.patch(url, {});
+  }
+  login(body: any) {
+    const url = environment.urlAPI + 'api/Users/authenticate' ;
+    return this.http.post(url, body);
+  }
 }
