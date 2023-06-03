@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Data.Entities;
+using eShopSolution.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,16 @@ namespace eShopSolution.ViewModels.Catalog.Categories
         public string Name { get; set; }
 
         public int? ParentId { get; set; }
+
+        public string SeoDescription { set; get; }
+
+        public string SeoTitle { set; get; }
+
+        public string SeoAlias { get; set; }
+
+        public string LanguageId { set; get; }
+
+        public Status Status { set; get; }  
         [JsonIgnore]
         public virtual List<ProductInCategory> ProductInCategories { get; set; }
     }

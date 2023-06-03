@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eShopSolution.AdminApp.IpAddresss;
 using eShopSolution.Application.Catalog.Products;
+using eShopSolution.Application.Sales.Orders;
+using eShopSolution.Application.System.Users;
+using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.Utilities.Exceptions;
-using eShopSolution.WebApp.Models;
+using eShopSolution.ViewModels.Sales;
+using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace eShopSolution.BackendApi.Controllers
 {
@@ -19,22 +25,37 @@ namespace eShopSolution.BackendApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IMemoryCache _cache;
-        public OrdersController(IProductService productService, IMemoryCache cache)
+        private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
+        //private readonly IMemoryCache _cache;
+        private readonly IConnectionMultiplexer _redisConnection;
+        private readonly IIpAdrress _ipAdrress;
+
+
+        public OrdersController(IProductService productService, 
+                                IConnectionMultiplexer redisConnection,
+                                IUserService userService, IOrderService orderService,
+                                IIpAdrress ipAdrress)
         {
             _productService = productService;
-            _cache = cache;
+            //_cache = cache;
+            _redisConnection = redisConnection;
+            _userService = userService;
+            _orderService = orderService;
+            _ipAdrress = ipAdrress; 
         }
         [HttpPost("{id}/{languageId}")]
         public async Task<IActionResult> AddToCart(int id, string languageId, int clientQuantity)
         {
-            var product = await _productService.GetById(id, languageId);
-            var cartItems = _cache.Get<List<CartItemViewModel>>(SystemConstants.CartCaching) 
-                                        ?? new List<CartItemViewModel>();
-            //var session = HttpContext.Session.GetString(SystemConstants.CartSession);
-            //List<CartItemViewModel> currentCart = new List<CartItemViewModel>();
-            //if (session != null)
-            //    currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+            var product =  _productService.GetById(id, languageId).Result.ResultObj;
+            var ipAdd = _ipAdrress.GetLocalIPAddress();
+            string cartKey = $"cart:{ipAdd.ResultObj}";
+
+            IDatabase redisDb = _redisConnection.GetDatabase();
+            string cartJson = await redisDb.StringGetAsync(cartKey);
+
+            var cartItems = cartJson != null ? JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson) 
+                                          : new List<CartItemVm>();
 
             int quantity = clientQuantity;
             if (cartItems.Any(x => x.ProductId == id))
@@ -44,7 +65,7 @@ namespace eShopSolution.BackendApi.Controllers
                 cartItems.Remove(cart);
             }
 
-            var cartItem = new CartItemViewModel()
+            var cartItem = new CartItemVm()
             {
                 ProductId = id,
                 Description = product.Description,
@@ -53,18 +74,24 @@ namespace eShopSolution.BackendApi.Controllers
                 Price = product.Price,
                 Quantity = quantity
             };
-
             cartItems.Add(cartItem);
-            _cache.Set(SystemConstants.CartCaching, cartItems);
-
-            //HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(currentCart));
+            string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
+            await redisDb.StringSetAsync(cartKey, cartJsonConvert);
             return Ok(cartItems);
         }
-
+        
         [HttpPatch("{productId}/{quantity}")]
-        public IActionResult RemoveFromCart(int productId, int quantity)
+        public async Task<IActionResult> RemoveFromCart(int productId, int quantity)
         {
-            var cartItems = _cache.Get<List<CartItemViewModel>>(SystemConstants.CartCaching);
+            var useClaims = HttpContext.User.Identity.Name;
+            var ipAdd = _ipAdrress.GetLocalIPAddress();
+            string cartKey = $"cart:{ipAdd.ResultObj}";
+
+            IDatabase redisDb = _redisConnection.GetDatabase();
+            string cartJson = await redisDb.StringGetAsync(cartKey);
+
+            var cartItems = JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson);
+                                         
             if (cartItems == null)
             {
                 throw new EShopException("Dont have cart in cache memory");
@@ -81,19 +108,52 @@ namespace eShopSolution.BackendApi.Controllers
                     item.Quantity = quantity;
                 }
             }
-            _cache.Set(SystemConstants.CartCaching, cartItems);
+            string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
+            await redisDb.StringSetAsync(cartKey, cartJsonConvert);
             return Ok(cartItems);
         }
         [HttpGet]
-        public IActionResult ViewCart()
+        public async Task<IActionResult> ViewCart()
         {
-            // Get the cart items from the cache or return an empty cart
-            var cartItems = _cache.Get<List<CartItemViewModel>>(SystemConstants.CartCaching) ?? new List<CartItemViewModel>();
+            var useClaims = HttpContext.User.Identity.Name;
+            var ipAdd = _ipAdrress.GetLocalIPAddress();
+            string cartKey = $"cart:{ipAdd.ResultObj}";
+
+            IDatabase redisDb = _redisConnection.GetDatabase();
+            string cartJson = await redisDb.StringGetAsync(cartKey);
+
+            var cartItems = cartJson != null ? JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson)
+                                          : new List<CartItemVm>();
             return Ok(cartItems);
         }
+        [Authorize]
+        [HttpPut]
+        public IActionResult MergingCart()
+        {
 
-        //[HttpPost]
-        //[Authorize]
-        //public IActionResult CheckOut() { }
+            return Ok();
+        }
+        
+        [HttpPost("checkouts")]
+        public async Task<IActionResult> CheckOutCart([FromForm] CheckOutRequest checkOutRequest) 
+        {
+            var useClaims = HttpContext.User.Identity.Name;
+            var ipAdd = _ipAdrress.GetLocalIPAddress();
+            string cartKey = $"cart:{ipAdd.ResultObj}";
+
+            IDatabase redisDb = _redisConnection.GetDatabase();
+            string cartJson = await redisDb.StringGetAsync(cartKey);
+
+            var cartItems = JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson);
+            checkOutRequest.CartItems = cartItems;
+            var data = await _orderService.Create(checkOutRequest);
+            if (data.ResultObj > 0)
+            {
+                
+                await redisDb.StringGetDeleteAsync(cartKey);
+                return Ok(checkOutRequest);
+            }
+            return BadRequest();
+        }
     }
 }

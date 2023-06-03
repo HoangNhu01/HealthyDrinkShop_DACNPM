@@ -83,7 +83,7 @@ namespace eShopSolution.Application.Catalog.Products
                     }
                 }
             };
-            //Save image
+            
             if (request.ThumbnailImage != null)
             {
                 product.ProductImages = new List<ProductImage>()
@@ -162,7 +162,10 @@ namespace eShopSolution.Application.Catalog.Products
                     ViewCount = x.Product.ViewCount,
                     ProductInCategories = x.Product.ProductInCategories,
                     IngredientInProducts = x.Product.IngredientInProducts,
-                    ListImg = x.Product.ProductImages.Select(x => Convert.ToBase64String(x.Data)).ToList(),
+                    ThumbnailImage = x.Product.ProductImages != null ? Convert.ToBase64String(x.Product
+                                                                                               .ProductImages
+                                                                                               .FirstOrDefault(x => x.Data != null && x.IsDefault).Data)
+                                                                     : String.Empty,
                 }).ToListAsync();
 
             //4. Select and projection
@@ -179,7 +182,7 @@ namespace eShopSolution.Application.Catalog.Products
             return pagedResult;
         }
 
-        public async Task<ProductVm> GetById(int productId, string languageId)
+        public async Task<ApiResult<ProductVm>> GetById(int productId, string languageId)
         {
             var productTranslation = await _context.ProductTranslations.Include(x => x.Product)
                                                                        .ThenInclude(x => x.ProductInCategories)
@@ -188,6 +191,7 @@ namespace eShopSolution.Application.Catalog.Products
                                                                        .Include(x => x.Product)
                                                                        .ThenInclude(i => i.IngredientInProducts)
                                                                        .ThenInclude(x => x.Ingredient)
+                                                                       .Include(x => x.Product).ThenInclude(x=>x.ProductImages)
                                                                        .FirstOrDefaultAsync(x => x.ProductId == productId
                                                                                             && x.LanguageId == languageId);
 
@@ -207,9 +211,12 @@ namespace eShopSolution.Application.Catalog.Products
                 Stock = productTranslation.Product.Stock,
                 ViewCount = productTranslation.Product.ViewCount,
                 ProductInCategories = productTranslation.Product.ProductInCategories,
-                IngredientInProducts = productTranslation.Product.IngredientInProducts
-            };
-            return productViewModel;
+                IngredientInProducts = productTranslation.Product.IngredientInProducts,
+                ListImg = productTranslation.Product.ProductImages.Where(x => x.Data != null)
+                                                                     .Select(x => Convert.ToBase64String(x.Data))
+                                                                     .ToList()
+        };
+            return new ApiSuccessResult<ProductVm>(productViewModel);
         }
 
         public async Task<ProductImageVm> GetImageById(int imageId)
@@ -374,7 +381,7 @@ namespace eShopSolution.Application.Catalog.Products
             foreach (var item in request.Ingredients)
             {
                 var ingredientInProduct = await _context.IngredientInProducts
-                    .FirstOrDefaultAsync(x => x.ProductId == int.Parse(item.Id)
+                    .FirstOrDefaultAsync(x => x.IngredientId == int.Parse(item.Id)
                     && x.ProductId == id);
                 if (ingredientInProduct != null && item.Selected == false)
                 {
@@ -387,12 +394,9 @@ namespace eShopSolution.Application.Catalog.Products
                         IngredientId = int.Parse(item.Id),
                         ProductId = id
                     });
-                    var ingredientct = await _context.Ingredients.FindAsync(int.Parse(item.Id));
-                    ingredientct.Stock -= item.UpdateStock ?? 0;
-                    _context.Ingredients.Update(ingredientct);
                 }
             }
-            await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
             
             return new ApiSuccessResult<bool>();
         }

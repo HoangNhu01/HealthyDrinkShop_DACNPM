@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eShopSolution.Data.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace eShopSolution.ViewModels.Catalog.ProductImages
 {
@@ -24,5 +26,8 @@ namespace eShopSolution.ViewModels.Catalog.ProductImages
         public long FileSize { get; set; }
 
         public byte[] Data { get; set; }
+
+        [JsonIgnore]        
+        public Product Product { get; set; }
     }
 }
