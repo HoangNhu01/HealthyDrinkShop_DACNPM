@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eShopSolution.ViewModels.Common;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,5 +21,10 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public string LanguageId { set; get; }
 
         public IFormFile ThumbnailImage { get; set; }
+
+        public IngredientAssignRequest SelectIngredients { set; get; } = new IngredientAssignRequest();
+
+        public CategoryAssignRequest SelectCategories { set; get; } = new CategoryAssignRequest();
+
     }
 }

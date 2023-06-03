@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using eShopSolution.Data.Entities;
@@ -9,6 +10,10 @@ namespace eShopSolution.ViewModels.Catalog.Products
 {
     public class ProductVm
     {
+        public ProductVm()
+        {
+            
+        }
         public int Id { set; get; }
         public decimal Price { set; get; }
         public decimal OriginalPrice { set; get; }
