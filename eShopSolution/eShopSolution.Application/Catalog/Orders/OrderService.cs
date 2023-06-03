@@ -1,0 +1,99 @@
+﻿using eShopSolution.Data.EF;
+using eShopSolution.Data.Entities;
+using eShopSolution.Utilities.Exceptions;
+using eShopSolution.ViewModels.Catalog.Categories;
+using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.Sales;
+using eShopSolution.ViewModels.System.Users;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eShopSolution.Application.Sales.Orders
+{
+    public class OrderService : IOrderService
+    {
+        private readonly EShopDbContext _context;
+
+        public OrderService(EShopDbContext context)
+        {
+            _context = context;
+        }
+        public async Task<ApiResult<int>> Create(CheckOutRequest request)
+        {
+            var newOrder = new Order()
+            {
+                UserId = request.UserId,
+                OrderDate = DateTime.Now,
+                ShipAddress = request.Adđress,
+                ShipEmail = request.Email,
+                ShipPhoneNumber = request.PhoneNumber,
+                ShipName = request.UserName,
+                Status = (Data.Enums.OrderStatus)1,
+                OrderDetails = new List<OrderDetail>(),
+                
+            };
+            newOrder.OrderDetails = request.CartItems.Select(x => new OrderDetail()
+            {
+                Price = x.Price,
+                ProductId = x.ProductId,
+                Quantity = x.Quantity,
+            }).ToList();
+            _context.Orders.Add(newOrder);
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<int>()
+            {
+                ResultObj = newOrder.Id
+            };
+        }
+
+        public async Task<ApiResult<List<OrderVm>>> GetAll(string userName, Guid id)
+        {
+            var order = await _context.Orders/*.Include(x => x.OrderDetails)*/
+                                             .Where(x => x.ShipName.Contains(userName?? "") || x.UserId == id)
+                                             .Select(x => new OrderVm()
+                                               {
+                                                   UserId = x.UserId,
+                                                   OrderDate = x.OrderDate,
+                                                   ShipAddress = x.ShipAddress,
+                                                   ShipEmail =x.ShipEmail,
+                                                   ShipPhoneNumber = x.ShipPhoneNumber,
+                                                   ShipName = x.ShipName,
+                                                   OrderStatus = x.Status,
+                                                   
+                                               }).ToListAsync();
+
+            return new ApiSuccessResult<List<OrderVm>>()
+            {
+                ResultObj = order
+            };
+            
+        }
+
+        public async Task<ApiResult<OrderVm>> GetById(int id)
+        {
+            var order = await _context.Orders.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.Id == id);
+            if (order == null)
+                throw new EShopException($"Can not find order by {id}");
+            return new ApiSuccessResult<OrderVm>()
+            {
+                ResultObj = new OrderVm()
+                {
+                    UserId = order.UserId,
+                    OrderDate = order.OrderDate,
+                    ShipAddress = order.ShipAddress,
+                    ShipEmail = order.ShipEmail,
+                    ShipPhoneNumber = order.ShipPhoneNumber,
+                    ShipName = order.ShipName,
+                    OrderStatus = order.Status,
+                    OrderDetails = order.OrderDetails
+                }
+            };
+        }
+
+        
+    }
+}

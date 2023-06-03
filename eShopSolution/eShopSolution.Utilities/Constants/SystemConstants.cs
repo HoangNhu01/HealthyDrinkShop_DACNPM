@@ -7,7 +7,8 @@ namespace eShopSolution.Utilities.Constants
     public class SystemConstants
     {
         public const string MainConnectionString = "eShopSolutionDb";
-        public const string CartCaching = "CartSession";
+
+        public const string CacheConnectionString = "Redis";
         public class AppSettings
         {
             public const string DefaultLanguageId = "DefaultLanguageId";
