@@ -51,7 +51,7 @@ namespace eShopSolution.Application.Catalog.Categories
         public async Task<int> Delete(int categoryId)
         {
             var category = await _context.Categories.FindAsync(categoryId);
-            if (category == null) throw new EShopException($"Cannot find a product: {categoryId}");
+            if (category == null) throw new EShopException($"Cannot find a category: {categoryId}");
             _context.Categories.Remove(category);
             return await _context.SaveChangesAsync();
         }
@@ -74,6 +74,9 @@ namespace eShopSolution.Application.Catalog.Categories
                     SeoDescription = x.SeoDescription,
                     SeoTitle= x.SeoTitle,
                     Status = x.Category.Status,
+                    SortOrder = x.Category.SortOrder,
+                    LanguageId = languageId,
+
                 }).ToListAsync()
             };
         }
@@ -93,6 +96,10 @@ namespace eShopSolution.Application.Catalog.Categories
                 {
                     Id = query.Id,
                     Name = query.Name,
+                    SeoDescription= query.SeoDescription,
+                    SeoTitle = query.SeoTitle,
+                    Status = query.Category.Status,
+                    SortOrder= query.Category.SortOrder,
                     ParentId = query.Category.ParentId,
                     ProductInCategories = query.Category.ProductInCategories                   
                 }

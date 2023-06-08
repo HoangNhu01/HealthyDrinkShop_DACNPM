@@ -47,7 +47,7 @@ namespace eShopSolution.AdminApp.Services
             }
             return JsonConvert.DeserializeObject<TResponse>(body);
         }
-        public async Task<bool> Delete(string url)
+        public async Task<ApiResult<bool>> Delete(string url)
         {
             var sessions = _httpContextAccessor
                .HttpContext
@@ -60,9 +60,9 @@ namespace eShopSolution.AdminApp.Services
             var response = await client.DeleteAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return new ApiSuccessResult<bool>();
             }
-            return false;
+            return new ApiErrorResult<bool>(response.Content.ToString());
         }
     }
 }

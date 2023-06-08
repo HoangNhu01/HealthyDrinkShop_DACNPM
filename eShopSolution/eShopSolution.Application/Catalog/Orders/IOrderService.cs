@@ -1,4 +1,5 @@
-﻿using eShopSolution.ViewModels.Catalog.Categories;
+﻿using eShopSolution.Data.Enums;
+using eShopSolution.ViewModels.Catalog.Categories;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.Sales;
 using System;
@@ -15,6 +16,11 @@ namespace eShopSolution.Application.Sales.Orders
         Task<ApiResult<OrderVm>> GetById(int id);
 
         Task<ApiResult<int>> Create(CheckOutRequest request);
+
+        Task<ApiResult<int>> UpdateStatus(int orderId, OrderStatus orderStatus);
+
+        Task<ApiResult<bool>> Delete(int orderId);
+
 
     }
 }

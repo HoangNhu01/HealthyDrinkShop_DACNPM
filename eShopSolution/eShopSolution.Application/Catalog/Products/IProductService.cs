@@ -21,6 +21,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<bool> UpdateStock(int productId, int addedQuantity);
 
+        Task<bool> UpdateFeature(int productId, bool isFeature);
         Task AddViewcount(int productId);
 
         Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request);

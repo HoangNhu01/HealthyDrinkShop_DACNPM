@@ -1,7 +1,9 @@
 ﻿using eShopSolution.Utilities.Constants;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -30,7 +32,7 @@ namespace eShopSolution.AdminApp.Services
             _httpContextAccessor = httpContextAccessor; 
             
         }
-        public async Task<bool> CreateProduct(ProductCreateRequest request)
+        public async Task<ApiResult<ProductVm>> CreateProduct(ProductCreateRequest request)
         {
             var sessions = _httpContextAccessor
                 .HttpContext
@@ -55,7 +57,7 @@ namespace eShopSolution.AdminApp.Services
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "thumbnailImage", request.ThumbnailImage.FileName);
             }
-
+           
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
             requestContent.Add(new StringContent(request.OriginalPrice.ToString()), "originalPrice");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
@@ -69,15 +71,26 @@ namespace eShopSolution.AdminApp.Services
             requestContent.Add(new StringContent(languageId), "languageId");
 
             var response = await client.PostAsync($"/api/products/", requestContent);
-            return response.IsSuccessStatusCode;
+            if(response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+
+                var product = JsonConvert.DeserializeObject<ProductVm>(result);
+                return new ApiSuccessResult<ProductVm>(product);
+            }
+            else
+            {
+                return new ApiErrorResult<ProductVm>();
+            }
+
         }
         public async Task<ApiResult<PagedResult<ProductVm>>> GetPagings(GetManageProductPagingRequest request)
         {
-            var cate = request.CategoryIds.Count > 0 ? $"&CategoryIds={request.CategoryIds.First().ToString()}" : "";
+            var category = request.CategoryIds.Count > 0 ? $"&CategoryIds={request.CategoryIds.First().ToString()}" : "";
             var data = await GetAsync<ApiResult<PagedResult<ProductVm>>>(
                 $"/api/products/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
-                cate +
+                category +
                 $"&keyword={request.Keyword}&languageId={request.LanguageId}");
 
             return data;
@@ -109,6 +122,7 @@ namespace eShopSolution.AdminApp.Services
             }
 
             //requestContent.Add(new StringContent(request.Id.ToString()), "id");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Id.ToString()) ? "" : request.Id.ToString()), "id");
 
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
@@ -119,7 +133,7 @@ namespace eShopSolution.AdminApp.Services
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
             requestContent.Add(new StringContent(languageId), "languageId");
 
-            var response = await client.PutAsync($"/api/products/" + request.Id, requestContent);
+            var response = await client.PutAsync($"/api/products", requestContent);
             return response.IsSuccessStatusCode;
         }
 
@@ -162,16 +176,50 @@ namespace eShopSolution.AdminApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
 
-        public async Task<ProductVm> GetById(int id, string languageId)
+        public async Task<ApiResult<ProductVm>> GetById(int id, string languageId)
         {
-            var data = await GetAsync<ProductVm>($"/api/products/{id}/{languageId}");
+            var data = await GetAsync<ApiResult<ProductVm>>($"/api/products/{id}/{languageId}");
 
             return data;
         }
 
-        public async Task<bool> DeleteProduct(int id)
+        public async Task<ApiResult<bool>> DeleteProduct(int id)
         {
-            return await Delete($"/api/products/" + id);
+            var result = await Delete($"/api/products/" + id);
+            return result;
+        }
+
+        public async Task<bool> AddImage(int id, ProductImageCreateRequest request)
+        {
+            var sessions = _httpContextAccessor
+                .HttpContext
+                .Session
+                .GetString(SystemConstants.AppSettings.Token);
+
+            var languageId = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.ImageFile != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ImageFile.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ImageFile.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "imageFile", request.ImageFile.FileName);
+            }
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.IsDefault.ToString()) ? "" : request.IsDefault.ToString()), "isDefault");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SortOrder.ToString()) ? "" : request.SortOrder.ToString()), "sortOrder");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Caption) ? "" : request.Caption.ToString()), "caption");
+
+            var response = await client.PostAsync($"/api/products/{id}/images", requestContent);
+            return response.IsSuccessStatusCode;
         }
     }
 }

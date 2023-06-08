@@ -23,6 +23,10 @@ namespace eShopSolution.Data.Configurations
 
             builder.Property(x => x.ShipAddress).IsRequired().HasMaxLength(200);
 
+            builder.Property(x => x.TotalPrice);
+
+            builder.Property(x => x.PaymentStatus);
+
 
             builder.Property(x => x.ShipName).IsRequired().HasMaxLength(200);
 

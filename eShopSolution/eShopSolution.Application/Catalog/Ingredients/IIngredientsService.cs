@@ -12,5 +12,11 @@ namespace eShopSolution.Application.Catalog.Ingredients
         Task<ApiResult<List<IngredientVm>>> GetAll();
 
         Task<ApiResult<IngredientVm>> GetById(int id);
+
+        Task<int> DeleteIngredient(int ingredientId);
+
+        Task<ApiResult<bool>> UpdateIngredient(IngredienUpdateRequest request);
+
+        Task<ApiResult<int>> CreateIngredient(IngredientCreateRequest request);
     }
 }
