@@ -15,6 +15,7 @@ namespace eShopSolution.ViewModels.Catalog.Ingredients
         public string Description { get; set; }
         
         public int Stock { get; set; }
+        public decimal Price { get; set; }
         [JsonIgnore] 
         public virtual List<IngredientInProduct> IngredientInProducts { get; set; }
     }

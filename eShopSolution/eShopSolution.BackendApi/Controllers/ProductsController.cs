@@ -2,6 +2,7 @@
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace eShopSolution.BackendApi.Controllers
     //api/products
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("corspolicy")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -80,6 +82,15 @@ namespace eShopSolution.BackendApi.Controllers
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
+            if (isSuccessful)
+                return Ok();
+
+            return BadRequest();
+        }
+        [HttpPut("{productId}/{isFeature}")]
+        public async Task<IActionResult> UpdateFeature(int productId, bool isFeature)
+        {
+            var isSuccessful = await _productService.UpdateFeature(productId, isFeature);
             if (isSuccessful)
                 return Ok();
 

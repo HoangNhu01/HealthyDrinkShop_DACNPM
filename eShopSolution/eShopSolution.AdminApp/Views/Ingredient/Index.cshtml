@@ -1,0 +1,110 @@
+﻿@model IEnumerable<eShopSolution.ViewModels.Catalog.Ingredients.IngredientVm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .table-responsive {
+        padding: 0 20px 20px 20px;
+    }
+</style>
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+<div class="container-fluid">
+    <h1 class="mt-4">Danh sách sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+    </ol>
+<div class="card mb-12">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-outline-success" asp-action="Create" asp-controller="Ingredient">Tạo mới</a>
+            </div>
+            @* <div class="col-md-6 col-xs-12">
+            <form asp-action="Index" method="get">
+            <div class="row">
+            <div class="col-md-9">
+            <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+            </div>
+            <div class="cold-md-3">
+            <button type="submit" class="btn btn-primary">Tìm</button>
+            <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-dark">Reset</button>
+            </div>
+            </div>
+            </form>
+            </div>*@
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            @if (ViewBag.SuccessMsg != null)
+            {
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+        </div>
+    </div>
+    <div class="table-responsive bi-filetype-ht ">
+    <table class="table datatable table-hover">
+    <thead>
+        <tr>
+           <th scope="col">
+                #
+            </th>
+           <th scope="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+           <th scope="col">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+           <th scope="col">
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+           <th scope="col">
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+           <th scope="col">
+               Action
+           </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price) 
+                <span>
+                    /kg
+                </span>
+            </td>
+            <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id },new {@class = "btn btn-outline-primary"})
+                    @Html.ActionLink("Xem", "Detail", new { id = item.Id },new {@class = "btn btn-outline-info"})
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new {@class = "btn btn-outline-danger"})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+    </div>
+</div>
+</div>

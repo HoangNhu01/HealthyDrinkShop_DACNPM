@@ -1,0 +1,278 @@
+﻿@model eShopSolution.ViewModels.Catalog.Products.ProductVm
+
+@{
+    ViewData["Title"] = "Detail";
+}
+  <style>
+            .container {
+            background: #fff !important;
+            border: none;
+            border-radius: none
+        }
+
+        .abc {
+            padding-left: 40px
+        }
+
+        .pqr {
+            padding-right: 70px;
+            padding-top: 14px
+        }
+
+        .para {
+            float: right;
+            margin-right: 0;
+            padding-left: 80%;
+            top: 0
+        }
+
+        .fa-star {
+            color: yellow
+        }
+
+        li {
+            list-style: none;
+            line-height: 50px;
+            color: #000
+        }
+
+        .col-md-2 {
+            padding-bottom: 20px;
+            font-weight: bold
+        }
+
+        .col-md-2 a {
+            text-decoration: none;
+            color: #000
+        }
+
+        .col-md-2.mio {
+            font-size: 12px;
+            padding-top: 7px
+        }
+
+        .des::after {
+            content: '.';
+            font-size: 0;
+            display: block;
+            border-radius: 20px;
+            height: 6px;
+            width: 55%;
+            background: yellow;
+            margin: 14px 0
+        }
+
+        .r4 {
+            padding-left: 25px
+        }
+
+        .btn-outline-warning {
+            border-radius: 0;
+            border: 2px solid yellow;
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
+            width: 70%
+        }
+        .row.r1 {
+            JUSTIFY-CONTENT: space-around;
+        }
+
+        @@media screen and (max-width: 620px) {
+            .container {
+                width: 98%;
+                display: flex;
+                flex-flow: column;
+                text-align: center
+            }
+
+            .des::after {
+                content: '.';
+                font-size: 0;
+                display: block;
+                border-radius: 20px;
+                height: 6px;
+                width: 35%;
+                background: yellow;
+                margin: 10px auto
+            }
+
+            .pqr {
+                text-align: center;
+                margin: 0 30px
+            }
+
+            .para {
+                text-align: center;
+                padding-left: 90px;
+                padding-top: 10px
+            }
+
+            .klo {
+                display: flex;
+                text-align: center;
+                margin: 0 auto;
+                margin-right: 40px
+            }
+            
+        }
+  </style>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<div class="container-fluid">
+    <h1 class="mt-4">Chi tiết sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item">Danh sách sản phẩm</li>
+        <li class="breadcrumb-item active">Cập nhật sản phẩm</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Product">Về danh sách</a>
+        </div>
+        <div class="card-body">
+        
+        <div class="container-body mt-4">
+            <div class="row r1">
+                <div class="col-md-6 klo">
+                    <dl class="row ">
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Id)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Id)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Price)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Price)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.OriginalPrice)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.OriginalPrice)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Stock)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.ViewCount)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.ViewCount)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.DateCreated)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.DateCreated)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Details)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.Details)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.SeoDescription)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.SeoDescription)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.SeoTitle)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.SeoTitle)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.SeoAlias)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.SeoAlias)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.LanguageId)
+                        </dt>
+                        <dd class="col-sm-6">
+                            @Html.DisplayFor(model => model.LanguageId)
+                        </dd>
+                       
+                    </dl>
+                </div>
+                <div class="col-md-5">
+                    
+                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    @for (int i = 0; i < Model.ListImg.Count; i++)
+                                    {
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="@(i)" class="@(i == 0 ? "active" :"")"></li>
+                                    }
+                                </ol>
+                                 <div class="carousel-inner">
+                                    @for (int i = 0; i < Model.ListImg.Count; i++)
+                                    {
+                               
+                                            <div class="carousel-item @(i == 0 ? "active" :"")">
+                                                <img style="
+                                                            width: 100%;
+                                                            height:90%;"
+                                                 src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ListImg[i])" class="d-block w-100" alt="Image @i" />
+                                            </div>
+
+                                    }
+                                 </div>
+
+                            @if(Model.ListImg.Count >1){
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                               }
+                            </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="footer d-flex flex-column mt-5">
+            <div class="row r4">
+                    <div class="col-md-2 myt des">
+                        @Html.ActionLink("Sửa", "Edit", new { id = Model.Id },new {@class = "btn btn-outline-primary"})
+                    </div>
+                <div class="col-md-2 myt "><a href="#">Review</a></div>
+                <div class="col-md-2 mio offset-md-4"><a href="#">ADD TO CART</a></div>
+                <div class="col-md-2 myt "><button type="button" class="btn btn-outline-warning"><a href="#">BUY NOW</a></button></div>
+            </div>
+        </div>
+    </div>
+ </div>
+<div>
+</div>
+</div>
+
+@*<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>*@

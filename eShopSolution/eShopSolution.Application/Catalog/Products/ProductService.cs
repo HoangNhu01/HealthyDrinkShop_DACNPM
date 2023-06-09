@@ -163,10 +163,9 @@ namespace eShopSolution.Application.Catalog.Products
                     ViewCount = x.Product.ViewCount,
                     ProductInCategories = x.Product.ProductInCategories,
                     IngredientInProducts = x.Product.IngredientInProducts,
-                    ThumbnailImage = x.Product.ProductImages != null ? Convert.ToBase64String(x.Product
-                                                                                               .ProductImages
-                                                                                               .FirstOrDefault(x => x.Data != null && x.IsDefault).Data)
-                                                                     : String.Empty,
+                    IsFeature = x.Product.IsFeatured,
+                    ThumbnailImage =x.Product.ProductImages.FirstOrDefault(x => x.Data != null && x.IsDefault).Data
+                                                                     
                 }).ToListAsync();
 
             //4. Select and projection
@@ -214,7 +213,7 @@ namespace eShopSolution.Application.Catalog.Products
                 ProductInCategories = productTranslation.Product.ProductInCategories,
                 IngredientInProducts = productTranslation.Product.IngredientInProducts,
                 ListImg = productTranslation.Product.ProductImages.Where(x => x.Data != null)
-                                                                     .Select(x => Convert.ToBase64String(x.Data))
+                                                                     .Select(x => x.Data)
                                                                      .ToList()
         };
             return new ApiSuccessResult<ProductVm>(productViewModel);
@@ -402,5 +401,13 @@ namespace eShopSolution.Application.Catalog.Products
             return new ApiSuccessResult<bool>();
         }
 
+        public async Task<bool> UpdateFeature(int productId, bool isFeature)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new EShopException($"Cannot find a product with id: {productId}");
+            product.IsFeatured = isFeature;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
