@@ -135,7 +135,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
         
         [HttpPost("checkouts")]
-        public async Task<IActionResult> CheckOutCart([FromForm] CheckOutRequest checkOutRequest) 
+        public async Task<IActionResult> CheckOutCart([FromBody] CheckOutRequest checkOutRequest) 
         {
             var useClaims = HttpContext.User.Identity.Name;
             var ipAdd = _ipAdrress.GetLocalIPAddress();

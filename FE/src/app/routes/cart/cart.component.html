@@ -18,7 +18,7 @@
           <label class="text-black fw-2 fs-4">Tổng tiền:</label>
           <label class="color-main text-black fw-2 fs-4">{{total + unit}}</label>
         </div>
-        <button (click)="payment()" class="w-100" style="background-color: #CE3C83" nzSize="large" nzType="primary"
+        <button [disabled]="total == 0" (click)="payment()" class="w-100" style="background-color: #CE3C83" nzSize="large" nzType="primary"
                 nz-button nzShape="round">Thanh toán
         </button>
       </div>

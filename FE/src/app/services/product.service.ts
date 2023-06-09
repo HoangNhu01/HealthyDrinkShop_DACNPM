@@ -35,4 +35,12 @@ export class ProductService {
     const url = environment.urlAPI + 'api/Users/authenticate' ;
     return this.http.post(url, body);
   }
+  payments(body: any) {
+    const url = environment.urlAPI + 'api/Orders/checkouts' ;
+    return this.http.post(url, body);
+  }
+  getProvinces() {
+    const url = 'https://provinces.open-api.vn/api/?depth=3' ;
+    return this.http.get(url);
+  }
 }

@@ -46,11 +46,11 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let getIdProcess =  this.route.params.pipe(take(1)).subscribe((res: any) => {
-      this.id = res.id ;
-      this.productService.getDetailProductById(this.id, environment.language).toPromise().then((res: any) => {
+    let getIdProcess =  this.route.params.pipe(take(1)).subscribe(async (res: any) => {
+      this.id = res.id;
+      await this.productService.getDetailProductById(this.id, environment.language).toPromise().then((res: any) => {
         if (res) {
-          this.detailProduct = res;
+          this.detailProduct = res.resultObj;
         }
       })
     })
@@ -63,5 +63,11 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   addToCart(data: any, quantity: number) {
     data.quantity = quantity;
     this.cart.openCart(data);
+  }
+
+  getImage(listBase64: any): string {
+    if (listBase64)
+      return `data:image/jpeg;base64, ${listBase64[0]} `;
+    else return this.emptyImage;
   }
 }

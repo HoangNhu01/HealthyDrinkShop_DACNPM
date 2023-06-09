@@ -29,24 +29,33 @@
               <input nz-input formControlName="sdt" placeholder="Nhập số điện thoại"/>
             </nz-form-control>
           </nz-form-item>
-<!--          <nz-form-item>-->
-<!--            <nz-form-label [nzRequired]="true">Tỉnh thành</nz-form-label>-->
-<!--            <nz-form-control nzErrorTip="Tỉnh thành không được để trống">-->
-<!--              <input nz-input formControlName="province" placeholder="Nhập tỉnh thành"/>-->
-<!--            </nz-form-control>-->
-<!--          </nz-form-item>-->
-<!--          <nz-form-item>-->
-<!--            <nz-form-label [nzRequired]="true">Quận/huyện</nz-form-label>-->
-<!--            <nz-form-control nzErrorTip="Quận/huyện không được để trống">-->
-<!--              <input nz-input formControlName="district" placeholder="Nhập quận/huyện"/>-->
-<!--            </nz-form-control>-->
-<!--          </nz-form-item>-->
-<!--          <nz-form-item>-->
-<!--            <nz-form-label [nzRequired]="true">Phường/Xã</nz-form-label>-->
-<!--            <nz-form-control nzErrorTip="Phường/Xã không được để trống">-->
-<!--              <input nz-input formControlName="ward" placeholder="Nhập phường/Xã"/>-->
-<!--            </nz-form-control>-->
-<!--          </nz-form-item>-->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Tỉnh/TP</nz-form-label>
+            <nz-form-control nzErrorTip="Tỉnh/TP không được để trống">
+              <nz-select (ngModelChange)="changeProvince($event)" formControlName="province" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Tỉnh/TP">
+                <nz-option *ngFor="let item of listProvince" [nzLabel]="item.name" [nzValue]="item.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Quận/Huyện</nz-form-label>
+            <nz-form-control nzErrorTip="Quận/Huyện không được để trống">
+              <nz-select (ngModelChange)="changeDistrict($event)"  formControlName="district" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Quận/Huyện">
+                <nz-option *ngFor="let item of listDistrict" [nzLabel]="item.name" [nzValue]="item.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Phường/Xã</nz-form-label>
+            <nz-form-control nzErrorTip="Phường/Xã không được để trống">
+              <nz-select formControlName="ward" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Phường/Xã">
+                <nz-option *ngFor="let item of listWard" [nzLabel]="item.name" [nzValue]="item.name"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
           <nz-form-item>
             <nz-form-label [nzRequired]="true">Địa chỉ</nz-form-label>
             <nz-form-control nzErrorTip="Địa chỉ không được để trống">
@@ -67,7 +76,7 @@
           </div>
           <ng-template #notAddress>
             <div class="d-flex justify-content-center">
-              <button nz-button nzType="primary" nzDanger >Mời nhập đầy đủ thông tin giao hàng</button>
+              <button nz-button nzType="primary" nzDanger>Mời nhập đầy đủ thông tin giao hàng</button>
             </div>
           </ng-template>
           <ng-template #haveAddress>
@@ -78,12 +87,13 @@
           </ng-template>
           <nz-divider class="mt-5 fw-bold fs-5" nzText="Thanh toán"></nz-divider>
           <nz-radio-group class="d-flex flex-column" formControlName="payments">
-            <label  class="fs-6 fw-bold pb-4" nz-radio nzValue="normal">Thanh toán khi nhận hàng</label>
+            <label class="fs-6 fw-bold pb-4" nz-radio nzValue="normal">Thanh toán khi nhận hàng</label>
             <div class="d-flex justify-content-sm-between">
               <label class="fs-6 fw-bold" nz-radio nzValue="eWallet">Ví điện tử</label>
               <span class="fs-4" nz-icon nzType="wallet" nzTheme="twotone"></span>
             </div>
-            <label class="pt-2 text-danger" *ngIf="form.get('payments')!.errors">Vui lòng chọn phương thức thanh toán</label>
+            <label class="pt-2 text-danger" *ngIf="form.get('payments')!.errors">Vui lòng chọn phương thức thanh
+              toán</label>
           </nz-radio-group>
         </div>
         <div class="pr-5" nz-col nzSpan="8">
@@ -94,9 +104,9 @@
               </thead>
               <tbody>
               <tr *ngFor="let data of productPayment; index as i">
-                <td style="width: 5%">{{i+1}}</td>
+                <td style="width: 5%">{{i + 1}}</td>
                 <td class="fw-bold" style="width: auto">
-                    <label class="fw-bold">{{data.name}}</label>
+                  <label class="fw-bold">{{data.name}}</label>
                 </td>
                 <td class="fw-bold" style="width: 5%">
                   <label class="fw-bold">{{data.quantity}}</label>
@@ -123,8 +133,10 @@
               <label class="fs-5 color-primary">{{ getSum(totalMoney, 25) + unit}}</label>
             </div>
             <div class="d-flex justify-content-sm-between align-items-center">
-              <a style="color: blue !important; text-decoration: revert;" routerLink="./all-product" (click)="close()"><span class="fs-5" nz-icon nzType="rollback" nzTheme="outline"></span>Quay lại mua hàng</a>
-              <button class="color-white" (click)="payment()">Đặt hàng</button>
+              <a style="color: blue !important; text-decoration: revert;" routerLink="/all-product"
+                 (click)="close()"><span class="fs-5" nz-icon nzType="rollback" nzTheme="outline"></span>Quay lại mua
+                hàng</a>
+              <button class="color-white" (click)="showConfirm()">Đặt hàng</button>
             </div>
           </div>
         </div>

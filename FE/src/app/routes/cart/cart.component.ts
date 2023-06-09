@@ -37,7 +37,6 @@ export class CartComponent implements AfterViewInit{
     this.visible = !this.visible;
   }
   openCart(data? : any) {
-    this.visible = true;
     if (data) {
       this.productService.addProductToCart(data.id, environment.language, data.quantity).toPromise().then((res) => {
         this.getOrderFromCart();
@@ -48,15 +47,17 @@ export class CartComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
   }
-  getOrderFromCart(): void {
-    this.productService.getOrder().toPromise().then((res: any) => {
+  async getOrderFromCart(): Promise<void> {
+    await this.productService.getOrder().toPromise().then((res: any) => {
       if (res) {
         this.listProductCarts = res;
         this.productPayments = res;
-        // this.header.updateCount(res.length());
         this.getTotal();
       }
-    });
+    })
+      .finally(() => {
+        this.visible = true;
+      });
   }
 
   getTotal(){
@@ -80,8 +81,6 @@ export class CartComponent implements AfterViewInit{
   }
 
   changeQuantiny(data: any, isRemoveProduct?: boolean, e?: any) {
-    // todo: cái này với getTotal nhiều bug vl
-    debugger
     const quantiny = (isRemoveProduct || e === 0) ? 0 : e;
     this.productService.patchOrder(data.productId, quantiny).toPromise().then((res: any) => {
       if (res) {

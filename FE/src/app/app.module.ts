@@ -47,6 +47,9 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import {NotFoundComponent} from "./routes/not-found/not-found.component";
 import {NzBadgeModule} from "ng-zorro-antd/badge";
 import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzSelectModule} from "ng-zorro-antd/select";
+import {AgmCoreModule} from "@agm/core";
+import {AboutUsComponent} from "./routes/about-us/about-us.component";
 
 registerLocaleData(en);
 
@@ -70,6 +73,7 @@ registerLocaleData(en);
     CartComponent,
     PaymentsComponent,
     NotFoundComponent,
+    AboutUsComponent
   ],
     imports: [
         BrowserModule,
@@ -101,6 +105,10 @@ registerLocaleData(en);
         NzModalModule,
         NzBadgeModule,
         NzRadioModule,
+        NzSelectModule,
+      AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyBS6lGj7CsMDE5O9bMEf3I3anmfn34OBlA'
+      })
     ],
   providers: [
     {provide: NZ_I18N, useValue: en_US},
