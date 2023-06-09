@@ -27,11 +27,12 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public string SeoDescription { set; get; }
         public string SeoTitle { set; get; }
 
+        public bool IsFeature { set; get; }
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
-        public string ThumbnailImage { set; get; } 
+        public byte[]? ThumbnailImage { set; get; } 
 
-        public List<string> ListImg { set; get; }
+        public List<byte[]>? ListImg { set; get; } = new List<byte[]>();
         [JsonIgnore]
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         [JsonIgnore]

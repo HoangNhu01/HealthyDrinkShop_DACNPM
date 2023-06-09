@@ -19,60 +19,94 @@
             });
     </script>
 }
-<div class="container-fluid">
-    <h1 class="mt-4">Cập nhật sản phẩm</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Cập nhật sản phẩm</li>
-    </ol>
-    <div class="card mb-4">
-        <div class="card-header">
-            <a class="btn btn-success" asp-action="Index" asp-controller="User">Về danh sách</a>
-        </div>
+    <div class="container-fluid">
+        <h1 class="mt-4">Cập nhâp sản phẩm</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">Danh sách sản phẩm</li>
+            <li class="breadcrumb-item active">Cập nhật sản phẩm</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a class="btn btn-success" asp-action="Index" asp-controller="Product">Về danh sách</a>
+            </div>
 
-        <div class="card-body">
-            <div class="col-md-8">
-                <form asp-action="Edit" enctype="multipart/form-data" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" />
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
+            <div class="card-body">
+                <div class="col-md-4">
+                    <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="row mb-3">
+                            <label asp-for="Id" class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Id" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label asp-for="Name" class="col-sm-2 col-form-label" >Name</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Name" type="text" class="form-control">
+                            </div>
+                            <span asp-validation-for="Name" class="text-danger"></span>
 
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label"></label>
-                        <textarea asp-for="Description" rows="5" class="form-control"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="row mb-3">
+                            <label asp-for="Description" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+                            </div>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+
+                        </div>
+                        <div class="row mb-3">
+                            <label asp-for="Price" class="col-sm-2 col-form-label">Price</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Price" type="number" class="form-control">
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="SeoDescription" class="col-sm-2 col-form-label">SeoDescription</label>
+                            <div class="col-sm-10">
+                                <input asp-for="SeoDescription" type="text" class="form-control">
+                            </div>
+                            <span asp-validation-for="SeoDescription" class="text-danger"></span>
+
+                        </div>
+                        <div class="row mb-3">
+                            <label asp-for="SeoTitle" class="col-sm-2 col-form-label">SeoTitle</label>
+                            <div class="col-sm-10">
+                                <input asp-for="SeoTitle" type="text" class="form-control">
+                            </div>
+                            <span asp-validation-for="SeoTitle" class="text-danger"></span>
+
+                        </div>
+                        <div class="row mb-3">
+                            <label asp-for="SeoAlias" class="col-sm-2 col-form-label">SeoAlias</label>
+                            <div class="col-sm-10">
+                                <input asp-for="SeoAlias" type="text" class="form-control">
+                            </div>
+                            <span asp-validation-for="SeoAlias" class="text-danger"></span>
+
+                        </div>
+                        <div class="row mb-3">
+                            <label asp-for="Details" class="col-sm-2 col-form-label">Details</label>
+                            <div class="col-sm-10">
+                                <textarea id="txt_details" asp-for="Details" rows="35" class="form-control"></textarea>
+                            </div>
+                            <span asp-validation-for="Details" class="text-danger"></span>
+
+                        </div>
+                        
+                    <div class="row mb-3">
+                        <label asp-for="ThumbnailImage" class="col-sm-2 col-form-label">Image Upload</label>
+                        <div class="col-sm-10">
+                            <input asp-for="ThumbnailImage" class="form-control" type="file" id="formFile" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Details" class="control-label"></label>
-                        <textarea id="txt_details" asp-for="Details" rows="35" class="form-control"></textarea>
-                        <span asp-validation-for="Details" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SeoDescription" class="control-label"></label>
-                        <input asp-for="SeoDescription" class="form-control" />
-                        <span asp-validation-for="SeoDescription" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SeoTitle" class="control-label"></label>
-                        <input asp-for="SeoTitle" class="form-control" />
-                        <span asp-validation-for="SeoTitle" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SeoAlias" class="control-label"></label>
-                        <input asp-for="SeoAlias" class="form-control" />
-                        <span asp-validation-for="SeoAlias" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ThumbnailImage" class="control-label"></label>
-                        <input asp-for="ThumbnailImage" type="file" class="form-control" />
-                        <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                        <input type="submit" value="Lưu lại" class="btn btn-primary" />
                     </div>
                 </form>
             </div>

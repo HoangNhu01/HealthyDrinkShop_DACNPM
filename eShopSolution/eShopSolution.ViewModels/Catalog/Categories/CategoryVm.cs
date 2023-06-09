@@ -21,6 +21,7 @@ namespace eShopSolution.ViewModels.Catalog.Categories
 
         public string SeoAlias { get; set; }
 
+        public int SortOrder { set; get; }
         public string LanguageId { set; get; }
 
         public Status Status { set; get; }  

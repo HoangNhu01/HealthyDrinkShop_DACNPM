@@ -117,7 +117,9 @@ namespace eShopSolution.BackendApi
                 options.AddPolicy("corspolicy",
                     policy =>
                     {
-                        policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+                        policy.WithOrigins("*").AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
                     });
             });
             services.AddAuthentication(opt =>

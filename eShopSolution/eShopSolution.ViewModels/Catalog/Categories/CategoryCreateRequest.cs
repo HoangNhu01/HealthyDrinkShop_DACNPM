@@ -19,8 +19,7 @@ namespace eShopSolution.ViewModels.Catalog.Categories
 
         public int? ParentId { get; set; }
 
-        public int SortOrder { get; set; }
-
+        public int SortOrder { set; get; }
         public Status Status { get; set; }
 
         public string SeoAlias { get; set; }

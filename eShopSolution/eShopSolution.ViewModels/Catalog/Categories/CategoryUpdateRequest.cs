@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eShopSolution.Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,5 +20,10 @@ namespace eShopSolution.ViewModels.Catalog.Categories
         public string LanguageId { set; get; }
 
         public int? ParentId { set; get; }
+
+        public int SortOrder { set; get; }
+        public Status Status { get; set; }
+
+
     }
 }

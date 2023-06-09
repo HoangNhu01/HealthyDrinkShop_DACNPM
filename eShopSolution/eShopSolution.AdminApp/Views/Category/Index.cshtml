@@ -1,0 +1,91 @@
+﻿@model IEnumerable<eShopSolution.ViewModels.Catalog.Categories.CategoryVm>
+
+@{
+    ViewData["Title"] = "Danh mục Sản phảm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Scripts{
+    <script>
+		
+    </script>
+}
+
+    <div class="container-fluid">
+        <div class="pagetitle">
+            <h1>Danh mục sản phẩm</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Sản phẩm</li>
+                    <li class="breadcrumb-item active">Danh mục sản phẩm</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="card mb-12">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <a class="btn btn-outline-success" asp-action="Create" asp-controller="Category">Tạo mới</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
+        <table class="table datatable table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">SeoDescription</th>
+                    <th scope="col">SeoTitle</th>
+                    <th scope="col">SeoAlias</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr class="table-row">
+                            <td class="table-data">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td class="table-data">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="table-data">
+                                @Html.DisplayFor(modelItem => item.SeoDescription)
+                            </td>
+                            <td class="table-data">
+                                @Html.DisplayFor(modelItem => item.SeoTitle)
+                            </td>
+                            <td class="table-data">
+                                @Html.DisplayFor(modelItem => item.SeoAlias)
+                            </td>
+                            <td class="table-data">
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td class="table-data">
+                            @Html.ActionLink("Edit", "Edit", new {  id = item.Id  }, new {@class = "btn btn-outline-primary"})
+                            @Html.ActionLink("Details", "Details", new { id = item.Id },new {@class = "btn btn-outline-info"})
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new {@class = "btn btn-outline-danger"})
+                            </td>
+                        </tr>
+                    }
+                    
+            </tbody>
+          @*  @await Component.InvokeAsync("Pager", Model)*@
+        </table>
+    </div>
+</div>

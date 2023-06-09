@@ -7,6 +7,7 @@ using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Sales.Orders;
 using eShopSolution.Application.System.Users;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Enums;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Sales;
@@ -76,7 +77,11 @@ namespace eShopSolution.BackendApi.Controllers
             };
             cartItems.Add(cartItem);
             string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
-            await redisDb.StringSetAsync(cartKey, cartJsonConvert);
+            var result = await redisDb.StringSetAsync(cartKey, cartJsonConvert);
+            if (result)
+            {
+                await _productService.AddViewcount(cartItem.ProductId);
+            }
             return Ok(cartItems);
         }
         
@@ -126,18 +131,17 @@ namespace eShopSolution.BackendApi.Controllers
                                           : new List<CartItemVm>();
             return Ok(cartItems);
         }
-        [Authorize]
-        [HttpPut]
-        public IActionResult MergingCart()
-        {
+        //[Authorize]
+        //[HttpPut]
+        //public IActionResult MergingCart()
+        //{
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
         
         [HttpPost("checkouts")]
-        public async Task<IActionResult> CheckOutCart([FromForm] CheckOutRequest checkOutRequest) 
+        public async Task<IActionResult> CheckOutCart([FromBody] CheckOutRequest checkOutRequest) 
         {
-            var useClaims = HttpContext.User.Identity.Name;
             var ipAdd = _ipAdrress.GetLocalIPAddress();
             string cartKey = $"cart:{ipAdd.ResultObj}";
 
@@ -145,15 +149,52 @@ namespace eShopSolution.BackendApi.Controllers
             string cartJson = await redisDb.StringGetAsync(cartKey);
 
             var cartItems = JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson);
-            checkOutRequest.CartItems = cartItems;
-            var data = await _orderService.Create(checkOutRequest);
-            if (data.ResultObj > 0)
+            if(checkOutRequest.CartItems == null && checkOutRequest.CartItems.Count == 0)
             {
-                
+                checkOutRequest.CartItems = cartItems;
+            }
+            var data = await _orderService.Create(checkOutRequest);
+           
+            if (data.IsSuccessed)
+            {
+               
                 await redisDb.StringGetDeleteAsync(cartKey);
-                return Ok(checkOutRequest);
+
+                return Ok(new {data.ResultObj, checkOutRequest.TotalPrice});
             }
             return BadRequest();
+        }
+        [Authorize]
+        [HttpPut("{orderId}/{orderStatus}")]
+        public async Task<IActionResult> UpdateStatus(Guid orderId, OrderStatus orderStatus)
+        {
+            var result = await _orderService.UpdateStatus(orderId, orderStatus);
+            if (result.IsSuccessed)
+            {
+                if(orderStatus == OrderStatus.Success)
+                {
+                  //Update Stock
+                }
+                return Ok(result.Message);
+            }
+            return BadRequest();
+        }
+        [Authorize]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid orderId)
+        {
+            var result = await _orderService.Delete(orderId);
+            if (result.IsSuccessed)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest();
+        }
+        [HttpPost("payment")]
+        public async Task<IActionResult> Payment([FromBody] CheckOutRequest checkOutRequest)
+        {
+            
+            return Ok();
         }
     }
 }

@@ -8,18 +8,59 @@
 }
 @section Scripts{
     <script>
-        setTimeout(function () {
+        setInterval(function () {
             $('#msgAlert').fadeOut('slow');
         }, 2000);
+
+        $(document).ready(function () {
+            //const checkbox = document.getElementById('flexSwitchCheckDefault');
+            const message = document.getElementById('mess-box');
+
+            $(".form-check-input").change(function (event) {
+                // Get the checked value
+                const isChecked = $(this).prop('checked');
+                console.log(isChecked)
+                // Make an AJAX request to the controller
+                const productId = $(this).attr('itemid');
+                const url = `https://localhost:5001/api/products/${productId}/${isChecked}`;
+                fetch(url, { method: 'PUT' })
+                    .then(response => {
+                        if (response.ok) {
+                            message.innerHTML = ` <div id="msgAlert" class="alert alert-success" role="alert">
+                                        Cập nhật thành công
+                            </div>`
+                        } else {
+                            
+                        }
+                    })
+                    .catch(error => {
+                        // Handle fetch error
+                        // For example, display an error message or handle the error condition
+                    });
+            });
+        });
     </script>
+    
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build(); // Replace with the appropriate hub URL
+
+        connection.on("ReceiveMessage", function (product) {
+            // Update the product list in the Index view with the new product information
+            // You can use JavaScript/jQuery to update the DOM dynamically
+            console.log(product);
+        });
+
+        connection.start().then(function () {
+            console.log("Connected to the product hub.");
+        }).catch(function (err) {
+            console.error(err.toString(),111);
+        });
+    </script>
+
 }
-<style>
-    img {
-        height: 68px;
-        border-radius: 50%;
-        width: 70px;
-    }
-</style>
+
 <div class="container-fluid">
     <h1 class="mt-4">Danh sách sản phẩm</h1>
     <ol class="breadcrumb mb-4">
@@ -30,15 +71,19 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="Product">Tạo mới</a>
+                        <a class="btn btn-outline-success" asp-action="Create" asp-controller="Product">Tạo mới</a>
                 </div>
-                <div class="col-md-6 col-xs-12">
+                @*<div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
                         <div class="row">
                             <div class="col-md-9">
-                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
-                                    <select name="categoryId">
-                                    <option value="">Select an option</option>
+                                    <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" style="
+    border-radius: 25px;
+" />
+                                    <select class="form-select" name="categoryId">
+                                        <option value="@ViewBag.CurrentCateId" selected disabled hidden>
+                                        @(ViewBag.CurrentCateId ?? "Danh mục")
+                                    </option>
                                     @foreach (var option in ViewBag.Categories)
                                     {
                                         <option value="@option.Value">@option.Text</option>
@@ -51,12 +96,12 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div>*@
             </div>
         </div>
 
         <div class="card-body">
-            <div class="row">
+            <div class="row" id="mess-box">
                 @if (ViewBag.SuccessMsg != null)
                 {
                     <div id="msgAlert" class="alert alert-success" role="alert">
@@ -65,31 +110,37 @@
                 }
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table datatable table-hover">
                     <thead>
                         <tr>
-                            <th>
-                                Anh
-                            </th>
-                            <th>
+                            <th scope="col">
                                 Mã SP
                             </th>
-                            <th>
+                            <th scope="col">
+                                Ảnh
+                            </th>
+                            
+                            <th scope="col">
                                 Tên
                             </th>
-                            <th>
+                            <th scope="col">
                                 Giá nhập
                             </th>
-                            <th>
+                            <th scope="col">
                                 Giá bán
                             </th>
-                            <th>
-                                Số lượng tồn
+                            <th scope="col">
+                                Số lượng
                             </th>
-                            <th>
+                            <th scope="col">
+                                Nổi bật
+                            </th>
+                            <th scope="col">
                                 Nguyên Liệu
                             </th>
-                            <th></th>
+                            <th scope="col">
+                                Action
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,11 +148,15 @@
                         {
                             <tr>
                                 <td>
-                                    <img src="data:image/jpeg;base64,@item.ThumbnailImage" alt="File Image" />
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
+                                <td>
+                                    <img style="
+                                    width: 60px;
+                                    height: 60px;
+                                " src="data:image/jpeg;base64,@(item.ThumbnailImage != null ? Convert.ToBase64String(item.ThumbnailImage) : "")" alt="File Image" />
+                                </td>
+                                    
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
@@ -115,6 +170,13 @@
                                     @Html.DisplayFor(modelItem => item.Stock)
                                 </td>
                                 <td>
+                                    
+                                        <div class="form-check form-switch">
+                                        <input itemid="@item.Id" class="form-check-input" type="checkbox" role="switch" asp-for="@item.IsFeature" value="@item.IsFeature" id="flexSwitchCheckDefault">
+                                         </div>
+                                   
+                                </td>
+                                <td>
                                     @foreach(var ingredientInProduct in item.IngredientInProducts)
                                     {
                                         <p>
@@ -123,19 +185,27 @@
                                     }
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                                    @Html.ActionLink("Gán danh mục", "CategoryAssign", new { id = item.Id }) |
-                                    @Html.ActionLink("Gán Nguyên Liệu", "IngredientAssign", new { id = item.Id }) |
+                                   <div>
+                                        @Html.ActionLink("Sửa", "Edit", new { id = item.Id },new {@class = "btn btn-outline-primary"})
+                                        @Html.ActionLink("Xem", "Detail", new { id = item.Id },new {@class = "btn btn-outline-info"})
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new {@class = "btn btn-outline-danger"})
+                                        @Html.ActionLink("Thêm ảnh", "AddImage", new { id = item.Id }, new {@class = "btn btn-outline-warning"})
 
+                                   </div>
+                                   <div class="mt-2">
+                                        @Html.ActionLink("Thêm danh mục", "CategoryAssign", new { id = item.Id },new {@class = "btn btn-outline-secondary"})
+                                        @Html.ActionLink("Thêm nguyên Liệu", "IngredientAssign", new { id = item.Id},new {@class = "btn btn-outline-secondary"})
+                                   </div>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            @await Component.InvokeAsync("Pager", Model.ResultObj)
+          @*  @await Component.InvokeAsync("Pager", Model.ResultObj)*@
         </div>
     </div>
 </div>
+<script>
+   
+</script>

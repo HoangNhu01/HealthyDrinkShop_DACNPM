@@ -51,10 +51,10 @@
                                    asp-for="Ingredients[i].Selected" 
                                    id="checkbox-@Model.Ingredients[i].Id"
                                    onchange="checkinputEvent(this,`input-@Model.Ingredients[i].Id`)" />
-                            <input type="number" 
+                            @*<input type="number" 
                                    asp-for="Ingredients[i].UpdateStock"
                                    id="input-@Model.Ingredients[i].Id" 
-                                   onclick="checkboxEvent(`checkbox-@Model.Ingredients[i].Id`)" />
+                                   onclick="checkboxEvent(`checkbox-@Model.Ingredients[i].Id`)" />*@
                             <input type="hidden" asp-for="Ingredients[i].Id" />
                             <input type="hidden" asp-for="Ingredients[i].Name" />
                         </label>

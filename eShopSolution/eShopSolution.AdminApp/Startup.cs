@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignalRChat.Hubs;
 
 namespace eShopSolution.AdminApp
 {
@@ -38,11 +39,11 @@ namespace eShopSolution.AdminApp
                     options.LoginPath = "/Login/Index/";
                     options.AccessDeniedPath = "/User/Forbidden/";
                 });
-
+           // services.AddKendo();
             services.AddControllersWithViews()
                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); services.AddSecurityFeature(Configuration).AddManagers();
             services.AddSecurityFeature(Configuration).AddManagers();
-
+            services.AddSignalR(options => { options.KeepAliveInterval = TimeSpan.FromSeconds(5); }).AddJsonProtocol();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -55,6 +56,8 @@ namespace eShopSolution.AdminApp
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<IIngredientApiClient, IngredientApiClient>();
+
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy =>
@@ -99,7 +102,9 @@ namespace eShopSolution.AdminApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
+
         }
     }
 }

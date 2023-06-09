@@ -1,5 +1,6 @@
 ﻿using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Enums;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Catalog.Categories;
 using eShopSolution.ViewModels.Common;
@@ -22,17 +23,20 @@ namespace eShopSolution.Application.Sales.Orders
         {
             _context = context;
         }
-        public async Task<ApiResult<int>> Create(CheckOutRequest request)
+        public async Task<ApiResult<Guid>> Create(CheckOutRequest request)
         {
             var newOrder = new Order()
             {
+                Id = request.OrderId,
                 UserId = request.UserId,
-                OrderDate = DateTime.Now,
-                ShipAddress = request.Adđress,
+                OrderDate = request.OrderDate,
+                ShipAddress = request.Address,
                 ShipEmail = request.Email,
                 ShipPhoneNumber = request.PhoneNumber,
                 ShipName = request.UserName,
                 Status = (Data.Enums.OrderStatus)1,
+                PaymentStatus = (PaymentStatus)request.PaymentStatus,
+                TotalPrice = request.TotalPrice,
                 OrderDetails = new List<OrderDetail>(),
                 
             };
@@ -44,15 +48,31 @@ namespace eShopSolution.Application.Sales.Orders
             }).ToList();
             _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
-            return new ApiSuccessResult<int>()
+            return new ApiSuccessResult<Guid>()
             {
                 ResultObj = newOrder.Id
             };
         }
 
+        public async Task<ApiResult<bool>> Delete(Guid orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order == null)
+                throw new EShopException($"Can not find order by {orderId}");
+            var res = _context.Orders.Remove(order);
+            if(res != null)
+            {
+                return new ApiSuccessResult<bool>(true,"Xóa đơn hàng thành công");
+            }
+            else
+            {
+                return new ApiErrorResult<bool>("Xóa sản phẩm thất bại");
+            }
+        }
+
         public async Task<ApiResult<List<OrderVm>>> GetAll(string userName, Guid id)
         {
-            var order = await _context.Orders/*.Include(x => x.OrderDetails)*/
+            var order = await _context.Orders.Include(x => x.OrderDetails)
                                              .Where(x => x.ShipName.Contains(userName?? "") || x.UserId == id)
                                              .Select(x => new OrderVm()
                                                {
@@ -63,7 +83,6 @@ namespace eShopSolution.Application.Sales.Orders
                                                    ShipPhoneNumber = x.ShipPhoneNumber,
                                                    ShipName = x.ShipName,
                                                    OrderStatus = x.Status,
-                                                   
                                                }).ToListAsync();
 
             return new ApiSuccessResult<List<OrderVm>>()
@@ -73,7 +92,7 @@ namespace eShopSolution.Application.Sales.Orders
             
         }
 
-        public async Task<ApiResult<OrderVm>> GetById(int id)
+        public async Task<ApiResult<OrderVm>> GetById(Guid id)
         {
             var order = await _context.Orders.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.Id == id);
             if (order == null)
@@ -94,6 +113,13 @@ namespace eShopSolution.Application.Sales.Orders
             };
         }
 
-        
+        public async Task<ApiResult<int>> UpdateStatus(Guid orderId, OrderStatus orderStatus)
+        {
+            var order = await _context.Orders.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.Id == orderId);
+            order.Status = orderStatus;
+            var result = await _context.SaveChangesAsync();
+            return new ApiSuccessResult<int>(result,"Cập nhật trạng thái đơn hàng thàng công");
+        }
+
     }
 }
