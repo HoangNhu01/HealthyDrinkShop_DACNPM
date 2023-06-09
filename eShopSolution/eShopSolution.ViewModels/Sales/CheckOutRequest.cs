@@ -6,6 +6,7 @@ namespace eShopSolution.ViewModels.Sales
 {
     public class CheckOutRequest
     {
+        public Guid OrderId { get; set; }
         public Guid? UserId { get; set; }
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }

@@ -23,10 +23,11 @@ namespace eShopSolution.Application.Sales.Orders
         {
             _context = context;
         }
-        public async Task<ApiResult<int>> Create(CheckOutRequest request)
+        public async Task<ApiResult<Guid>> Create(CheckOutRequest request)
         {
             var newOrder = new Order()
             {
+                Id = request.OrderId,
                 UserId = request.UserId,
                 OrderDate = request.OrderDate,
                 ShipAddress = request.Address,
@@ -47,13 +48,13 @@ namespace eShopSolution.Application.Sales.Orders
             }).ToList();
             _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
-            return new ApiSuccessResult<int>()
+            return new ApiSuccessResult<Guid>()
             {
                 ResultObj = newOrder.Id
             };
         }
 
-        public async Task<ApiResult<bool>> Delete(int orderId)
+        public async Task<ApiResult<bool>> Delete(Guid orderId)
         {
             var order = await _context.Orders.FindAsync(orderId);
             if (order == null)
@@ -91,7 +92,7 @@ namespace eShopSolution.Application.Sales.Orders
             
         }
 
-        public async Task<ApiResult<OrderVm>> GetById(int id)
+        public async Task<ApiResult<OrderVm>> GetById(Guid id)
         {
             var order = await _context.Orders.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.Id == id);
             if (order == null)
@@ -112,12 +113,12 @@ namespace eShopSolution.Application.Sales.Orders
             };
         }
 
-        public async Task<ApiResult<int>> UpdateStatus(int orderId, OrderStatus orderStatus)
+        public async Task<ApiResult<int>> UpdateStatus(Guid orderId, OrderStatus orderStatus)
         {
             var order = await _context.Orders.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.Id == orderId);
             order.Status = orderStatus;
             var result = await _context.SaveChangesAsync();
-            return new ApiSuccessResult<int>(result,"Cập nhật thàng công");
+            return new ApiSuccessResult<int>(result,"Cập nhật trạng thái đơn hàng thàng công");
         }
 
     }

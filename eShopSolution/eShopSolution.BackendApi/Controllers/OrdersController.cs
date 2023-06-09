@@ -140,7 +140,7 @@ namespace eShopSolution.BackendApi.Controllers
         //}
         
         [HttpPost("checkouts")]
-        public async Task<IActionResult> CheckOutCart([FromForm] CheckOutRequest checkOutRequest) 
+        public async Task<IActionResult> CheckOutCart([FromBody] CheckOutRequest checkOutRequest) 
         {
             var ipAdd = _ipAdrress.GetLocalIPAddress();
             string cartKey = $"cart:{ipAdd.ResultObj}";
@@ -166,7 +166,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
         [Authorize]
         [HttpPut("{orderId}/{orderStatus}")]
-        public async Task<IActionResult> UpdateStatus(int orderId, OrderStatus orderStatus)
+        public async Task<IActionResult> UpdateStatus(Guid orderId, OrderStatus orderStatus)
         {
             var result = await _orderService.UpdateStatus(orderId, orderStatus);
             if (result.IsSuccessed)
@@ -181,7 +181,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
         [Authorize]
         [HttpDelete]
-        public async Task<IActionResult> Delete(int orderId)
+        public async Task<IActionResult> Delete(Guid orderId)
         {
             var result = await _orderService.Delete(orderId);
             if (result.IsSuccessed)
@@ -189,6 +189,12 @@ namespace eShopSolution.BackendApi.Controllers
                 return Ok(result.Message);
             }
             return BadRequest();
+        }
+        [HttpPost("payment")]
+        public async Task<IActionResult> Payment([FromBody] CheckOutRequest checkOutRequest)
+        {
+            
+            return Ok();
         }
     }
 }

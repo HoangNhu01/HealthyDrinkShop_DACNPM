@@ -13,13 +13,13 @@ namespace eShopSolution.Application.Sales.Orders
     {
         Task<ApiResult<List<OrderVm>>> GetAll(string userName, Guid id);
 
-        Task<ApiResult<OrderVm>> GetById(int id);
+        Task<ApiResult<OrderVm>> GetById(Guid id);
 
-        Task<ApiResult<int>> Create(CheckOutRequest request);
+        Task<ApiResult<Guid>> Create(CheckOutRequest request);
 
-        Task<ApiResult<int>> UpdateStatus(int orderId, OrderStatus orderStatus);
+        Task<ApiResult<int>> UpdateStatus(Guid orderId, OrderStatus orderStatus);
 
-        Task<ApiResult<bool>> Delete(int orderId);
+        Task<ApiResult<bool>> Delete(Guid orderId);
 
 
     }
