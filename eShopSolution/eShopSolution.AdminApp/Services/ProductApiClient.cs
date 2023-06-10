@@ -75,8 +75,8 @@ namespace eShopSolution.AdminApp.Services
             {
                 var result = await response.Content.ReadAsStringAsync();
 
-                var product = JsonConvert.DeserializeObject<ProductVm>(result);
-                return new ApiSuccessResult<ProductVm>(product);
+                var product = JsonConvert.DeserializeObject<ApiSuccessResult<ProductVm>>(result);
+                return product;
             }
             else
             {
