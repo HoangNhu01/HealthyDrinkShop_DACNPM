@@ -198,11 +198,6 @@ namespace eShopSolution.BackendApi.Controllers
             }
             return BadRequest();
         }
-        [HttpPost("payment")]
-        public async Task<IActionResult> Payment([FromBody] CheckOutRequest checkOutRequest)
-        {
-            
-            return Ok();
-        }
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using eShopSolution.AdminApp.Hubs;
 using eShopSolution.AdminApp.Services;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.ViewModels.Catalog.Categories;
@@ -14,7 +15,6 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Newtonsoft.Json;
-using SignalRChat.Hubs;
 
 namespace eShopSolution.AdminApp.Controllers
 {
@@ -24,13 +24,13 @@ namespace eShopSolution.AdminApp.Controllers
         private readonly IConfiguration _configuration;
         private readonly IIngredientApiClient _ingredientApiClient;
         private readonly ICategoryApiClient _categoryApiClient;
-        private IHubContext<ChatHub> _hubContext;
+        private IHubContext<ProductHub> _hubContext;
 
         public ProductController(IProductApiClient productApiClient,
             IConfiguration configuration,
             ICategoryApiClient categoryApiClient,
             IIngredientApiClient ingredientApiClient,
-            IHubContext<ChatHub> hubContext)
+            IHubContext<ProductHub> hubContext)
         {
             _configuration = configuration;
             _productApiClient = productApiClient;
@@ -116,7 +116,6 @@ namespace eShopSolution.AdminApp.Controllers
             var result = await _productApiClient.CreateProduct(request);
             if (result.IsSuccessed)
             {
-                //await _hubContext.Clients.All.SendAsync("ReceiveMessage", request);
                 var resultIngreAssign = await _productApiClient.IngredientAssign(result.ResultObj.Id, request.SelectIngredients);
                 if (!resultIngreAssign.IsSuccessed)
                 {
@@ -128,6 +127,8 @@ namespace eShopSolution.AdminApp.Controllers
                     TempData["result"] = "KHông thêm được danh mục cho sản phảm mới";
                 }
                 TempData["result"] = result.Message;
+                await _hubContext.Clients.All.SendAsync("SendMessage", result.ResultObj, request.SelectIngredients);
+
                 return RedirectToAction("Index");
             }
 

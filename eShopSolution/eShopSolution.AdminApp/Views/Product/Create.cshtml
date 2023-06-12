@@ -12,12 +12,12 @@
         }, 2000);
     </script>
     
-    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script>
+   @* <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>*@
+   @* <script>
         var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build(); // Replace with the appropriate hub URL
 
-        connection.on("ReceiveMessage", function (product) {
+        connection.on("SendMessage", function (product) {
             // Update the product list in the Index view with the new product information
             // You can use JavaScript/jQuery to update the DOM dynamically
             console.log(product);
@@ -28,7 +28,7 @@
         }).catch(function (err) {
             console.error(err.toString(),111);
         });
-    </script>
+    </script>*@
 }
     
     <div class="container-fluid">
