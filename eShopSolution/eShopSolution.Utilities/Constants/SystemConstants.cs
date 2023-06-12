@@ -15,5 +15,12 @@ namespace eShopSolution.Utilities.Constants
             public const string Token = "Token";
             public const string BaseAddress = "BaseAddress";
         }
+        public class PaymentApi
+        {
+            public const string Url = "VNpayApi:Url";
+            public const string ReturnUrl = "VNpayApi:ReturnUrl";
+            public const string TmnCode = "VNpayApi:TmnCode";
+            public const string HashSecret = "VNpayApi:HashSecret";
+        }
     }
 }
