@@ -83,8 +83,8 @@ export class PaymentsComponent implements OnInit{
 
     if(this.form.valid) {
       const body = {
-        orderId: Guid.create(),
-        userId: null,
+        orderId: Guid.create()["value"],
+        userId: localStorage.getItem('userId'),
         userName: this.form.value.name,
         phoneNumber: this.form.value.sdt,
         address: this.form.value.address + ' ' +
@@ -97,19 +97,17 @@ export class PaymentsComponent implements OnInit{
         cartItems: this.productPayment,
         orderDate: getCurrentTime()
       }
-      this.productService.payments(body).toPromise().then((res: any) => {
-        console.log(res);
-      })
-        // .finally(() => {
-        //   this.close();
-        //   this.message.success('Thanh toán thành công!')
-        //   this.router.navigate(['/']);
-        // })
-        // .catch(() => {
-        //   // this.close();
-        //   // this.message.error('Thanh toán thất bại, vui lòng kiểm tra lại thông tin!')
-        //   // this.router.navigate(['/']);
-        // })
+      if (this.form.value.payments === 'eWallet')
+      {
+          this.productService.eWalletPayments(body).toPromise().then((res: any) => {
+            if (res) {
+              window.open(res["data"]);
+            }
+          })
+      }
+      else {
+        this.submitPayments(body);
+      }
     }
   }
 
@@ -142,5 +140,18 @@ export class PaymentsComponent implements OnInit{
         this.payment();
       }
     });
+  }
+
+  async submitPayments(body: object) {
+    await this.productService.payments(body).toPromise().then(() => {
+      this.message.success('Thanh toán thành công!')
+    })
+      .finally(() => {
+        this.close();
+        this.router.navigate(['/']);
+      })
+      .catch(() => {
+        this.message.error('Thanh toán thất bại, vui lòng kiểm tra lại thông tin!')
+      })
   }
 }

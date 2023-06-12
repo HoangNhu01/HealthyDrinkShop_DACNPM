@@ -149,19 +149,20 @@ namespace eShopSolution.BackendApi.Controllers
             string cartJson = await redisDb.StringGetAsync(cartKey);
 
             var cartItems = JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson);
-            foreach(var item in cartItems)
+            foreach (var item in checkOutRequest.CartItems)
             {
-                if (checkOutRequest.CartItems.Contains(item))
+                var cart = cartItems.FirstOrDefault(x => x.ProductId == item.ProductId);
+                if (cart != null)
                 {
-                    cartItems.Remove(item);
+                    cartItems.Remove(cart);
                 }
             }
-            if(checkOutRequest.CartItems == null && checkOutRequest.CartItems.Count == 0)
+            if (checkOutRequest.CartItems == null && checkOutRequest.CartItems.Count == 0)
             {
                 checkOutRequest.CartItems = cartItems;
             }
             var data = await _orderService.Create(checkOutRequest);
-           
+
             if (data.IsSuccessed)
             {
 

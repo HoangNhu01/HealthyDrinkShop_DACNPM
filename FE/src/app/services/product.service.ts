@@ -43,4 +43,8 @@ export class ProductService {
     const url = 'https://provinces.open-api.vn/api/?depth=3' ;
     return this.http.get(url);
   }
+  eWalletPayments(body: {}) {
+    const url = environment.urlAPI + 'api/Payment';
+    return this.http.post(url, body);
+  }
 }

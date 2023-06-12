@@ -58,6 +58,10 @@ export class AccountComponent {
           this.message.create('success', 'Đăng nhập thành công');
         }
       } )
+        .catch(() => {
+          this.isLoading = false;
+          this.message.create('error', 'Đăng nhập thất bại');
+        })
     }
   }
   getUserInfo(token: string) : any {
@@ -78,6 +82,7 @@ export class AccountComponent {
     this.cookieService.set('token', token);
     localStorage.setItem('isRememberMe', this.rememberMe.toString());
     const userInfo = this.getUserInfo(token);
+    localStorage.setItem('userId', userInfo["UserId"]);
     localStorage.setItem('name', userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
     localStorage.setItem('email', userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]);
   }
