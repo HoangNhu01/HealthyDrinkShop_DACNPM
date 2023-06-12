@@ -149,6 +149,13 @@ namespace eShopSolution.BackendApi.Controllers
             string cartJson = await redisDb.StringGetAsync(cartKey);
 
             var cartItems = JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson);
+            foreach(var item in cartItems)
+            {
+                if (checkOutRequest.CartItems.Contains(item))
+                {
+                    cartItems.Remove(item);
+                }
+            }
             if(checkOutRequest.CartItems == null && checkOutRequest.CartItems.Count == 0)
             {
                 checkOutRequest.CartItems = cartItems;
@@ -157,10 +164,11 @@ namespace eShopSolution.BackendApi.Controllers
            
             if (data.IsSuccessed)
             {
-               
-                await redisDb.StringGetDeleteAsync(cartKey);
 
-                return Ok(new {data.ResultObj, checkOutRequest.TotalPrice});
+                string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
+                await redisDb.StringSetAsync(cartKey, cartJsonConvert);
+
+                return Ok(cartItems);
             }
             return BadRequest();
         }
@@ -190,11 +198,6 @@ namespace eShopSolution.BackendApi.Controllers
             }
             return BadRequest();
         }
-        [HttpPost("payment")]
-        public async Task<IActionResult> Payment([FromBody] CheckOutRequest checkOutRequest)
-        {
-            
-            return Ok();
-        }
+       
     }
 }
