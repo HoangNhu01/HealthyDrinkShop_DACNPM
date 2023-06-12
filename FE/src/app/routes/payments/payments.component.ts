@@ -6,6 +6,7 @@ import {environment} from "@env/env";
 import {ProductService} from "../../services/product.service";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {Guid} from "guid-typescript";
 
 @Component({
   selector: 'app-payments',
@@ -82,29 +83,33 @@ export class PaymentsComponent implements OnInit{
 
     if(this.form.valid) {
       const body = {
+        orderId: Guid.create(),
         userId: null,
         userName: this.form.value.name,
         phoneNumber: this.form.value.sdt,
-        adđress: this.form.value.address + ' ' +
+        address: this.form.value.address + ' ' +
           this.form.value.ward + ' ' +
         this.form.value.district + ' ' +
           this.form.value.province,
         email: this.form.value.email,
+        paymentStatus: this.form.value.payments === 'normal' ? 0 : 1,
+        totalPrice: this.totalMoney,
         cartItems: this.productPayment,
         orderDate: getCurrentTime()
       }
-      this.productService.payments(body).toPromise().then(() => {
+      this.productService.payments(body).toPromise().then((res: any) => {
+        console.log(res);
       })
-        .finally(() => {
-          this.close();
-          this.message.success('Thanh toán thành công!')
-          this.router.navigate(['/']);
-        })
-        .catch(() => {
-          this.close();
-          this.message.error('Thanh toán thất bại, vui lòng kiểm tra lại thông tin!')
-          this.router.navigate(['/']);
-        })
+        // .finally(() => {
+        //   this.close();
+        //   this.message.success('Thanh toán thành công!')
+        //   this.router.navigate(['/']);
+        // })
+        // .catch(() => {
+        //   // this.close();
+        //   // this.message.error('Thanh toán thất bại, vui lòng kiểm tra lại thông tin!')
+        //   // this.router.navigate(['/']);
+        // })
     }
   }
 
