@@ -1,57 +1,68 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using eShopSolution.AdminApp.Services;
+using eShopSolution.Data.Enums;
+using eShopSolution.ViewModels.Sales;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers
 {
     public class OrderController : Controller
     {
-        // GET: OrderController
-        public ActionResult Index()
+        private readonly IConfiguration _configuration;
+        private readonly IOrderApiClient _orderApiClient;
+
+        public OrderController(
+            IConfiguration configuration,
+            IOrderApiClient orderApiClient)
         {
-            return View();
+            _configuration = configuration;
+            _orderApiClient = orderApiClient;
+
+        }
+        // GET: OrderController
+        public async Task<IActionResult> Index(string keyword)
+        {
+            var result = await _orderApiClient.GetAll(keyword);
+            return View(result.ResultObj);
         }
 
         // GET: OrderController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Detail(Guid id)
         {
-            return View();
-        }
-
-        // GET: OrderController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: OrderController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var result = await _orderApiClient.GetById(id);
+            if (TempData["result"] != null)
             {
-                return RedirectToAction(nameof(Index));
+                ViewBag.SuccessMsg = TempData["result"];
             }
-            catch
-            {
-                return View();
-            }
+            return View(result.ResultObj);
         }
 
         // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            return View();
+            var result = await _orderApiClient.GetById(id);
+            ViewBag.Status = new SelectList(Enum.GetValues(typeof(OrderStatus)));
+            return View(result.ResultObj);
         }
 
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(Guid id, OrderStatus collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _orderApiClient.UpdateOrderStatus(id, collection);
+                if (result.ResultObj)
+                {
+                    TempData["result"] = "Cập nhật trạng thái đơn hàng thành công";
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -60,18 +71,23 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         // GET: OrderController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var orderDelete = new OrderVm()
+            {
+                Id = id,
+            };
+            return View(orderDelete);
         }
 
         // POST: OrderController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(OrderVm orderVm)
         {
             try
             {
+                var result = await _orderApiClient.DeleteOrder(orderVm.Id);
                 return RedirectToAction(nameof(Index));
             }
             catch

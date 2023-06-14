@@ -118,7 +118,7 @@ namespace eShopSolution.AdminApp.Controllers
             return View(request);
         }
 
-        [HttpPost]
+        
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

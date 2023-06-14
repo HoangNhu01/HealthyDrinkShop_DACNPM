@@ -97,6 +97,7 @@ namespace eShopSolution.Application.Catalog.Categories
                     Id = query.Id,
                     Name = query.Name,
                     SeoDescription= query.SeoDescription,
+                    SeoAlias = query.SeoAlias,
                     SeoTitle = query.SeoTitle,
                     Status = query.Category.Status,
                     SortOrder= query.Category.SortOrder,
@@ -116,7 +117,8 @@ namespace eShopSolution.Application.Catalog.Categories
             category.SeoTitle = request.SeoTitle;
             category.SeoAlias = request.SeoAlias;
             category.Name = request.Name;
-            return await _context.SaveChangesAsync();
+            var rs = await _context.SaveChangesAsync();
+            return rs;
         }
     }
 }
