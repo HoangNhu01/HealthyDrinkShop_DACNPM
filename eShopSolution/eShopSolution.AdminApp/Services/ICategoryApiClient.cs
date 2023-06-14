@@ -14,7 +14,7 @@ namespace eShopSolution.AdminApp.Services
 
         Task<ApiResult<bool>> CreateCategory(CategoryCreateRequest request);
 
-        Task<ApiResult<bool>> UpdateCategory(CategoryUpdateRequest request);
+        Task<int> UpdateCategory(CategoryUpdateRequest request);
 
         Task<ApiResult<bool>> DeleteCategory(int id);
         

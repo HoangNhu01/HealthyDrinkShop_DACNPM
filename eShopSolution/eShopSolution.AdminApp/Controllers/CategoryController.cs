@@ -104,13 +104,13 @@ namespace eShopSolution.AdminApp.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromBody] CategoryUpdateRequest request)
+        public async Task<IActionResult> Edit( CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
             var result = await _categoryApiClient.UpdateCategory(request);
-            if (result.ResultObj)
+            if (result>0)
             {
                 TempData["result"] = "Cập nhật danh mục thành công";
                 return RedirectToAction("Index");

@@ -45,6 +45,7 @@ namespace eShopSolution.Application.Sales.Orders
                 Price = x.Price,
                 ProductId = x.ProductId,
                 Quantity = x.Quantity,
+                ProductName = x.Name,
             }).ToList();
             _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
@@ -70,17 +71,19 @@ namespace eShopSolution.Application.Sales.Orders
             }
         }
 
-        public async Task<ApiResult<List<OrderVm>>> GetAll(string userName, Guid id)
+        public async Task<ApiResult<List<OrderVm>>> GetAll(string userName)
         {
             var order = await _context.Orders.Include(x => x.OrderDetails)
-                                             .Where(x => x.ShipName.Contains(userName?? "") || x.UserId == id)
+                                             .Where(x => x.ShipName.Contains(userName?? ""))
                                              .Select(x => new OrderVm()
                                                {
+                                                   Id = x.Id,
                                                    UserId = x.UserId,
                                                    OrderDate = x.OrderDate,
                                                    ShipAddress = x.ShipAddress,
                                                    ShipEmail =x.ShipEmail,
                                                    ShipPhoneNumber = x.ShipPhoneNumber,
+                                                   TotalPrice = x.TotalPrice,
                                                    ShipName = x.ShipName,
                                                    OrderStatus = x.Status,
                                                }).ToListAsync();
@@ -94,18 +97,22 @@ namespace eShopSolution.Application.Sales.Orders
 
         public async Task<ApiResult<OrderVm>> GetById(Guid id)
         {
-            var order = await _context.Orders.Include(x => x.OrderDetails).FirstOrDefaultAsync(x => x.Id == id);
+            var order = await _context.Orders.Include(x => x.OrderDetails)
+                                             .ThenInclude(x=> x.Product)
+                                             .ThenInclude(x =>x.ProductTranslations).FirstOrDefaultAsync(x => x.Id == id);
             if (order == null)
                 throw new EShopException($"Can not find order by {id}");
             return new ApiSuccessResult<OrderVm>()
             {
                 ResultObj = new OrderVm()
                 {
+                    Id = id,
                     UserId = order.UserId,
                     OrderDate = order.OrderDate,
                     ShipAddress = order.ShipAddress,
                     ShipEmail = order.ShipEmail,
                     ShipPhoneNumber = order.ShipPhoneNumber,
+                    TotalPrice = order.TotalPrice,
                     ShipName = order.ShipName,
                     OrderStatus = order.Status,
                     OrderDetails = order.OrderDetails

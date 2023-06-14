@@ -36,7 +36,7 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok(category);
         }
         [HttpPost("created-categories")]
-        public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpPut("updated-categories")]
-        public async Task<IActionResult> Update([FromForm] CategoryUpdateRequest request)
+        public async Task<IActionResult> Update([FromBody] CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace eShopSolution.BackendApi.Controllers
             var affectedResult = await _categoryService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();
-            return Ok();
+            return Ok(affectedResult);
         }
 
         [HttpDelete("{categoryId}")]

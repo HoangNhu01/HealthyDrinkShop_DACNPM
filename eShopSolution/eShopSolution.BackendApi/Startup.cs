@@ -25,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SignalRChat.Hubs;
 using StackExchange.Redis;
 
 namespace eShopSolution.BackendApi
@@ -122,6 +123,7 @@ namespace eShopSolution.BackendApi
                        .AllowAnyMethod();
                     });
             });
+            services.AddSignalR();
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -149,11 +149,12 @@ namespace eShopSolution.BackendApi.Controllers
             string cartJson = await redisDb.StringGetAsync(cartKey);
 
             var cartItems = JsonConvert.DeserializeObject<List<CartItemVm>>(cartJson);
-            foreach(var item in cartItems)
+            foreach(var item in checkOutRequest.CartItems)
             {
-                if (checkOutRequest.CartItems.Contains(item))
+                var cart = cartItems.FirstOrDefault(x => x.ProductId == item.ProductId);
+                if (cart !=null)
                 {
-                    cartItems.Remove(item);
+                    cartItems.Remove(cart);
                 }
             }
             if(checkOutRequest.CartItems == null && checkOutRequest.CartItems.Count == 0)
@@ -179,10 +180,6 @@ namespace eShopSolution.BackendApi.Controllers
             var result = await _orderService.UpdateStatus(orderId, orderStatus);
             if (result.IsSuccessed)
             {
-                if(orderStatus == OrderStatus.Success)
-                {
-                  //Update Stock
-                }
                 return Ok(result.Message);
             }
             return BadRequest();
@@ -195,6 +192,26 @@ namespace eShopSolution.BackendApi.Controllers
             if (result.IsSuccessed)
             {
                 return Ok(result.Message);
+            }
+            return BadRequest();
+        }
+        [HttpGet("order-paging")]
+        public async Task<IActionResult> GetAllOrder(string userName)
+        {
+            var result = await _orderService.GetAll(userName);
+            if (result.IsSuccessed)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _orderService.GetById(id);
+            if (result.IsSuccessed)
+            {
+                return Ok(result);
             }
             return BadRequest();
         }

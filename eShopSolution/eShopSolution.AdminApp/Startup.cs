@@ -57,7 +57,18 @@ namespace eShopSolution.AdminApp
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.AddTransient<IIngredientApiClient, IngredientApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
 
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("corspolicy",
+            //        policy =>
+            //        {
+            //            policy.AllowAnyOrigin()
+            //           .AllowAnyHeader()
+            //           .AllowAnyMethod();
+            //        });
+            //});
 
             services.AddAuthorization(options =>
             {
@@ -95,6 +106,7 @@ namespace eShopSolution.AdminApp
             app.UseAuthentication();
 
             app.UseRouting();
+            //app.UseCors("corspolicy");
 
             app.UseAuthorization();
             app.UseSession();
@@ -104,6 +116,8 @@ namespace eShopSolution.AdminApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<ProductHub>("/productHub");
+                endpoints.MapHub<OrderHub>("/orderHub");
+
             });
 
         }

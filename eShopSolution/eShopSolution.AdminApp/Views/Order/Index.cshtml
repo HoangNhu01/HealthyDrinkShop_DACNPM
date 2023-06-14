@@ -1,0 +1,108 @@
+﻿@model IEnumerable<eShopSolution.ViewModels.Sales.OrderVm>
+
+@{
+    ViewData["Title"] = "Danh mục Sản phảm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Scripts{
+    <script>
+
+    </script>
+}
+
+    <div class="container-fluid">
+        <div class="pagetitle">
+            <h1>Danh mục sản phẩm</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Đơn hàng</li>
+                    <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <div class="card mb-12">
+            <div class="card-header">
+                <div class="row">
+                    
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
+            <div class="table-responsive">
+                <table class="table datatable table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">OrderDate</th>
+                            <th scope="col">ShipName</th>
+                            <th scope="col">ShipPhoneNumber</th>
+                            <th scope="col">ShipAddress</th>
+                            <th scope="col">ShipEmail</th>
+                            <th scope="col">TotalPrice</th>
+
+                            <th scope="col">OrderStatus</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr class="table-row">
+                                <td class="table-data" width="80px">
+                                    @{
+                                        string originalString = item.Id.ToString();
+                                        int startIndex = originalString.IndexOf('e');
+                                        int endIndex = originalString.IndexOf("86") + 2; // Adding 2 to include '86' in the substring
+
+                                        string extractedSubstring = originalString.Substring(startIndex, endIndex - startIndex) + "...";
+                                    }
+                                    @Html.DisplayFor(modelItem => extractedSubstring )
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.ShipName)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.ShipPhoneNumber)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.ShipAddress)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.ShipEmail)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                </td>
+                                <td class="table-data">
+                                    @Html.ActionLink("Edit", "Edit", new {  id = item.Id  }, new {@class = "btn btn-outline-primary"})
+                                    @Html.ActionLink("Details", "Detail", new { id = item.Id },new {@class = "btn btn-outline-info"})
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new {@class = "btn btn-outline-danger"})
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    @*  @await Component.InvokeAsync("Pager", Model)*@
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
