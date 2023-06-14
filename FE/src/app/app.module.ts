@@ -50,6 +50,7 @@ import {NzRadioModule} from "ng-zorro-antd/radio";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {AgmCoreModule} from "@agm/core";
 import {AboutUsComponent} from "./routes/about-us/about-us.component";
+import {BlogComponent} from "./routes/blog/blog.component";
 
 registerLocaleData(en);
 
@@ -73,7 +74,8 @@ registerLocaleData(en);
     CartComponent,
     PaymentsComponent,
     NotFoundComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    BlogComponent
   ],
     imports: [
         BrowserModule,
@@ -107,7 +109,8 @@ registerLocaleData(en);
         NzRadioModule,
         NzSelectModule,
       AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyBS6lGj7CsMDE5O9bMEf3I3anmfn34OBlA'
+        apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
+        libraries: ["places", "geometry"]
       })
     ],
   providers: [
