@@ -4,7 +4,52 @@
     ViewData["Title"] = "Xóa sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .table {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 20px;
+    }
 
+    .term {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        padding: 8px 8px;
+        background-color: #1d4adf85;
+        color: white;
+        position: relative;
+    }
+
+        .term::after {
+            content: '';
+            width: 12px;
+            height: 24px;
+            position: absolute;
+            background-color: #1d4adf85;
+            left: 100%;
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+        }
+
+    .desc {
+        width: 80%;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        padding: 8px 8px 8px 24px;
+    }
+
+    dd {
+        margin-bottom: 0px;
+    }
+    /* ******************************* */
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+</style>
 <div class="container-fluid">
     <h1 class="mt-4">Xóa sản phẩm</h1>
     <ol class="breadcrumb mb-4">
@@ -19,11 +64,11 @@
 
         <div class="card-body">
             <div class="col-md-12">
-                <dl class="row">
-                    <dt class="col-sm-2">
+                <dl class="table">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.Id)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.Id)
                     </dd>
                 </dl>

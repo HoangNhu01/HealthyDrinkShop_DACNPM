@@ -69,7 +69,7 @@ namespace eShopSolution.AdminApp.Services
             return await GetAsync<ApiResult<CategoryVm>>($"/api/categories/{languageId}/{id}");
         }
 
-        public async Task<ApiResult<bool>> UpdateCategory(CategoryUpdateRequest request)
+        public async Task<int> UpdateCategory(CategoryUpdateRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -79,10 +79,10 @@ namespace eShopSolution.AdminApp.Services
             var response = await client.PutAsync("/api/categories/updated-categories", httpContent);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
             }
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
         }
     }
 }

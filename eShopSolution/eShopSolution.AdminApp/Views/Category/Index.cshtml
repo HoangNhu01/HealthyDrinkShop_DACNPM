@@ -7,7 +7,25 @@
 }
 @section Scripts{
     <script>
-		
+         setInterval(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+		var startDate = new Date("2023-06-14T12:00:00");
+        console.log(startDate)
+// Get the current date and time
+var currentDate = new Date();
+
+// Calculate the time difference in milliseconds
+var timeDiff = currentDate - startDate;
+
+// Calculate the elapsed time in seconds, minutes, hours, and days
+var seconds = Math.floor(timeDiff / 1000);
+var minutes = Math.floor(seconds / 60);
+var hours = Math.floor(minutes / 60);
+var days = Math.floor(hours / 24);
+
+// Output the elapsed time
+console.log("Time ago: " + days + " days, " + hours % 24 + " hours, " + minutes % 60 + " minutes, " + seconds % 60 + " seconds.");
     </script>
 }
 
@@ -30,10 +48,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card-body">
-            <div class="row">
+            <div class="card-body">
+                <div class="row">
                 @if (ViewBag.SuccessMsg != null)
                 {
                     <div id="msgAlert" class="alert alert-success" role="alert">
@@ -41,51 +57,56 @@
                     </div>
                 }
             </div>
-        <table class="table datatable table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">SeoDescription</th>
-                    <th scope="col">SeoTitle</th>
-                    <th scope="col">SeoAlias</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                    @foreach (var item in Model)
-                    {
-                        <tr class="table-row">
-                            <td class="table-data">
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </td>
-                            <td class="table-data">
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td class="table-data">
-                                @Html.DisplayFor(modelItem => item.SeoDescription)
-                            </td>
-                            <td class="table-data">
-                                @Html.DisplayFor(modelItem => item.SeoTitle)
-                            </td>
-                            <td class="table-data">
-                                @Html.DisplayFor(modelItem => item.SeoAlias)
-                            </td>
-                            <td class="table-data">
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
-                            <td class="table-data">
-                            @Html.ActionLink("Edit", "Edit", new {  id = item.Id  }, new {@class = "btn btn-outline-primary"})
-                            @Html.ActionLink("Details", "Details", new { id = item.Id },new {@class = "btn btn-outline-info"})
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new {@class = "btn btn-outline-danger"})
-                            </td>
+            <div class="table-responsive">
+                <table class="table datatable table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">SeoDescription</th>
+                            <th scope="col">SeoTitle</th>
+                            <th scope="col">SeoAlias</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
                         </tr>
-                    }
-                    
-            </tbody>
-          @*  @await Component.InvokeAsync("Pager", Model)*@
-        </table>
-    </div>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr class="table-row">
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.SeoDescription)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.SeoTitle)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.SeoAlias)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td class="table-data">
+                                    @Html.ActionLink("Edit", "Edit", new {  id = item.Id  }, new {@class = "btn btn-outline-primary"})
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id },new {@class = "btn btn-outline-info"})
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new {@class = "btn btn-outline-danger"})
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    @*  @await Component.InvokeAsync("Pager", Model)*@
+                </table>
+            </div>
+        </div>
+
+        </div>
+
 </div>
