@@ -7,6 +7,8 @@ import {ProductService} from "../../services/product.service";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {Guid} from "guid-typescript";
+import {SignalRServiceService} from "../../services/signal-rservice.service";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-payments',
@@ -20,7 +22,8 @@ export class PaymentsComponent implements OnInit{
     protected fb: FormBuilder,
     protected productService: ProductService,
     protected modalService: NzModalService,
-    protected message: NzMessageService
+    protected message: NzMessageService,
+    protected SignalRService: SignalRServiceService,
   ) {
     this.initForm();
   }
@@ -52,7 +55,7 @@ export class PaymentsComponent implements OnInit{
       address: ['', Validators.required],
       option: '',
       ship: [true],
-      payments: ['', Validators.required]
+      payments: ['', Validators.required],
     })
   }
   close() {
@@ -93,7 +96,7 @@ export class PaymentsComponent implements OnInit{
           this.form.value.province,
         email: this.form.value.email,
         paymentStatus: this.form.value.payments === 'normal' ? 0 : 1,
-        totalPrice: this.totalMoney,
+        totalPrice: this.totalMoney + 25,
         cartItems: this.productPayment,
         orderDate: getCurrentTime()
       }
@@ -102,6 +105,13 @@ export class PaymentsComponent implements OnInit{
           this.productService.eWalletPayments(body).toPromise().then((res: any) => {
             if (res) {
               window.open(res["data"]);
+              this.SignalRService.getSignalRData();
+              this.SignalRService.receiveData.pipe(take(2)).subscribe((res: any) => {
+                if (res.isSuccessed) {
+                  this.submitPayments(body);
+                }
+                else this.message.error(res.resultObj);
+              })
             }
           })
       }

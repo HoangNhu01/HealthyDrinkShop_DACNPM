@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eShopSolution.Data.Migrations
 {
-    public partial class InitNewTable : Migration
+    public partial class New : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -204,7 +204,8 @@ namespace eShopSolution.Data.Migrations
                     OriginalPrice = table.Column<decimal>(nullable: false),
                     Stock = table.Column<int>(nullable: false, defaultValue: 0),
                     ViewCount = table.Column<int>(nullable: false, defaultValue: 0),
-                    DateCreated = table.Column<DateTime>(nullable: false)
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    IsFeatured = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,15 +237,16 @@ namespace eShopSolution.Data.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: true),
                     ShipName = table.Column<string>(maxLength: 200, nullable: false),
                     ShipAddress = table.Column<string>(maxLength: 200, nullable: false),
                     ShipEmail = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
                     ShipPhoneNumber = table.Column<string>(maxLength: 200, nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    TotalPrice = table.Column<decimal>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    PaymentStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,7 +256,7 @@ namespace eShopSolution.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -453,10 +455,11 @@ namespace eShopSolution.Data.Migrations
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false),
+                    ProductName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -488,7 +491,7 @@ namespace eShopSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "d37f57b6-92b7-4070-aa03-0e8a62581238", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "81d0132e-f497-4c50-8d13-ade4745ae385", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
@@ -498,7 +501,7 @@ namespace eShopSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "77f8cd5c-c825-4f8b-aa9b-c3652ea031cf", new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "hoangnhu300901@gmail.com", true, "Nhu", "Hoang", false, null, "hoang123@gmail.com", "admin", "AQAAAAEAACcQAAAAEKRua0QtsrUfm0gM3AesHcPS0yVCBg7TUudGVczsT/tdJJSUV1kJZ0lNk6Pxe4jOPg==", null, false, "", false, "admin" });
+                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "fe96ad9d-857e-48a0-af79-bde06136b133", new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "hoangnhu300901@gmail.com", true, "Nhu", "Hoang", false, null, "hoang123@gmail.com", "admin", "AQAAAAEAACcQAAAAEHAAJqJl5SKfEbw31SUHe+6WB3g5CDuPOuXiMQo/rMfqE4gh8/XJ7zm6HL88ek7LoA==", null, false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -520,8 +523,8 @@ namespace eShopSolution.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "DateCreated", "OriginalPrice", "Price" },
-                values: new object[] { 1, new DateTime(2023, 5, 24, 21, 31, 8, 308, DateTimeKind.Local).AddTicks(3353), 100000m, 200000m });
+                columns: new[] { "Id", "DateCreated", "IsFeatured", "OriginalPrice", "Price" },
+                values: new object[] { 1, new DateTime(2023, 6, 14, 21, 7, 52, 707, DateTimeKind.Local).AddTicks(7902), false, 100000m, 200000m });
 
             migrationBuilder.InsertData(
                 table: "CategoryTranslations",

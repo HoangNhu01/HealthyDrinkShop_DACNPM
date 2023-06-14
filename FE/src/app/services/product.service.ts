@@ -44,7 +44,7 @@ export class ProductService {
     return this.http.get(url);
   }
   eWalletPayments(body: {}) {
-    const url = environment.urlAPI + 'api/Payment';
+    const url = environment.urlAPI + 'api/Payments';
     return this.http.post(url, body);
   }
 }
