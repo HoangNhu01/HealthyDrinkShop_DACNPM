@@ -5,13 +5,31 @@
         <div class="wrap flex-container padding-small">
           <div class="contact-block d-flex align-items-center">
             <span class="pr-50"><i class="icon icon-phone"></i>5555-00-444</span>
-            <span class="color-secondary"><i class="icon icon-envelope-o"></i><a href="#"> healthydrink@gmail.com</a></span>
+            <span class="color-secondary"><i class="icon icon-envelope-o"></i><a
+              href="#"> healthydrink@gmail.com</a></span>
           </div>
 
           <div class="header-top-right">
             <ul class="d-flex list-unstyled color-secondary">
-              <li class="d-flex align-items-center mr-5"><i class="fs-4 pr-2 bi bi-person-circle"></i><a routerLink="/account">My Account</a></li>
-              <li class="d-flex align-items-center"><i class="fs-4 pr-2 bi bi-cart-plus"></i><a (click)="openCart()">Card</a></li>
+              <div *ngIf="!checkAcc()">
+                <li class="d-flex align-items-center mr-5"><i class="fs-4 pr-2 bi bi-person-circle"></i><a
+                  routerLink="/account">My Account</a></li>
+              </div>
+              <div *ngIf="checkAcc()">
+                <li class="d-flex align-items-center mr-5">
+                  <i class="fs-4 pr-2 bi bi-person-circle"></i>
+                  <a nz-dropdown [nzDropdownMenu]="menu"> {{name}} <span nz-icon nzType="down"></span></a></li>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                  <ul nz-menu nzSelectable>
+                    <li (click)="logout()" class="text-danger fs-5" nz-menu-item>Đăng xuất</li>
+                  </ul>
+                </nz-dropdown-menu>
+              </div>
+              <div class="pt-3p">
+                <nz-badge [nzCount]="numberProductInCart">
+            <a class="head-example" (click)="openCart()"><span class="pr-1 fs-4" nz-icon nzType="shopping-cart" nzTheme="outline"></span>Cart</a>
+                </nz-badge>
+              </div>
             </ul>
           </div>
         </div>
@@ -36,26 +54,29 @@
             </div>
             <div class="d-flex col-9">
               <div class="navbar-collapse collapse" id="slide-navbar-collapse">
-              <ul class="navbar-nav list-inline text-uppercase">
-                <li class="nav-item text-hover active"><a routerLink="/" class="nav-link" data-effect="Home">Home</a></li>
-                <li class="nav-item text-hover"><a routerLink="/about-us" class="nav-link" data-effect="About Us">About us</a></li>
-                <li class="nav-item text-hover"><a routerLink="/blog" class="nav-link" data-effect="Blogs">Blog</a></li>
-                <li class="nav-item text-hover"><a routerLink="/contact" class="nav-link" data-effect="Contact">Contact us</a></li>
+                <ul class="navbar-nav list-inline text-uppercase">
+                  <li class="nav-item text-hover active"><a routerLink="/" class="nav-link" data-effect="Home">Home</a>
+                  </li>
+                  <li class="nav-item text-hover"><a routerLink="/all-product" class="nav-link" data-effect="Shopping">Shopping</a></li>
+                  <li class="nav-item text-hover"><a routerLink="/blog" class="nav-link" data-effect="Blogs">Blog</a>
+                  </li>
+                  <li class="nav-item text-hover"><a routerLink="/about-us" class="nav-link" data-effect="Contact">Contact
+                    us</a></li>
 
-                <!--              <li class="nav-item dropdown">-->
-                <!--                <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link dropdown-toggle">Pages</a>-->
-                <!--                <ul class="dropdown-menu">-->
-                <!--                  <li><a href="about.html" class="dropdown-item">About us</a></li>-->
-                <!--                  <li><a href="blog.html" class="dropdown-item">Blog</a></li>-->
-                <!--                  <li><a href="single-post.html" class="dropdown-item">Single Post</a></li>-->
-                <!--                  <li><a href="contact.html" class="dropdown-item">Contact us</a></li>-->
-                <!--                  <li><a href="shop.html" class="dropdown-item">Shop</a></li>-->
-                <!--                  <li><a href="single-product.html" class="dropdown-item">Single Product</a></li>-->
-                <!--                </ul>-->
-                <!--              </li>-->
+                  <!--              <li class="nav-item dropdown">-->
+                  <!--                <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link dropdown-toggle">Pages</a>-->
+                  <!--                <ul class="dropdown-menu">-->
+                  <!--                  <li><a href="about.html" class="dropdown-item">About us</a></li>-->
+                  <!--                  <li><a href="blog.html" class="dropdown-item">Blog</a></li>-->
+                  <!--                  <li><a href="single-post.html" class="dropdown-item">Single Post</a></li>-->
+                  <!--                  <li><a href="contact.html" class="dropdown-item">Contact us</a></li>-->
+                  <!--                  <li><a href="shop.html" class="dropdown-item">Shop</a></li>-->
+                  <!--                  <li><a href="single-product.html" class="dropdown-item">Single Product</a></li>-->
+                  <!--                </ul>-->
+                  <!--              </li>-->
 
-              </ul>
-            </div>
+                </ul>
+              </div>
             </div>
           </div>
         </nav>
