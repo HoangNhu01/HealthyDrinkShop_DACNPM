@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using eShopSolution.AdminApp.Hubs;
 using eShopSolution.AdminApp.Services;
@@ -261,7 +262,8 @@ namespace eShopSolution.AdminApp.Controllers
                 SeoAlias = product.SeoAlias,
                 SeoDescription = product.SeoDescription,
                 SeoTitle = product.SeoTitle,
-                Price = product.Price               
+                Price = product.Price,
+                Stock = product.Stock,
             };
             return View(editVm);
         }
@@ -341,5 +343,40 @@ namespace eShopSolution.AdminApp.Controllers
             ViewBag.ProductId = id;
             return View(request);
         }
+        [HttpGet]
+        public IActionResult DeleteImage(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var product = _productApiClient.GetById(id, languageId).Result.ResultObj;
+            var productImage = product.ProductImages.Where(x =>!x.IsDefault).Select(x => new ProductImageVm()
+            {
+                ProductId = x.ProductId,
+                Id = x.Id,
+                Data = x.Data,
+                SortOrder = x.SortOrder,
+                IsDefault = x.IsDefault
+            }).ToArray().OrderByDescending(x => x.SortOrder);
+            ViewBag.Id = id;
+            return View(productImage);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(ProductImageVm request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _productApiClient.DeleteImage(request.Id);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = $"Xóa ảnh số {request.Id} thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Xóa không thành công");
+            return RedirectToAction("Index");
+        }
     }
+
 }

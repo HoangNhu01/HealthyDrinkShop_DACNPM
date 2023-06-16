@@ -4,44 +4,65 @@
     ViewData["Title"] = "AddImage";
 }
 
-<h1> Sản Phẩm #@ViewBag.ProductId</h1>
+    <div class="container-fluid">
+        <h1 class="mt-4">Tạo mới sản phẩm</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item">Danh sách sản phẩm</li>
+            <li class="breadcrumb-item active">Thêm hình ảnh</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a class="btn btn-outline-success" asp-action="Index" asp-controller="Product">Về danh sách</a>
+            </div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data" action="/Product/AddImage">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="id" value="@ViewBag.ProductId" />
-            <div class="form-group">
-                <label asp-for="Caption" class="control-label"></label>
-                <input asp-for="Caption" class="form-control" />
-                <span asp-validation-for="Caption" class="text-danger"></span>
+            <div class="card-body">
+                <div class="col-md-4">
+                    <form asp-action="AddImage" enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="row mb-3">
+                        <label asp-for="Caption" class="col-sm-2 col-form-label">Caption</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Caption" type="text" class="form-control">
+                            </div>
+                            <span asp-validation-for="Caption" class="text-danger"></span>
+
+                        </div>
+                        <div class="row mb-3">
+                        <div class="col-sm-10">
+                            
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1" asp-for="IsDefault">
+                                    <label class="form-check-label" for="gridCheck1" style="font-weight: 700;">
+                                        IsDefault
+                                    </label>
+                                   
+                                </div>
+                            
+                        </div>
+                        </div>
+                        <div class="row mb-3">
+
+                            <label asp-for="SortOrder" class="col-sm-2 col-form-label">SortOrder</label>
+                                <div class="col-sm-10">
+                                    <input asp-for="SortOrder" type="number" class="form-control">
+                                </div>
+                                <span asp-validation-for="SortOrder" class="text-danger"></span>
+                        </div>
+                        
+                     
+                        <div class="row mb-3">
+                            <label asp-for="ImageFile" class="col-sm-2 col-form-label">Image Upload</label>
+                            <div class="col-sm-10">
+                                <input asp-for="ImageFile" class="form-control" type="file" id="formFile" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Lưu lại" class="btn btn-outline-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDefault" /> @Html.DisplayNameFor(model => model.IsDefault)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="SortOrder" class="control-label"></label>
-                <input asp-for="SortOrder" class="form-control" />
-                <span asp-validation-for="SortOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageFile" class="control-label">Image Upload</label>
-                <input asp-for="ImageFile" class="form-control" type="file" id="formFile" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

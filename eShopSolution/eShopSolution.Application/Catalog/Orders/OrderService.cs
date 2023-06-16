@@ -61,6 +61,7 @@ namespace eShopSolution.Application.Sales.Orders
             if (order == null)
                 throw new EShopException($"Can not find order by {orderId}");
             var res = _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
             if(res != null)
             {
                 return new ApiSuccessResult<bool>(true,"Xóa đơn hàng thành công");

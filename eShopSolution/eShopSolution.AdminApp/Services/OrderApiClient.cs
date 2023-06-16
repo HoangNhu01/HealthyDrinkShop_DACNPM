@@ -32,7 +32,7 @@ namespace eShopSolution.AdminApp.Services
         }
         public async Task<ApiResult<bool>> DeleteOrder(Guid id)
         {
-            return await Delete($"/api/orders?id={id}");
+            return await Delete($"/api/orders?orderId={id}");
         }
 
         public async Task<ApiResult<List<OrderVm>>> GetAll(string keyword)

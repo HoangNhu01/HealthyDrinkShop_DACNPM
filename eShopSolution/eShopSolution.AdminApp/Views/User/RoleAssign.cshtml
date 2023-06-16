@@ -8,32 +8,47 @@
     <h1 class="mt-4">Gán quyền</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Người dùng</li>
+
         <li class="breadcrumb-item active">Gán quyền</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
-            <a class="btn btn-success" asp-action="Index" asp-controller="User">Về danh sách</a>
+            <a class="btn btn-outline-success" asp-action="Index" asp-controller="User">Về danh sách</a>
         </div>
 
         <div class="card-body">
+            <div class="col-md-4">
+
             <form asp-action="RoleAssign">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                @for (var i = 0; i < Model.Roles.Count; i++)
-                {
-                    <div class="form-group">
-                        <label>
-                            @Model.Roles[i].Name
-                            <input type="checkbox" asp-for="Roles[i].Selected" />
-                            <input type="hidden" asp-for="Roles[i].Id" />
-                            <input type="hidden" asp-for="Roles[i].Name" />
-                        </label>
+                <div class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Select Roles</legend>
+                    <div class="col-sm-10">
+                        
+                        <input type="hidden" asp-for="Id" />
+                        @for (var i = 0; i < Model.Roles.Count; i++)
+                        {
+                            <div class="form-check">
+                                <label class="form-check-label" for="gridCheck1">
+                                    @Model.Roles[i].Name
+                                </label>
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1" asp-for="Roles[i].Selected">
+
+                                <input type="hidden" asp-for="Roles[i].Id" />
+                                <input type="hidden" asp-for="Roles[i].Name" />
+                            </div>
+
+                        }
                     </div>
-                }
-                <div class="form-group">
-                    <input type="submit" value="Lưu lại" class="btn btn-primary" />
                 </div>
+               
+                <div class="form-group">
+                    <input type="submit" value="Lưu lại" class="btn btn-outline-primary" />
+                </div>
+                
             </form>
         </div>
-    </div>
+        </div>
+</div>
 </div>

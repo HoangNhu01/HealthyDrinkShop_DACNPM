@@ -34,6 +34,10 @@
             font-weight: 700;
         }
     </style>
+
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    
 </head>
 <body class="sb-nav-fixed">
     @await Component.InvokeAsync("Navigation")
@@ -117,18 +121,24 @@
                             <i class="bi bi-circle"></i><span>Danh sách Đơn hàng</span>
                         </a>
                     </li>
-                    <li>
+                    @*<li>
                         <a href="tables-data.html">
                             <i class="bi bi-circle"></i><span>Data Tables</span>
                         </a>
-                    </li>
+                    </li>*@
                 </ul>
             </li><!-- End Tables Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-bar-chart"></i><span>Thống kê</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="https://sandbox.vnpayment.vn/merchantv2/Home/Dashboard.htm" target="_blank" id="myLink">
+                            <i class="bi bi-circle"></i><span>Thống kê hóa đơn</span>
+                        </a>
+                    </li>
+                    
                     <li>
                         <a href="charts-chartjs.html">
                             <i class="bi bi-circle"></i><span>Chart.js</span>
@@ -242,6 +252,38 @@
         </div>
     </footer><!-- End Footer -->
 
+    <script>
+     
+
+        // Create a connection to the SignalR hub
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/orderHub", {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets
+        }).build();
+       var count = localStorage.getItem('count') || 0; // Retrieve count from localStorage, or set it to 0 if not found
+
+        connection.on("OrderCheckOut", (message) => {
+            console.log(message);
+            count = parseInt(count) + 1; // Increment count
+            $(".badge.bg-primary").text(count);
+            localStorage.setItem('count', count); // Save updated count to localStorage
+        });
+
+        // Start the connection
+        connection
+            .start()
+            .then(() => {
+                console.log('SignalR connection started.');
+            })
+            .catch((error) => {
+                console.error(
+                    'Error starting SignalR connection: ' + error
+                );
+            });
+
+                    // Other SignalR code goes here
+    </script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/js/scripts.js"></script>

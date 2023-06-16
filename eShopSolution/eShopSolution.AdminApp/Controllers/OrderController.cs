@@ -27,6 +27,11 @@ namespace eShopSolution.AdminApp.Controllers
         public async Task<IActionResult> Index(string keyword)
         {
             var result = await _orderApiClient.GetAll(keyword);
+            ViewBag.Status = Enum.GetValues(typeof(OrderStatus));
+            if (TempData["result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["result"];
+            }
             return View(result.ResultObj);
         }
 
@@ -88,7 +93,13 @@ namespace eShopSolution.AdminApp.Controllers
             try
             {
                 var result = await _orderApiClient.DeleteOrder(orderVm.Id);
-                return RedirectToAction(nameof(Index));
+                if (result.IsSuccessed)
+                {
+                    TempData["result"] = "Cập nhật trạng thái đơn hàng thành công";
+                    return RedirectToAction("Index");
+                }
+                return View(orderVm);
+
             }
             catch
             {

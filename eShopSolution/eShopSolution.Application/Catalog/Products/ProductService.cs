@@ -120,6 +120,18 @@ namespace eShopSolution.Application.Catalog.Products
 
             return await _context.SaveChangesAsync();
         }
+        public async Task<int> DeleteImage(int imageId)
+        {
+            var productImage = await _context.ProductImages.FindAsync(imageId);
+            if (productImage == null) throw new EShopException($"Cannot find a image: {imageId}");  
+            
+            await _storageService.DeleteFileAsync(productImage.ImagePath);
+
+
+            _context.ProductImages.Remove(productImage);
+
+            return await _context.SaveChangesAsync();
+        }
         //<img src="data:image/jpeg;base64,{resultObj.items.listImg[1]}" alt="File Image" />
 
         public async Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request)
@@ -211,6 +223,7 @@ namespace eShopSolution.Application.Catalog.Products
                 ViewCount = productTranslation.Product.ViewCount,
                 ProductInCategories = productTranslation.Product.ProductInCategories,
                 IngredientInProducts = productTranslation.Product.IngredientInProducts,
+                ProductImages = productTranslation.Product.ProductImages,
                 ListImg = productTranslation.Product.ProductImages.Where(x => x.Data != null)
                                                                      .Select(x => x.Data)
                                                                      .ToList()
@@ -256,14 +269,7 @@ namespace eShopSolution.Application.Catalog.Products
                 }).ToListAsync();
         }
 
-        public async Task<int> RemoveImage(int imageId)
-        {
-            var productImage = await _context.ProductImages.FindAsync(imageId);
-            if (productImage == null)
-                throw new EShopException($"Cannot find an image with id {imageId}");
-            _context.ProductImages.Remove(productImage);
-            return await _context.SaveChangesAsync();
-        }
+       
 
         public async Task<int> Update(ProductUpdateRequest request)
         {
@@ -278,6 +284,8 @@ namespace eShopSolution.Application.Catalog.Products
             productTranslations.SeoTitle = request.SeoTitle;
             productTranslations.Description = request.Description;
             productTranslations.Details = request.Details;
+            productTranslations.Product.Price = request.Price;
+            productTranslations.Product.Stock = request.Stock;
 
             //Save image
             if (request.ThumbnailImage != null)

@@ -1,23 +1,83 @@
 ﻿@model eShopSolution.ViewModels.Sales.OrderVm
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa đơn hàng";
 }
+<style>
+    .table {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 20px;
+    }
 
-<h1>Delete</h1>
+    .term {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        padding: 8px 8px;
+        background-color: #1d4adf85;
+        color: white;
+        position: relative;
+    }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>OrderVm</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        .term::after {
+            content: '';
+            width: 12px;
+            height: 24px;
+            position: absolute;
+            background-color: #1d4adf85;
+            left: 100%;
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+        }
+
+    .desc {
+        width: 80%;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        padding: 8px 8px 8px 24px;
+    }
+
+    dd {
+        margin-bottom: 0px;
+    }
+    /* ******************************* */
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+</style>
+<div class="container-fluid">
+    <h1 class="mt-4">Xóa đơn hàng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item">Đơn hàng</li>
+
+        <li class="breadcrumb-item active">Xóa đơn hàng</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-outline-success" asp-action="Index" asp-controller="Order">Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-12">
+                <dl class="table">
+                    <dt class="term">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </dt>
+                    <dd class="desc">
+                        @Html.DisplayFor(model => model.Id)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete">
+                    <input asp-for="Id" type="hidden" />
+                    <input type="submit" value="Xóa" class="btn btn-outline-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

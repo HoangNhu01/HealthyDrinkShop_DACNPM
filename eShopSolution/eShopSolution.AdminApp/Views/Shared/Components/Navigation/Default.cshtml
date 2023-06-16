@@ -2,6 +2,14 @@
 <style>
   
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  
+   
+    var count = localStorage.getItem('count') ?? 0;
+    console.log(count);
+
+</script>
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -34,66 +42,28 @@
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>
-                    <span class="badge bg-primary badge-number">4</span>
+                    <span class="badge bg-primary badge-number">0</span>
                 </a><!-- End Notification Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
-                        You have 4 new notifications
                         <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    @foreach (var item in ViewBag.NavigationVm)
+                    {
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                    <li class="notification-item">
-                        <i class="bi bi-exclamation-circle text-warning"></i>
-                        <div>
-                            <h4>Lorem Ipsum</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>30 min. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-x-circle text-danger"></i>
-                        <div>
-                            <h4>Atque rerum nesciunt</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>1 hr. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-check-circle text-success"></i>
-                        <div>
-                            <h4>Sit rerum fuga</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>2 hrs. ago</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-info-circle text-primary"></i>
-                        <div>
-                            <h4>Dicta reprehenderit</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>4 hrs. ago</p>
-                        </div>
-                    </li>
-
+                        <li class="notification-item">
+                            <i class="bi bi-cart-check-fill text-success"></i>
+                            <div>
+                                <h4>@item.ShipName</h4>
+                                <p>Have checkout their cart</p>
+                                <p>At @item.OrderDate</p>
+                            </div>
+                        </li>
+                    }
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -229,5 +199,16 @@
 
         </ul>
     </nav><!-- End Icons Navigation -->
+    <script>
+        $(".badge.bg-primary").text(`${count}`);
+        $(".dropdown-header").text(`
+                                You have
+                ${count} new notifications`);
+        $(".nav-link").click(function (e) {
+            console.log(123);
+            $(".badge.bg-primary").text("0");
+            localStorage.removeItem('count');
 
+        })
+    </script>
 </header><!-- End Header -->

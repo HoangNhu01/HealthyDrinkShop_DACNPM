@@ -14,6 +14,7 @@ namespace eShopSolution.Application.Catalog.Products
         Task<int> Update(ProductUpdateRequest request);
 
         Task<int> Delete(int productId);
+        Task<int> DeleteImage(int imageId);
 
         Task<ApiResult<ProductVm>> GetById(int productId, string languageId);
 
@@ -28,7 +29,6 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
 
-        Task<int> RemoveImage(int imageId);
 
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
 

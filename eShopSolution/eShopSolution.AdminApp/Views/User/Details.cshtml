@@ -4,55 +4,105 @@
     ViewData["Title"] = "Chi tiết";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .table {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 20px;
+    }
 
+    .term {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        padding: 8px 8px;
+        background-color: #1d4adf85;
+        color: white;
+        position: relative;
+    }
+
+        .term::after {
+            content: '';
+            width: 12px;
+            height: 24px;
+            position: absolute;
+            background-color: #1d4adf85;
+            left: 100%;
+            clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+        }
+
+    .desc {
+        width: 80%;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        padding: 8px 8px 8px 24px;
+    }
+
+    dd {
+        margin-bottom: 0px;
+    }
+
+
+    /* ******************************* */
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+</style>
 <div class="container-fluid">
-    <h1 class="mt-4">Chi tiết</h1>
+    <h1 class="mt-4">Chi tiết người dùng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Chi tiết</li>
+        <li class="breadcrumb-item active">Người dùng</li>
+
+        <li class="breadcrumb-item active">Chi tiết người dùng</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
-            <a class="btn btn-success" asp-action="Index" asp-controller="User">Về danh sách</a>
+            <a class="btn btn-outline-success" asp-action="Index" asp-controller="User">Về danh sách</a>
         </div>
 
         <div class="card-body">
-            <div class="col-md-12">
-                <dl class="row">
-                    <dt class="col-sm-2">
+                                <div class="col-md-6 " style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; padding: 10px; border-radius: 10px;width: 692px;">
+
+                <dl class="table m-0">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.FirstName)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.FirstName)
                     </dd>
-                    <dt class="col-sm-2">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.LastName)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.LastName)
                     </dd>
-                    <dt class="col-sm-2">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.PhoneNumber)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.PhoneNumber)
                     </dd>
-                    <dt class="col-sm-2">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.UserName)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.UserName)
                     </dd>
-                    <dt class="col-sm-2">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.Email)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.Email)
                     </dd>
-                    <dt class="col-sm-2">
+                    <dt class="term">
                         @Html.DisplayNameFor(model => model.Dob)
                     </dt>
-                    <dd class="col-sm-10">
+                    <dd class="desc">
                         @Html.DisplayFor(model => model.Dob)
                     </dd>
                 </dl>

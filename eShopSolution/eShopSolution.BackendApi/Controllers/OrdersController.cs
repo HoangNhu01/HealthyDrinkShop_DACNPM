@@ -6,6 +6,7 @@ using eShopSolution.AdminApp.IpAddresss;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Sales.Orders;
 using eShopSolution.Application.System.Users;
+using eShopSolution.BackendApi.Hubs;
 using eShopSolution.Data.Entities;
 using eShopSolution.Data.Enums;
 using eShopSolution.Utilities.Constants;
@@ -15,6 +16,7 @@ using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using StackExchange.Redis;
@@ -31,12 +33,13 @@ namespace eShopSolution.BackendApi.Controllers
         //private readonly IMemoryCache _cache;
         private readonly IConnectionMultiplexer _redisConnection;
         private readonly IIpAdrress _ipAdrress;
+        private IHubContext<OrderHub> _hubContext;
 
 
         public OrdersController(IProductService productService, 
                                 IConnectionMultiplexer redisConnection,
                                 IUserService userService, IOrderService orderService,
-                                IIpAdrress ipAdrress)
+                                IIpAdrress ipAdrress, IHubContext<OrderHub> hubContext)
         {
             _productService = productService;
             //_cache = cache;
@@ -44,6 +47,8 @@ namespace eShopSolution.BackendApi.Controllers
             _userService = userService;
             _orderService = orderService;
             _ipAdrress = ipAdrress; 
+
+            _hubContext = hubContext;
         }
         [HttpPost("{id}/{languageId}")]
         public async Task<IActionResult> AddToCart(int id, string languageId, int clientQuantity)
@@ -168,6 +173,7 @@ namespace eShopSolution.BackendApi.Controllers
 
                 string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
                 await redisDb.StringSetAsync(cartKey, cartJsonConvert);
+                await _hubContext.Clients.All.SendAsync("OrderCheckOut", checkOutRequest);
 
                 return Ok(cartItems);
             }
@@ -180,7 +186,7 @@ namespace eShopSolution.BackendApi.Controllers
             var result = await _orderService.UpdateStatus(orderId, orderStatus);
             if (result.IsSuccessed)
             {
-                return Ok(result.Message);
+                return Ok();
             }
             return BadRequest();
         }
@@ -191,7 +197,7 @@ namespace eShopSolution.BackendApi.Controllers
             var result = await _orderService.Delete(orderId);
             if (result.IsSuccessed)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
             return BadRequest();
         }

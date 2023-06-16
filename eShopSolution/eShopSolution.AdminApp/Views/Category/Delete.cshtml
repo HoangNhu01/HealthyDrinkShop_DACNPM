@@ -1,9 +1,9 @@
-﻿@model eShopSolution.ViewModels.Catalog.Products.ProductVm
+﻿@model eShopSolution.ViewModels.Catalog.Categories.CategoryVm
 
 @{
-    ViewData["Title"] = "Xóa sản phẩm";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Delete";
 }
+
 <style>
     .table {
         width: 100%;
@@ -50,16 +50,18 @@
         margin: 0;
     }
 </style>
+
 <div class="container-fluid">
-    <h1 class="mt-4">Xóa sản phẩm</h1>
+    <h1 class="mt-4">Xóa danh mục</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách danh mục</li>
 
-        <li class="breadcrumb-item active">Xóa sản phẩm</li>
+        <li class="breadcrumb-item active">Xóa danh mục</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
-            <a class="btn btn-outline-success" asp-action="Index" asp-controller="Product">Về danh sách</a>
+            <a class="btn btn-outline-success" asp-action="Index" asp-controller="Category">Về danh sách</a>
         </div>
 
         <div class="card-body">

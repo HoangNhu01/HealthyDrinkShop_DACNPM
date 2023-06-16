@@ -4,70 +4,98 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="container-fluid">
+    <h1 class="mt-4">Tạo mới danh mục</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item">Danh sách danh mục</li>
+        <li class="breadcrumb-item active">Tạo mới danh mục</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-outline-success" asp-action="Index" asp-controller="Category">Về danh sách</a>
+        </div>
 
-<h4>CategoryUpdateRequest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group hidden">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+        <div class="card-body">
+            <div class="col-md-4">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="row mb-3">
+                        <label asp-for="Name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input asp-for="Name" type="text" class="form-control">
+                        </div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+
+                    </div>
+                   
+                  
+                    <div class="row mb-3">
+                        <label asp-for="SeoAlias" class="col-sm-2 col-form-label">SeoAlias</label>
+                        <div class="col-sm-10">
+                            <input asp-for="SeoAlias" type="text" class="form-control">
+                        </div>
+                        <span asp-validation-for="SeoAlias" class="text-danger"></span>
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="SeoTitle" class="col-sm-2 col-form-label">SeoTitle</label>
+                        <div class="col-sm-10">
+                            <input asp-for="SeoTitle" type="text" class="form-control">
+                        </div>
+                        <span asp-validation-for="SeoTitle" class="text-danger"></span>
+
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="SeoDescription" class="col-sm-2 col-form-label">SeoDescription</label>
+                        <div class="col-sm-10">
+                            <input asp-for="SeoDescription" type="text" class="form-control">
+                        </div>
+                        <span asp-validation-for="SeoDescription" class="text-danger"></span>
+
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="SortOrder" class="col-sm-2 col-form-label">SortOrder</label>
+                        <div class="col-sm-10">
+                            <input asp-for="SortOrder" type="number" class="form-control">
+                        </div>
+                        <span asp-validation-for="SortOrder" class="text-danger"></span>
+
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="Status" class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-10">
+                            <select asp-for="Status" asp-items="@ViewBag.Status" class="form-control"></select>
+
+                        </div>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="ParentId" class="col-sm-2 col-form-label">ParentId</label>
+                        <div class="col-sm-10">
+                            <select asp-for="ParentId" asp-items="@ViewBag.ParentId" class="form-control">
+                                <option>None</option>
+                            </select>
+
+                        </div>
+                        <span asp-validation-for="ParentId" class="text-danger"></span>
+
+                    </div>
+                    <div class="row mb-3">
+                        <label asp-for="LanguageId" class="col-sm-2 col-form-label">LanguageId</label>
+                        <div class="col-sm-10">
+                            <input asp-for="LanguageId" type="text" class="form-control">
+                        </div>
+                        <span asp-validation-for="LanguageId" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Lưu lại" class="btn btn-outline-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SeoDescription" class="control-label"></label>
-                <input asp-for="SeoDescription" class="form-control" />
-                <span asp-validation-for="SeoDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SeoTitle" class="control-label"></label>
-                <input asp-for="SeoTitle" class="form-control" />
-                <span asp-validation-for="SeoTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SeoAlias" class="control-label"></label>
-                <input asp-for="SeoAlias" class="form-control" />
-                <span asp-validation-for="SeoAlias" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LanguageId" class="control-label"></label>
-                <input asp-for="LanguageId" class="form-control" />
-                <span asp-validation-for="LanguageId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentId" class="control-label"></label>
-                <select asp-for="ParentId" asp-items="@ViewBag.ParentId" class="form-control">
-                </select>
-                <span asp-validation-for="ParentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SortOrder" class="control-label"></label>
-                <input asp-for="SortOrder" class="form-control" />
-                <span asp-validation-for="SortOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" asp-items="@ViewBag.Status" class="form-control">
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
