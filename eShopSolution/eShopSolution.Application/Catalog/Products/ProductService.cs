@@ -129,6 +129,7 @@ namespace eShopSolution.Application.Catalog.Products
                                                     .Include(x => x.Product).ThenInclude(p => p.ProductImages)
                                                     .Include(x => x.Product).ThenInclude(i => i.IngredientInProducts)
                                                                             .ThenInclude(i => i.Ingredient)
+                                                    .Include(x => x.Product).ThenInclude(x => x.ProductImages)
                                                     .Where(x => x.Name.Contains(request.Keyword ?? "")
                                                                     && x.LanguageId == request.LanguageId);
 

@@ -6,6 +6,8 @@ import {DetailProductComponent} from "./routes/detail-product/detail-product.com
 import {AllProductComponent} from "./routes/all-product/all-product.component";
 import {AccountComponent} from "./routes/account/account.component";
 import {BlogComponent} from "./routes/blog/blog.component";
+import {PaymentsComponent} from "./routes/payments/payments.component";
+import {NotFoundComponent} from "./routes/not-found/not-found.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,6 +18,19 @@ const routes: Routes = [
   {
     path: 'blog',
     component: BlogComponent
+  },
+  {
+    path: 'payment',
+    component: PaymentsComponent
+  },
+  {
+    path: '404',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/404',
+    pathMatch: 'full'
   }
 ];
 

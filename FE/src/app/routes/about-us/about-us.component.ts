@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.less']
 })
-export class AboutUsComponent {
-
+export class AboutUsComponent{
+  lat = 51.678418;
+  lng = 7.809007;
 }

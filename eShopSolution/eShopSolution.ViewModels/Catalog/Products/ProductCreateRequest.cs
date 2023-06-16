@@ -22,9 +22,9 @@ namespace eShopSolution.ViewModels.Catalog.Products
 
         public IFormFile ThumbnailImage { get; set; }
 
-        public IngredientAssignRequest SelectIngredients { set; get; } = new IngredientAssignRequest();
+        public IngredientAssignRequest? SelectIngredients { set; get; } = new IngredientAssignRequest();
 
-        public CategoryAssignRequest SelectCategories { set; get; } = new CategoryAssignRequest();
+        public CategoryAssignRequest? SelectCategories { set; get; } = new CategoryAssignRequest();
 
     }
 }

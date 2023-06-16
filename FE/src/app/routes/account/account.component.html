@@ -9,22 +9,29 @@
                 <div class="card-body p-md-5 mx-md-4">
 
                   <ng-container *ngIf="isLogin">
-                    <form>
-                      <div class="form-outline mb-4">
-                        <label class="form-label" for="form2Example11">Username</label>
-                        <input type="email" id="form2Example11" class="form-control"
-                               placeholder="Phone number or email address" />
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <label class="form-label" for="form2Example22">Password</label>
-                        <input type="password" id="form2Example22" class="form-control" />
-                      </div>
-
+                    <form nzLayout="vertical" nz-form [formGroup]="loginForm" class="login-form">
+                      <nz-form-item>
+                        <nz-form-label [nzSpan]="12" nzFor="username">UserName</nz-form-label>
+                        <nz-form-control nzErrorTip="Please input your username!">
+                          <nz-input-group nzPrefixIcon="user">
+                            <input type="text" nz-input formControlName="username" placeholder="Nhập username" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-label [nzSpan]="12" nzFor="password">Password</nz-form-label>
+                        <nz-form-control nzErrorTip="Please input your Password!">
+                          <nz-input-group nzPrefixIcon="lock">
+                            <input type="password" nz-input formControlName="password" placeholder="Nhập password" />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <label nz-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="rememberMe">Remember me</label>
+                      </nz-form-item>
                       <div class="text-center pt-1 mb-5 pb-1">
-                        <button class="d-block w-100 btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Log
+                        <button class="d-block w-100 btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" (click)="login()">Log
                           in</button>
-                        <a class="text-muted" href="#!">Forgot password?</a>
                       </div>
 
                       <div class="d-flex align-items-center justify-content-center pb-4">

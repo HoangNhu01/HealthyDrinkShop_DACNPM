@@ -18,7 +18,7 @@
           <label class="text-black fw-2 fs-4">Tổng tiền:</label>
           <label class="color-main text-black fw-2 fs-4">{{total + unit}}</label>
         </div>
-        <button (click)="test()" class="w-100" style="background-color: #CE3C83" nzSize="large" nzType="primary"
+        <button [disabled]="total == 0" (click)="payment()" class="w-100" style="background-color: #CE3C83" nzSize="large" nzType="primary"
                 nz-button nzShape="round">Thanh toán
         </button>
       </div>
@@ -28,9 +28,9 @@
         <tbody>
         <tr *ngFor="let data of listProductCarts; index as i">
           <td
-            [nzChecked]="setOfCheckedId.has(data.id)"
+            [nzChecked]="true"
             [nzDisabled]="data.disabled"
-            (nzCheckedChange)="onItemChecked(data.id, $event)"
+            (nzCheckedChange)="onItemChecked(data.productId, $event)"
           ></td>
           <td class="fw-bold" style="width: auto">
             <div>
@@ -38,13 +38,13 @@
               <div class="d-flex justify-content-lg-between">
                 <div class="d-inline-flex">
                   <label>Số lượng: </label>
-                  <nz-input-number (ngModelChange)="changeQuantiny($event, data)" [ngModel]="data.quantity" class="ml-2" nzSize="small" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                  <nz-input-number (ngModelChange)="changeQuantiny(data,false, $event)" [ngModel]="data.quantity" class="ml-2" nzSize="small" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
                 </div>
                 <label class="color-main">{{data.price + unit}}</label>
               </div>
             </div>
           </td>
-          <td style="width: 10%" (click)="removeFromCart(i)">
+          <td style="width: 10%" (click)="changeQuantiny(data, true, 0)">
             <span class="fs-5" nz-icon nzType="close" nzTheme="outline"></span>
           </td>
         </tr>
@@ -53,3 +53,5 @@
     </div>
   </ng-container>
 </nz-drawer>
+<app-payments #payments [productPayment]="productPayments" [totalMoney]="total"></app-payments>
+
