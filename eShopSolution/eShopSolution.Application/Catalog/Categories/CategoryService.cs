@@ -102,7 +102,8 @@ namespace eShopSolution.Application.Catalog.Categories
                     Status = query.Category.Status,
                     SortOrder= query.Category.SortOrder,
                     ParentId = query.Category.ParentId,
-                    ProductInCategories = query.Category.ProductInCategories                   
+                    ProductInCategories = query.Category.ProductInCategories  ,
+                    LanguageId = languageId,
                 }
             };
         }

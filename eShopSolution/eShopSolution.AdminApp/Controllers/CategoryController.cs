@@ -48,8 +48,8 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         // GET: CategoryController/Create
-        [HttpGet("created-categories")]
-        public async Task<ActionResult> CreateAsync()
+        [HttpGet]
+        public async Task<ActionResult> Create()
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             var data = await _categoryApiClient.GetAll(languageId);
@@ -67,7 +67,7 @@ namespace eShopSolution.AdminApp.Controllers
                 return View(request);
 
             var result = await _categoryApiClient.CreateCategory(request);
-            if (result.ResultObj)
+            if (result.IsSuccessed)
             {
                 TempData["result"] = "Thêm mới danh mục thành công";
                 return RedirectToAction("Index");
@@ -138,7 +138,7 @@ namespace eShopSolution.AdminApp.Controllers
                 return View();
 
             var result = await _categoryApiClient.DeleteCategory(request.Id);
-            if (result.ResultObj)
+            if (result >0)
             {
                 TempData["result"] = "Xóa danh mục thành công";
                 return RedirectToAction("Index");

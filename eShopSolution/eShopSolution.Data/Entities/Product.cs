@@ -25,6 +25,8 @@ namespace eShopSolution.Data.Entities
         public List<ProductImage> ProductImages { get; set; }
        
         public List<IngredientInProduct> IngredientInProducts { get; set; }
+        public List<Comment> Comments { get; set; }
+
 
     }
 }

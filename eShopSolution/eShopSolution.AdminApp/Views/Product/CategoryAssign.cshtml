@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid">
-    <h1 class="mt-4">Gán quyền</h1>
+    <h1 class="mt-4">Thêm danh mục</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
         <li class="breadcrumb-item active">Gán danh mục</li>
@@ -16,24 +16,35 @@
         </div>
 
         <div class="card-body">
-            <form asp-action="CategoryAssign">
+            <div class="col-md-4">
+
+             <form asp-action="CategoryAssign">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                @for (var i = 0; i < Model.Categories.Count; i++)
-                {
-                    <div class="form-group">
-                        <label>
-                            @Model.Categories[i].Name
-                            <input type="checkbox" asp-for="Categories[i].Selected" />
-                            <input type="hidden" asp-for="Categories[i].Id" />
-                            <input type="hidden" asp-for="Categories[i].Name" />
-                        </label>
+                <div class="row mb-3">
+                        <legend class="col-form-label col-sm-2 pt-0">Select Categories</legend>
+                    <div class="col-sm-10">
+                        
+                        <input type="hidden" asp-for="Id" />
+                        @for (var i = 0; i < Model.Categories.Count; i++)
+                        {
+                            <div class="form-check">
+                                <label class="form-check-label" for="gridCheck1">
+                                    @Model.Categories[i].Name
+                                </label>
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1" asp-for="Categories[i].Selected">
+
+                                <input type="hidden" asp-for="Categories[i].Id" />
+                                <input type="hidden" asp-for="Categories[i].Name" />
+                            </div>
+
+                        }
                     </div>
-                }
-                <div class="form-group">
-                    <input type="submit" value="Lưu lại" class="btn btn-primary" />
                 </div>
-            </form>
+                <div class="form-group">
+                    <input type="submit" value="Lưu lại" class="btn btn-outline-primary" />
+                    </div>
+                </form>
         </div>
     </div>
+</div>
 </div>

@@ -72,6 +72,14 @@
 
                         </div>
                         <div class="row mb-3">
+                            <label asp-for="Stock" class="col-sm-2 col-form-label">Stock</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Stock" type="number" class="form-control">
+                            </div>
+                            <span asp-validation-for="Stock" class="text-danger"></span>
+
+                        </div>
+                        <div class="row mb-3">
                             <label asp-for="OriginalPrice" class="col-sm-2 col-form-label">OriginalPrice</label>
                             <div class="col-sm-10">
                                 <input asp-for="OriginalPrice" type="number" class="form-control">

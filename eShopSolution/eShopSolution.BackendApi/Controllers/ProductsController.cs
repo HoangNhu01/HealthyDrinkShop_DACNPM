@@ -77,7 +77,14 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest();
             return Ok();
         }
-
+        [HttpDelete("/images/{imageId}")]
+        public async Task<IActionResult> DeleteImage(int imageId)
+        {
+            var affectedResult = await _productService.DeleteImage(imageId);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
         [HttpPatch("{productId}/{newPrice}")]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
@@ -128,19 +135,8 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("images/{imageId}")]
-        public async Task<IActionResult> RemoveImage(int imageId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var result = await _productService.RemoveImage(imageId);
-            if (result == 0)
-                return BadRequest();
-
-            return Ok();
-        }
+        
+        
 
         [HttpGet("images/{imageId}")]
         public async Task<IActionResult> GetImageById(int imageId)

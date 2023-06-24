@@ -22,5 +22,18 @@ namespace eShopSolution.Utilities.Constants
             public const string TmnCode = "VNpayApi:TmnCode";
             public const string HashSecret = "VNpayApi:HashSecret";
         }
+        public class FaceBookAuthentication
+        {
+            public const string FacebookAppId = "FaceBookSetting:FacebookAppId";
+            public const string FacebookAppSecret = "FaceBookSetting:FacebookAppSecret";
+            public const string FacebookRedirectUri = "FaceBookSetting:FacebookRedirectUri";
+        }
+        public class GoogleAuthentication
+        {
+            public const string GoogleClientId = "GoogleSetting:GoogleClientId";
+            public const string GoogleRedirectUri = "GoogleSetting:GoogleRedirectUri";
+            public const string Scope = "GoogleSetting:Scope";
+            public const string ClientSecret = "GoogleSetting:ClientSecret";
+        }
     }
 }
