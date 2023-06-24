@@ -27,6 +27,10 @@ namespace eShopSolution.AdminApp.Controllers
             var user = User.Identity.Name;
             var img = User.Claims.Select(x => x.Value);
             var jwt = HttpContext.Request.Cookies["Token"];
+            if (TempData["img"] != null)
+            {
+                ViewBag.UserImage = TempData["img"];
+            }
             return View();
         }
 

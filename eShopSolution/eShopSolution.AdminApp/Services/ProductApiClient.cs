@@ -126,6 +126,8 @@ namespace eShopSolution.AdminApp.Services
 
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
+            requestContent.Add(new StringContent(request.Price.ToString()), "price");
+            requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
 
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Details) ? "" : request.Details.ToString()), "details");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoDescription) ? "" : request.SeoDescription.ToString()), "seoDescription");
@@ -220,6 +222,12 @@ namespace eShopSolution.AdminApp.Services
 
             var response = await client.PostAsync($"/api/products/{id}/images", requestContent);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<ApiResult<bool>> DeleteImage(int imageId)
+        {
+            var result = await Delete($"/api/products/images/" + imageId);
+            return result;
         }
     }
 }

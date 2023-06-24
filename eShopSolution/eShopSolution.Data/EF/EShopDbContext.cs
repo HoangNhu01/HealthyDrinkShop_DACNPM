@@ -31,6 +31,8 @@ namespace eShopSolution.Data.EF
 
             modelBuilder.ApplyConfiguration(new IngredientInProductConfiguration());
 
+            modelBuilder.ApplyConfiguration(new CommentConfiguration());
+
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ContactConfiguration());
@@ -60,7 +62,7 @@ namespace eShopSolution.Data.EF
 
         public DbSet<AppConfig> AppConfigs { get; set; }
 
-
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Cart> Carts { get; set; }
 
         public DbSet<CategoryTranslation> CategoryTranslations { get; set; }

@@ -29,7 +29,7 @@ namespace eShopSolution.AdminApp.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<ApiResult<bool>> CreateCategory(CategoryCreateRequest request)
+        public async Task<ApiResult<CategoryVm>> CreateCategory(CategoryCreateRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -39,13 +39,13 @@ namespace eShopSolution.AdminApp.Services
             var response = await client.PostAsync("/api/categories/created-categories", httpContent);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(await response.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<ApiSuccessResult<CategoryVm>>(await response.Content.ReadAsStringAsync());
             }
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ApiErrorResult<CategoryVm>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<ApiResult<bool>> DeleteCategory(int id)
+        public async Task<int> DeleteCategory(int id)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
@@ -54,9 +54,9 @@ namespace eShopSolution.AdminApp.Services
             var response = await client.DeleteAsync($"/api/categories/{id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(body);
+                return JsonConvert.DeserializeObject<int>(body);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(body);
+            return JsonConvert.DeserializeObject<int>(body);
         }
 
         public async Task<ApiResult<List<CategoryVm>>> GetAll(string languageId)

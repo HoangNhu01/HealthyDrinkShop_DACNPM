@@ -23,5 +23,7 @@ namespace eShopSolution.AdminApp.Services
         Task<ApiResult<ProductVm>> GetById(int id, string languageId);
 
         Task<ApiResult<bool>> DeleteProduct(int id);
+        Task<ApiResult<bool>> DeleteImage(int imageId);
+
     }
 }

@@ -5,10 +5,12 @@ using eShopSolution.Application.Catalog.Categories;
 using eShopSolution.Application.Catalog.Ingredients;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
+using eShopSolution.Application.Community.Comments;
 using eShopSolution.Application.Sales.Orders;
 using eShopSolution.Application.System.Languages;
 using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Users;
+using eShopSolution.BackendApi.Hubs;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Constants;
@@ -25,7 +27,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SignalRChat.Hubs;
 using StackExchange.Redis;
 
 namespace eShopSolution.BackendApi
@@ -48,8 +49,8 @@ namespace eShopSolution.BackendApi
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<EShopDbContext>()
                 .AddDefaultTokenProviders();
-
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString(SystemConstants.CacheConnectionString)));
+           
+                 services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString(SystemConstants.CacheConnectionString)));
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
 
@@ -57,6 +58,8 @@ namespace eShopSolution.BackendApi
             services.AddTransient<IIngredientsService, IngredientService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<ICommentService, CommentService>();
 
 
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
@@ -118,7 +121,7 @@ namespace eShopSolution.BackendApi
                 options.AddPolicy("corspolicy",
                     policy =>
                     {
-                        policy.WithOrigins("*").AllowAnyOrigin()
+                        policy.WithOrigins("*")
                        .AllowAnyHeader()
                        .AllowAnyMethod();
                     });
@@ -182,6 +185,8 @@ namespace eShopSolution.BackendApi
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<OrderHub>("/orderHub");
+
             });
         }
     }

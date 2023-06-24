@@ -69,26 +69,27 @@ namespace eShopSolution.WebApp.Controllers
                     if (vnp_ResponseCode == "00")
                     {
                         //Thanh toán thành công
-                        payMentStatus.ResultObj = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
+                        payMentStatus.Message = "Thanh toán thành công hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId;
                         payMentStatus.IsSuccessed = true;
+                        payMentStatus.ResultObj = pay.GetResponseData("vnp_TxnRef");
                     }
                     else
                     {
                         //Thanh toán không thành công. Mã lỗi: vnp_ResponseCode
-                        payMentStatus.ResultObj = "Có lỗi xảy ra trong quá trình xử lý hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId + " | Mã lỗi: " + vnp_ResponseCode;
+                        payMentStatus.Message = "Có lỗi xảy ra trong quá trình xử lý hóa đơn " + orderId + " | Mã giao dịch: " + vnpayTranId + " | Mã lỗi: " + vnp_ResponseCode;
                         payMentStatus.IsSuccessed = false;
                     }
                 }
                 else
                 {
-                    payMentStatus.ResultObj = "Có lỗi xảy ra trong quá trình xử lý";
+                    payMentStatus.Message = "Có lỗi xảy ra trong quá trình xử lý";
                     payMentStatus.IsSuccessed= false;
                 }
 
             }
             else
             {
-                payMentStatus.ResultObj = "Không tìm thấy yêu cầu thanh toán";
+                payMentStatus.Message = "Không tìm thấy yêu cầu thanh toán";
                 payMentStatus.IsSuccessed = false;
             }
             await _hubContext.Clients.All.SendAsync("StatusOrderMessage", payMentStatus);

@@ -70,7 +70,7 @@ namespace eShopSolution.BackendApi.Controllers
             var affectedResult = await _categoryService.Delete(categoryId);
             if (affectedResult == 0)
                 return BadRequest();
-            return Ok();
+            return Ok(affectedResult);
         }
     }
 }

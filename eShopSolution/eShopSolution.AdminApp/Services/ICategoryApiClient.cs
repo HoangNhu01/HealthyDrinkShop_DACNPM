@@ -12,11 +12,11 @@ namespace eShopSolution.AdminApp.Services
 
         Task<ApiResult<CategoryVm>> GetById(string languageId, int id);
 
-        Task<ApiResult<bool>> CreateCategory(CategoryCreateRequest request);
+        Task<ApiResult<CategoryVm>> CreateCategory(CategoryCreateRequest request);
 
         Task<int> UpdateCategory(CategoryUpdateRequest request);
 
-        Task<ApiResult<bool>> DeleteCategory(int id);
+        Task<int> DeleteCategory(int id);
         
     }
 }
