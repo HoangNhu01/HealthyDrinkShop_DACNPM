@@ -6,7 +6,7 @@ namespace eShopSolution.Data.Enums
 {
     public enum PaymentStatus
     {
-        Direct,
+        DirectPayment,
         WithOnlineWallet
 
     }

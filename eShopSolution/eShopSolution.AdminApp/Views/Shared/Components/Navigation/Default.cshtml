@@ -7,7 +7,6 @@
   
    
     var count = localStorage.getItem('count') ?? 0;
-    console.log(count);
 
 </script>
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -45,7 +44,7 @@
                     <span class="badge bg-primary badge-number">0</span>
                 </a><!-- End Notification Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                <ul id="notifications" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
                         <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                     </li>
@@ -68,7 +67,7 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li class="dropdown-footer">
-                        <a href="#">Show all notifications</a>
+                        <a asp-action="Index" asp-controller="Order">Show all customer order</a>
                     </li>
 
                 </ul><!-- End Notification Dropdown Items -->
@@ -144,7 +143,14 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                    @if (ViewBag.UserImage != null)
+                    {
+                        <img src="@(ViewBag.UserImage)" alt="Profile" class="rounded-circle" />
+
+                    }else{
+                        <img src="~/assets/img/logo.jpg" alt="Profile" class="rounded-circle" />
+
+                    }
                     <span class="d-none d-md-block dropdown-toggle ps-2">@Context.User.Identity.Name</span>
                 </a><!-- End Profile Iamge Icon -->
 
@@ -199,16 +205,8 @@
 
         </ul>
     </nav><!-- End Icons Navigation -->
-    <script>
-        $(".badge.bg-primary").text(`${count}`);
-        $(".dropdown-header").text(`
-                                You have
-                ${count} new notifications`);
-        $(".nav-link").click(function (e) {
-            console.log(123);
-            $(".badge.bg-primary").text("0");
-            localStorage.removeItem('count');
-
-        })
+    <script>      
+        $(".dropdown-header").text(`You have
+                                ${count} new notifications`);
     </script>
 </header><!-- End Header -->

@@ -87,6 +87,7 @@ namespace eShopSolution.Application.Sales.Orders
                                                    TotalPrice = x.TotalPrice,
                                                    ShipName = x.ShipName,
                                                    OrderStatus = x.Status,
+                                                   PaymentStatus = x.PaymentStatus,
                                                }).ToListAsync();
 
             return new ApiSuccessResult<List<OrderVm>>()

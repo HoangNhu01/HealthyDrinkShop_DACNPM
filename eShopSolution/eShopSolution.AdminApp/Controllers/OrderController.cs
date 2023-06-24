@@ -95,7 +95,7 @@ namespace eShopSolution.AdminApp.Controllers
                 var result = await _orderApiClient.DeleteOrder(orderVm.Id);
                 if (result.IsSuccessed)
                 {
-                    TempData["result"] = "Cập nhật trạng thái đơn hàng thành công";
+                    TempData["result"] = "Xóa đơn hàng thành công";
                     return RedirectToAction("Index");
                 }
                 return View(orderVm);

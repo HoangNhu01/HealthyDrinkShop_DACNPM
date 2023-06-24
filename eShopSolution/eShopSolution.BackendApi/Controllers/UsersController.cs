@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using eShopSolution.Application.System.Users;
+using eShopSolution.ViewModels.System.ExternalUser;
 using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace eShopSolution.BackendApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.Authencate(request);
+            var result = await _userService.Authenticate(request);
 
             if (string.IsNullOrEmpty(result.ResultObj))
             {
@@ -43,6 +44,35 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest(ModelState);
 
             var result = await _userService.Register(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("external-fb-authenticate")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalFbAuthenticate([FromBody] FaceBookUserInfor request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.ExternalAuthenticate(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost("external-gg-authenticate")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalGgAuthenticate([FromBody] GoogleUserInfor request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.ExternalAuthenticate(request);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);
@@ -83,14 +113,21 @@ namespace eShopSolution.BackendApi.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
         {
-            var products = await _userService.GetUsersPaging(request);
-            return Ok(products);
+            var users = await _userService.GetUsersPaging(request);
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var user = await _userService.GetById(id);
+            return Ok(user);
+        }
+        [HttpGet("searching/{userName}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByName(string userName)
+        {
+            var user = await _userService.GetByName(userName);
             return Ok(user);
         }
 

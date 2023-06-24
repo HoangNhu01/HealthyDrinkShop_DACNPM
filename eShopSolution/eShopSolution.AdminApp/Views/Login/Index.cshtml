@@ -283,8 +283,11 @@
 		<form action="~/User/Create" method="post">
 			<h1>Create Account</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a href="https://www.facebook.com/dialog/oauth?client_id=@(ViewBag.Fbsetting.FacebookAppId)&redirect_uri=@(ViewBag.Fbsetting.FacebookRedirectUri)&&response_type=code&scope=email"
+				   class="social">
+				   <i class="fab fa-facebook-f"></i></a>
+					<a href="https://accounts.google.com/o/oauth2/auth?client_id=@(ViewBag.Ggsetting.GoogleClientId)&redirect_uri=@(ViewBag.Ggsetting.GoogleRedirectUri)&response_type=code&scope=@(ViewBag.Ggsetting.Scope)"
+				   class="social"><i class="fab fa-google-plus-g"></i></a>
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 				<div asp-validation-summary="All" class="text-danger"></div>
@@ -305,9 +308,13 @@
 			<form asp-action="Index" asp-controller="Login" method="post">
 			<h1>Sign in</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+					<a href="https://www.facebook.com/dialog/oauth?client_id=@(ViewBag.Fbsetting.FacebookAppId)&redirect_uri=@(ViewBag.Fbsetting.FacebookRedirectUri)&&response_type=code&scope=email"
+					   class="social">
+						<i class="fab fa-facebook-f"></i>
+					</a>
+					<a href="https://accounts.google.com/o/oauth2/auth?client_id=@(ViewBag.Ggsetting.GoogleClientId)&redirect_uri=@(ViewBag.Ggsetting.GoogleRedirectUri)&include_granted_scopes=true&response_type=code&scope=@(ViewBag.Ggsetting.Scope)"
+				   class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 				<div asp-validation-summary="All" class="text-danger"></div>
 

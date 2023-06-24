@@ -39,6 +39,7 @@ namespace eShopSolution.AdminApp
                     options.LoginPath = "/Login/Index/";
                     options.AccessDeniedPath = "/User/Forbidden/";
                 });
+              
            // services.AddKendo();
             services.AddControllersWithViews()
                      .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()); services.AddSecurityFeature(Configuration).AddManagers();

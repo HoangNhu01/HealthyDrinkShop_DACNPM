@@ -49,8 +49,8 @@ namespace eShopSolution.BackendApi
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<EShopDbContext>()
                 .AddDefaultTokenProviders();
-
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString(SystemConstants.CacheConnectionString)));
+           
+                 services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString(SystemConstants.CacheConnectionString)));
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
 

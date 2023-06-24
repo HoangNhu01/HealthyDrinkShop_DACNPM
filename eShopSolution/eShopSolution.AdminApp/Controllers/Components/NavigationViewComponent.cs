@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers.Components
 {
+    
     public class NavigationViewComponent : ViewComponent
     {
         private readonly ILanguageApiClient _languageApiClient;
@@ -29,7 +30,9 @@ namespace eShopSolution.AdminApp.Controllers.Components
                 .GetString(SystemConstants.AppSettings.DefaultLanguageId),
                 Languages = languages.ResultObj
             };
-            ViewBag.NavigationVm = _orderApiClient.GetAll(null).Result.ResultObj.Take(4);
+            var order = _orderApiClient.GetAll(null).Result.ResultObj;
+            order.Sort((o1, o2) => o2.OrderDate.CompareTo(o1.OrderDate));
+            ViewBag.NavigationVm = order.Take(4);
             return View("Default", navigationVm);
         }
     }

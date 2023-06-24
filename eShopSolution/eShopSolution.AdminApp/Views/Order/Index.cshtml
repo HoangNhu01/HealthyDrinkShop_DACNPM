@@ -54,17 +54,7 @@
             @@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css';
             @@import 'https://fonts.googleapis.com/css?family=Roboto+Mono:300,700';
            
-            h1 {
-                text-align: center;
-                color: #fff;
-                font-weight: 600;
-                font-size: 3em;
-                letter-spacing: 0px;
-                text-shadow: 1px 1px rgba(0, 0, 0, 0.02),
-                    2px 2px rgba(0, 0, 0, 0.02), 3px 3px rgba(0, 0, 0, 0.02),
-                    4px 4px rgba(0, 0, 0, 0.02), 5px 5px rgba(0, 0, 0, 0.02),
-                    6px 6px rgba(0, 0, 0, 0.02), 7px 7px rgba(0, 0, 0, 0.02);
-            }
+          
             h1 i {
                 position: relative;
                 font-size: 70px;
@@ -200,17 +190,13 @@
                 cursor: no-drop;
             }
         </style>
-    <div class="container-fluid">
-        <div class="pagetitle">
-            <h1>Danh mục sản phẩm</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Đơn hàng</li>
-                    <li class="breadcrumb-item active">Danh sách đơn hàng</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
+        <div class="container-fluid">
+            <h1 class="mt-4">Danh sách đơn hàng</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item">Đơn hàng</li>
+                <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+            </ol>
         <div class="card mb-12">
             <div class="card-header">
                 <div class="row">
@@ -233,10 +219,12 @@
                             <th scope="col">#</th>
                             <th scope="col">OrderDate</th>
                             <th scope="col">ShipName</th>
-                            <th scope="col">ShipPhoneNumber</th>
+                            <th scope="col">PhoneNumber</th>
                             <th scope="col">ShipAddress</th>
                             <th scope="col">ShipEmail</th>
                             <th scope="col">TotalPrice</th>
+                            <th scope="col">PaymentStatus</th>
+
                             <th scope="col">OrderStatus</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -247,14 +235,8 @@
                         {
                             <tr class="table-row">
                                 <td class="table-data" width="80px">
-                                    @{
-                                        string originalString = item.Id.ToString();
-                                        int startIndex = originalString.IndexOf('e')+1;
-                                        int endIndex = originalString.IndexOf("86") + 2; // Adding 2 to include '86' in the substring
-
-                                        string extractedSubstring = originalString.Substring(startIndex, endIndex - startIndex) + "...";
-                                    }
-                                    @Html.DisplayFor(modelItem => extractedSubstring )
+                                   
+                                    @Html.DisplayFor(modelItem => item.Id )
                                 </td>
                                 <td class="table-data">
                                     @Html.DisplayFor(modelItem => item.OrderDate)
@@ -273,6 +255,9 @@
                                 </td>
                                 <td class="table-data">
                                     @Html.DisplayFor(modelItem => item.TotalPrice)
+                                </td>
+                                <td class="table-data">
+                                    @Html.DisplayFor(modelItem => item.PaymentStatus)
                                 </td>
                                 <td class="table-data">
                                     
