@@ -51,6 +51,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {AgmCoreModule} from "@agm/core";
 import {AboutUsComponent} from "./routes/about-us/about-us.component";
 import {BlogComponent} from "./routes/blog/blog.component";
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 
 registerLocaleData(en);
 
@@ -108,10 +109,11 @@ registerLocaleData(en);
         NzBadgeModule,
         NzRadioModule,
         NzSelectModule,
-      AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
-        libraries: ["places", "geometry"]
-      })
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
+            libraries: ["places", "geometry"]
+        }),
+        NzDatePickerModule
     ],
   providers: [
     {provide: NZ_I18N, useValue: en_US},

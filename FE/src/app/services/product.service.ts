@@ -47,4 +47,8 @@ export class ProductService {
     const url = environment.urlAPI + 'api/Payments';
     return this.http.post(url, body);
   }
+  registry(body: object) {
+    const url = environment.urlAPI + 'api/Users';
+    return this.http.post(url, body);
+  }
 }
