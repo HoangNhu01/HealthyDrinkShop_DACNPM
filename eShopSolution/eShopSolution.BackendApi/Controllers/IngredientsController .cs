@@ -18,9 +18,9 @@ namespace eShopSolution.BackendApi.Controllers
         private readonly IIngredientsService _ingredientsService;
 
         public IngredientsController(
-            IIngredientsService categoryService)
+            IIngredientsService ingredientsService)
         {
-            _ingredientsService = categoryService;
+            _ingredientsService = ingredientsService;
         }
 
         [HttpGet]

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace eShopSolution.ViewModels.System.Users
+namespace eShopSolution.ViewModels.AppSystem.Users
 {
     public class UserVm
     {

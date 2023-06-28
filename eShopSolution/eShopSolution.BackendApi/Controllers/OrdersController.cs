@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using eShopSolution.AdminApp.IpAddresss;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Sales.Orders;
-using eShopSolution.Application.System.Users;
+using eShopSolution.Application.AppSystem.Users;
 using eShopSolution.BackendApi.Hubs;
 using eShopSolution.Data.Entities;
 using eShopSolution.Data.Enums;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Sales;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +50,7 @@ namespace eShopSolution.BackendApi.Controllers
 
             _hubContext = hubContext;
         }
-        [HttpPost("{id}/{languageId}")]
+        [HttpPost("{id}/{languageId}/{clientQuantity}")]
         public async Task<IActionResult> AddToCart(int id, string languageId, int clientQuantity)
         {
             var product =  _productService.GetById(id, languageId).Result.ResultObj;
@@ -201,20 +201,20 @@ namespace eShopSolution.BackendApi.Controllers
             }
             return BadRequest();
         }
-        [HttpGet("order-paging")]
-        public async Task<IActionResult> GetAllOrder(string userName)
+        [HttpGet("customer-order")]
+        public async Task<IActionResult> GetByUserId(Guid userId)
         {
-            var result = await _orderService.GetAll(userName);
+            var result = await _orderService.GetByUserId(userId);
             if (result.IsSuccessed)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{orderId}")]
+        public async Task<IActionResult> GetById(Guid orderId)
         {
-            var result = await _orderService.GetById(id);
+            var result = await _orderService.GetById(orderId);
             if (result.IsSuccessed)
             {
                 return Ok(result);

@@ -8,7 +8,6 @@
     <meta name="author" content="" />
     <title>@ViewData["Title"] - Administration</title>
     @*<link rel="icon" type="image/png" href="/assets/img/logo.png" />*@
-    <link href="~/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     <link href="~/assets/img/favicon.png" rel="icon">
@@ -46,32 +45,34 @@
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
+           
             <li class="nav-item">
-                <a class="nav-link " asp-controller="Home" asp-action="Index">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class=" ri-account-circle-line
 "></i><span>Người Dùng</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a asp-controller="User" asp-action="Index">
+                        <a href="~/User/Index" >
                             <i class="bi bi-circle"></i><span>Danh Sách</span>
                         </a>
                     </li>
                     <li>
-                        <a asp-controller ="User" asp-action="Create">
+                        <a asp-controller="User" asp-action="Create">
                             <i class="bi bi-circle"></i><span>Thêm Mới</span>
                         </a>
                     </li>
-                    
+
                 </ul>
             </li><!-- End Components Nav -->
+
+           
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -218,7 +219,7 @@
             </li><!-- End Login Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-error-404.html">
+                <a class="nav-link collapsed" href="/"
                     <i class="bi bi-dash-circle"></i>
                     <span>Error 404</span>
                 </a>
@@ -251,9 +252,41 @@
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
     </footer><!-- End Footer -->
-
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     <script>
-     
+        // Get all the list items with the class "nav-item"
+        $(document).ready(function () {
+            // Get the current URL
+            var currentUrl = window.location.href;
+
+            // Iterate through each list item with the class "nav-item"
+            $('.nav-item').each(function () {
+                // Get the anchor tag within the list item
+                var anchor = $(this).find('a');
+                var nav = $(this);
+
+                anchor.each(function () {
+                    var href = "https://localhost:5002" + $(this).attr('href');
+
+                    if (href === currentUrl) {
+                        
+                        $(this).addClass('active')
+                        $(this).css({
+                            'color': '#4154f1',
+                            'background': '#f6f9ff'
+                        });
+
+                        // Toggle the "collapsed" class
+                        nav.toggleClass('collapsed');
+                        // Toggle the "show" class on the parent ul element
+                        nav.find('.nav-content').toggleClass('show');
+                    }
+                });
+                // Check if the href matches the current URL
+               
+            });
+        });
+
 
         // Create a connection to the SignalR hub
 

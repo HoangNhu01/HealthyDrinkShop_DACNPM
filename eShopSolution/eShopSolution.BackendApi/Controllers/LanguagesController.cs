@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using eShopSolution.Application.System.Languages;
+using eShopSolution.Application.AppSystem.Languages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eShopSolution.BackendApi.Controllers

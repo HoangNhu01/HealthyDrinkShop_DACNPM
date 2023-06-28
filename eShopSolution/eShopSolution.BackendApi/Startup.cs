@@ -7,14 +7,14 @@ using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
 using eShopSolution.Application.Community.Comments;
 using eShopSolution.Application.Sales.Orders;
-using eShopSolution.Application.System.Languages;
-using eShopSolution.Application.System.Roles;
-using eShopSolution.Application.System.Users;
+using eShopSolution.Application.AppSystem.Languages;
+using eShopSolution.Application.AppSystem.Roles;
+using eShopSolution.Application.AppSystem.Users;
 using eShopSolution.BackendApi.Hubs;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Constants;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Users;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,7 +27,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NETCore.MailKit.Core;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using StackExchange.Redis;
+using eShopSolution.Application.Catalog.Statistic;
 
 namespace eShopSolution.BackendApi
 {
@@ -46,7 +50,7 @@ namespace eShopSolution.BackendApi
             services.AddDbContext<EShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
-            services.AddIdentity<AppUser, AppRole>()
+            services.AddIdentity<AppUser, AppRole>(option => option.SignIn.RequireConfirmedEmail = true)
                 .AddEntityFrameworkStores<EShopDbContext>()
                 .AddDefaultTokenProviders();
            
@@ -58,9 +62,9 @@ namespace eShopSolution.BackendApi
             services.AddTransient<IIngredientsService, IngredientService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<ICommentService, CommentService>();
-
+            services.AddTransient<IIpAdrress, IpAddress>();
+            services.AddTransient<IStatisticService, StatisticService>();
 
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
@@ -71,7 +75,25 @@ namespace eShopSolution.BackendApi
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 
-            services.AddTransient<IIpAdrress, IpAddress>();
+            services.AddMailKit(optionBuilder =>
+            {
+                optionBuilder.UseMailKit(new MailKitOptions()
+                {
+                    //get options from sercets.json
+                    Server = Configuration["EmailConfig:Server"],
+                    Port = Convert.ToInt32(Configuration["EmailConfig:Port"]),
+                    SenderName = Configuration["EmailConfig:SenderName"],
+                    SenderEmail = Configuration["EmailConfig:SenderEmail"],
+
+                    // can be optional with no authentication 
+                    Account = Configuration["EmailConfig:Account"],
+                    Password = Configuration["EmailConfig:Password"],
+                    // enable ssl or tls
+                    Security = true
+                });
+            }); ;
+
+            
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {

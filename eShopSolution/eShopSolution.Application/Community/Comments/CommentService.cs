@@ -63,11 +63,14 @@ namespace eShopSolution.Application.Community.Comments
 
         public async Task<ApiResult<List<CommentVm>>> GetByAnyId(Guid userId, int productId, string languageId)
         {
-            var comments = _context.Comments.Where(x => x.UserId == userId 
-                                                     || x.ProductId == productId)
-                                                                        .Include(x => x.Product)
-                                                                        .ThenInclude(x =>x.ProductTranslations)
-                                                                        .Include(x => x.User);
+            var comments = _context.Comments.Where(x => x.UserId.ToString()
+                                            .Contains(userId == Guid.Empty ? "" : userId.ToString())
+                                            && x.ProductId.ToString()
+                                            .Contains(productId ==0 ? "" : productId.ToString()))
+                                            .Include(x => x.Product)
+                                            .ThenInclude(x =>x.ProductTranslations)
+                                            .Include(x => x.User);
+
             var commentVM = await comments.Select(x => new CommentVm()
             {
                 UserId = userId,

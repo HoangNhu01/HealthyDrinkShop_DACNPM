@@ -6,7 +6,7 @@ using eShopSolution.AdminApp.Hubs;
 using eShopSolution.AdminApp.Services;
 using eShopSolution.Security;
 using eShopSolution.Security.FeatureBuilder;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +38,7 @@ namespace eShopSolution.AdminApp
                 {
                     options.LoginPath = "/Login/Index/";
                     options.AccessDeniedPath = "/User/Forbidden/";
+
                 });
               
            // services.AddKendo();
@@ -70,7 +71,6 @@ namespace eShopSolution.AdminApp
             //           .AllowAnyMethod();
             //        });
             //});
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy =>

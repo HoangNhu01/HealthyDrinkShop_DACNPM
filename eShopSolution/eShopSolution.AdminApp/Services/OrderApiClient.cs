@@ -35,9 +35,9 @@ namespace eShopSolution.AdminApp.Services
             return await Delete($"/api/orders?orderId={id}");
         }
 
-        public async Task<ApiResult<List<OrderVm>>> GetAll(string keyword)
+        public async Task<ApiResult<List<OrderVm>>> GetAll(Guid uId)
         {
-            return await GetAsync<ApiResult<List<OrderVm>>>($"/api/orders/order-paging/{keyword}");
+            return await GetAsync<ApiResult<List<OrderVm>>>($"/api/orders/customer-order?userId={uId}");
         }
 
         public async Task<ApiResult<OrderVm>> GetById(Guid id)
