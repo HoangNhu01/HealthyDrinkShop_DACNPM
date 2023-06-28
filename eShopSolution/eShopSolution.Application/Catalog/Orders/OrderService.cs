@@ -5,7 +5,7 @@ using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Catalog.Categories;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.Sales;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -72,10 +72,10 @@ namespace eShopSolution.Application.Sales.Orders
             }
         }
 
-        public async Task<ApiResult<List<OrderVm>>> GetAll(string userName)
+        public async Task<ApiResult<List<OrderVm>>> GetByUserId(Guid userId)
         {
-            var order = await _context.Orders.Include(x => x.OrderDetails)
-                                             .Where(x => x.ShipName.Contains(userName?? ""))
+            var order = await _context.Orders.Include(x => x.OrderDetails).ThenInclude(x => x.Product)
+                                             .Where(x => x.UserId.ToString().Contains(userId ==Guid.Empty ? "" : userId.ToString()))
                                              .Select(x => new OrderVm()
                                                {
                                                    Id = x.Id,
@@ -88,6 +88,7 @@ namespace eShopSolution.Application.Sales.Orders
                                                    ShipName = x.ShipName,
                                                    OrderStatus = x.Status,
                                                    PaymentStatus = x.PaymentStatus,
+                                                   OrderDetails = x.OrderDetails
                                                }).ToListAsync();
 
             return new ApiSuccessResult<List<OrderVm>>()
@@ -97,18 +98,18 @@ namespace eShopSolution.Application.Sales.Orders
             
         }
 
-        public async Task<ApiResult<OrderVm>> GetById(Guid id)
+        public async Task<ApiResult<OrderVm>> GetById(Guid orderId)
         {
             var order = await _context.Orders.Include(x => x.OrderDetails)
                                              .ThenInclude(x=> x.Product)
-                                             .ThenInclude(x =>x.ProductTranslations).FirstOrDefaultAsync(x => x.Id == id);
+                                             .FirstOrDefaultAsync(x => x.Id == orderId);
             if (order == null)
-                throw new EShopException($"Can not find order by {id}");
+                throw new EShopException($"Can not find order by {orderId}");
             return new ApiSuccessResult<OrderVm>()
             {
                 ResultObj = new OrderVm()
                 {
-                    Id = id,
+                    Id = orderId,
                     UserId = order.UserId,
                     OrderDate = order.OrderDate,
                     ShipAddress = order.ShipAddress,

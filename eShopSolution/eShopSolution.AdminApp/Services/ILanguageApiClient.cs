@@ -1,5 +1,5 @@
 ﻿using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.Languages;
+using eShopSolution.ViewModels.AppSystem.Languages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

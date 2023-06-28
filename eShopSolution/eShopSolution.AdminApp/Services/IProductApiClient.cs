@@ -1,7 +1,7 @@
 ﻿using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;

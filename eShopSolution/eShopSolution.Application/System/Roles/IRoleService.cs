@@ -1,10 +1,10 @@
-﻿using eShopSolution.ViewModels.System.Roles;
+﻿using eShopSolution.ViewModels.AppSystem.Roles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.Application.System.Roles
+namespace eShopSolution.Application.AppSystem.Roles
 {
     public interface IRoleService
     {

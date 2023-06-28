@@ -1,7 +1,7 @@
 ﻿using Azure.Core;
 using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.ExternalUser;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.ExternalUser;
+using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -139,7 +139,7 @@ namespace eShopSolution.AdminApp.Services
             return users;
         }
 
-        public async Task<ApiResult<bool>> RegisterUser(RegisterRequest registerRequest)
+        public async Task<ApiResult<string>> RegisterUser(RegisterRequest registerRequest)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -150,9 +150,9 @@ namespace eShopSolution.AdminApp.Services
             var response = await client.PostAsync($"/api/users", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+                return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(result);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return JsonConvert.DeserializeObject<ApiErrorResult<string>>(result);
         }
 
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
@@ -264,5 +264,19 @@ namespace eShopSolution.AdminApp.Services
 
         }
 
+        public async Task<ApiResult<string>> VerìfyEmail(string email, string token)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var httpContent = new StringContent("", Encoding.UTF8, "application/json");
+            var response = await client.PutAsync($"/api/users/verify-email?email={email}&token={token}", httpContent);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(body);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<string>>(body);
+        }
     }
 }

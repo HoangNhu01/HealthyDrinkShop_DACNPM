@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.ViewModels.System.ExternalUser
+namespace eShopSolution.ViewModels.AppSystem.ExternalUser
 {
     public class ValidateTokenResult
 	{

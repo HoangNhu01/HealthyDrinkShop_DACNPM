@@ -1,6 +1,6 @@
 ﻿using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.ExternalUser;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.ExternalUser;
+using eShopSolution.ViewModels.AppSystem.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace eShopSolution.AdminApp.Services
 
         Task<ApiResult<PagedResult<UserVm>>> GetUsersPagings(GetUserPagingRequest request);
 
-        Task<ApiResult<bool>> RegisterUser(RegisterRequest registerRequest);
+        Task<ApiResult<string>> RegisterUser(RegisterRequest registerRequest);
         Task<ApiResult<string>> ExternalAuthenticate(FaceBookUserInfor request);
         Task<ApiResult<string>> ExternalAuthenticate(GoogleUserInfor request);
 
@@ -24,6 +24,7 @@ namespace eShopSolution.AdminApp.Services
         Task<ApiResult<UserVm>> GetByName(string userName);
         Task<ApiResult<bool>> Delete(Guid id);
 
+        Task<ApiResult<string>> VerìfyEmail(string email, string token);
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
         Task<ValidateTokenResult> GetAccessFBTokenAsync(string facebookAppId, string facebookAppSecret, string facebookAppDomain, string code);
         Task<ValidateTokenResult> GetAccessGGTokenAsync(string googleClientId, string googleAppSecret, string googleAppDomai, string code);

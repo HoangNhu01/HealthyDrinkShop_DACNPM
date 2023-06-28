@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using eShopSolution.AdminApp.Services;
 using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +13,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    public class UserController : BaseController
+    [Authorize(Policy = "AdminOnly")]
+    public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
@@ -72,7 +73,7 @@ namespace eShopSolution.AdminApp.Controllers
             var result = await _userApiClient.RegisterUser(request);
             if (result.IsSuccessed)
             {
-                TempData["result"] = "Thêm mới người dùng thành công";
+                TempData["result"] = result.ResultObj;
                 return RedirectToAction("Index");
             }
 
@@ -197,6 +198,22 @@ namespace eShopSolution.AdminApp.Controllers
                 });
             }
             return roleAssignRequest;
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyEmail(string email, string token)
+        {
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("PageNotFound", "Login", null);
+            }
+            var result =await _userApiClient.VerìfyEmail(email, token);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Xác thực mail thành công";
+                return View();
+            }
+            return RedirectToAction("PageNotFound", "Login", null);
         }
     }
 }
