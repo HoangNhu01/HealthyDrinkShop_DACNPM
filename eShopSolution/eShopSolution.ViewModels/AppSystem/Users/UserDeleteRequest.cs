@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.ViewModels.System.Users
+namespace eShopSolution.ViewModels.AppSystem.Users
 {
     public class UserDeleteRequest
     {

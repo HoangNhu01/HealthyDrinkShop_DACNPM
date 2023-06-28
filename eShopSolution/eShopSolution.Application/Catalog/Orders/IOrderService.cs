@@ -11,9 +11,9 @@ namespace eShopSolution.Application.Sales.Orders
 {
     public interface IOrderService
     {
-        Task<ApiResult<List<OrderVm>>> GetAll(string userName);
+        Task<ApiResult<List<OrderVm>>> GetByUserId(Guid userId);
 
-        Task<ApiResult<OrderVm>> GetById(Guid id);
+        Task<ApiResult<OrderVm>> GetById(Guid orderId);
 
         Task<ApiResult<Guid>> Create(CheckOutRequest request);
 

@@ -24,9 +24,9 @@ namespace eShopSolution.AdminApp.Controllers
 
         }
         // GET: OrderController
-        public async Task<IActionResult> Index(string keyword)
+        public async Task<IActionResult> Index(Guid uId)
         {
-            var result = await _orderApiClient.GetAll(keyword);
+            var result = await _orderApiClient.GetAll(uId);
             ViewBag.Status = Enum.GetValues(typeof(OrderStatus));
             if (TempData["result"] != null)
             {

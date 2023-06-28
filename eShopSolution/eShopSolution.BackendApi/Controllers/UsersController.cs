@@ -1,23 +1,30 @@
 ﻿using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
-using eShopSolution.Application.System.Users;
-using eShopSolution.ViewModels.System.ExternalUser;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.Application.AppSystem.Users;
+using eShopSolution.Data.Entities;
+using eShopSolution.ViewModels.AppSystem.ExternalUser;
+using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using NETCore.MailKit.Core;
 
 namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-
-        public UsersController(IUserService userService)
+        private readonly IEmailService _emailService;
+        public UsersController(IUserService userService, IEmailService emailService)
         {
             _userService = userService;
+            _emailService = emailService;
+            
         }
 
         [HttpPost("authenticate")]
@@ -29,7 +36,7 @@ namespace eShopSolution.BackendApi.Controllers
 
             var result = await _userService.Authenticate(request);
 
-            if (string.IsNullOrEmpty(result.ResultObj))
+            if (string.IsNullOrEmpty(result.Message))
             {
                 return BadRequest(result);
             }
@@ -48,9 +55,43 @@ namespace eShopSolution.BackendApi.Controllers
             {
                 return BadRequest(result);
             }
+            var rs = await _userService.SendConfirmEmail(result.ResultObj);
+            if (!rs.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(rs);
+        }
+        [HttpGet("send-email/{email}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SendConfirmEmail(string email)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var rs = await _userService.SendConfirmEmail(email);
+
+            if (!rs.IsSuccessed)
+            {
+                return BadRequest();
+            }
+            //_emailService.Send("hoangnhu300901@gmail.com", "Email Verìfy", "Hello");
+            return Ok(rs);
+        }
+        [HttpPut("verify-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerìfyEmail(string email, string token)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.VerìfyEmail(email, token);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest();
+            }
             return Ok(result);
         }
-
         [HttpPost("external-fb-authenticate")]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalFbAuthenticate([FromBody] FaceBookUserInfor request)

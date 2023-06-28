@@ -1,23 +1,29 @@
 ﻿using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.ExternalLoginTool;
 using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.ExternalUser;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.ExternalUser;
+using eShopSolution.ViewModels.AppSystem.Users;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using NETCore.MailKit.Core;
 using System;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using eShopSolution.Utilities.Exceptions;
 
-namespace eShopSolution.Application.System.Users
+namespace eShopSolution.Application.AppSystem.Users
 {
     public class UserService : IUserService
     {
@@ -25,16 +31,20 @@ namespace eShopSolution.Application.System.Users
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
+        private readonly IEmailService _emailService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public UserService(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<AppRole> roleManager,
-            IConfiguration config)
+            IConfiguration config, IEmailService emailService, IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
+            _emailService = emailService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
@@ -64,10 +74,12 @@ namespace eShopSolution.Application.System.Users
                     Dob = DateTime.ParseExact(user.Birthday, format, CultureInfo.InvariantCulture),
                     UserName = UserNameConvert.ConvertUnicode(user.Name),
                     PhoneNumber = String.Empty,
+                    EmailConfirmed = true
                 };
                 var result = await _userManager.CreateAsync(userIndentity);
                 if (!result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(userIndentity, "user");
                     return new ApiErrorResult<string>("Có lỗi xảy ra :((");
                 }
             }
@@ -97,10 +109,12 @@ namespace eShopSolution.Application.System.Users
                     Dob = DateTime.Now,
                     UserName = UserNameConvert.ConvertUnicode(user.Name),
                     PhoneNumber = String.Empty,
+                    EmailConfirmed = true
                 };
                 var result = await _userManager.CreateAsync(userIndentity);
                 if (!result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(userIndentity,"user");
                     return new ApiErrorResult<string>("Có lỗi xảy ra :((");
                 }
             }
@@ -244,16 +258,16 @@ namespace eShopSolution.Application.System.Users
             return new ApiSuccessResult<PagedResult<UserVm>>(pagedResult);
         }
 
-        public async Task<ApiResult<bool>> Register(RegisterRequest request)
+        public async Task<ApiResult<string>> Register(RegisterRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user != null)
             {
-                return new ApiErrorResult<bool>("Tài khoản đã tồn tại");
+                return new ApiErrorResult<string>("Tài khoản đã tồn tại");
             }
             if (await _userManager.FindByEmailAsync(request.Email) != null)
             {
-                return new ApiErrorResult<bool>("Emai đã tồn tại");
+                return new ApiErrorResult<string>("Emai đã tồn tại");
             }
 
             user = new AppUser()
@@ -268,9 +282,10 @@ namespace eShopSolution.Application.System.Users
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                return new ApiSuccessResult<bool>();
+                await _userManager.AddToRoleAsync(user, "user");
+                return new ApiSuccessResult<string>(user.Email, "Bạn đã đăng kí thành công");
             }
-            return new ApiSuccessResult<bool>(result.Succeeded,"Đăng ký không thành công");
+            return new ApiSuccessResult<string>("Đăng ký không thành công");
         }
 
         public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
@@ -320,6 +335,63 @@ namespace eShopSolution.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        public async Task<ApiResult<string>> SendConfirmEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var content = System.IO.File.ReadAllText(Path.Combine(_webHostEnvironment.WebRootPath, _config["EmailConfig:EmailContent"]));
+            content = content.Replace("#Name#", user.FirstName);
+            content = content.Replace("#Email#", user.Email);
+            content = content.Replace("#Token#", token);
+
+            MailMessage message = new MailMessage(
+                from: _config["EmailConfig:SenderEmail"],
+                to: user.Email,
+                subject: "EShopDrink kính chào quý khách hàng",
+                body: content
+            );
+            message.BodyEncoding = System.Text.Encoding.UTF8;
+            message.SubjectEncoding = System.Text.Encoding.UTF8;
+            message.IsBodyHtml = true;
+            message.ReplyToList.Add(new MailAddress(_config["EmailConfig:SenderEmail"]));
+            message.Sender = new MailAddress(_config["EmailConfig:SenderEmail"]);
+
+
+            // Tạo SmtpClient kết nối đến smtp.gmail.com
+            using (SmtpClient client = new SmtpClient("smtp.gmail.com"))
+            {
+                client.Port = int.Parse(_config["EmailConfig:Port"]);
+                client.UseDefaultCredentials = true;
+                client.Credentials = new NetworkCredential(_config["EmailConfig:Account"], _config["EmailConfig:Password"]);
+                client.EnableSsl = true;
+                try
+                {
+                    await client.SendMailAsync(message);
+                    return new ApiSuccessResult<string>($"Dã đăng kí thành công. Vui lòng xác thực email: {user.Email}");
+
+                }
+                catch (EShopException ex)
+                {
+                    return new ApiErrorResult<string>(ex.Message);
+
+                }
+            }           
+        }
+
+        public async Task<ApiResult<string>> VerìfyEmail(string email, string token)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            token = token.Replace(" ", "+");
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<string>("Xác thực email thành công");
+            }
+            return new ApiErrorResult<string>("Xác thực email không thành công");
         }
     }
 }

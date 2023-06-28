@@ -1,8 +1,8 @@
 ﻿using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
 using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.Languages;
-using eShopSolution.ViewModels.System.Users;
+using eShopSolution.ViewModels.AppSystem.Languages;
+using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eShopSolution.Application.System.Languages
+namespace eShopSolution.Application.AppSystem.Languages
 {
     public class LanguageService : ILanguageService
     {

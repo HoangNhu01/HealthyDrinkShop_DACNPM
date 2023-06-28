@@ -1,12 +1,14 @@
 ﻿using eShopSolution.Application.Common;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Enums;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Catalog.Categories;
 using eShopSolution.ViewModels.Catalog.Ingredients;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Common;
+using eShopSolution.ViewModels.Statistic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -136,6 +138,8 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<ApiResult<PagedResult<ProductVm>>> GetAllPaging(GetManageProductPagingRequest request)
         {
+           
+
             var query = _context.ProductTranslations.Include(x => x.Product).ThenInclude(p => p.ProductInCategories)
                                                                             .ThenInclude(pc => pc.Category)
                                                     .Include(x => x.Product).ThenInclude(p => p.ProductImages)
@@ -418,4 +422,6 @@ namespace eShopSolution.Application.Catalog.Products
             return true;
         }
     }
+
+   
 }

@@ -9,7 +9,7 @@ namespace eShopSolution.AdminApp.Services
 {
     public interface IOrderApiClient
     {
-        Task<ApiResult<List<OrderVm>>> GetAll(string keyword);
+        Task<ApiResult<List<OrderVm>>> GetAll(Guid uId);
 
         Task<ApiResult<OrderVm>> GetById(Guid id);
 

@@ -1,5 +1,5 @@
 ﻿using eShopSolution.ViewModels.Common;
-using eShopSolution.ViewModels.System.Roles;
+using eShopSolution.ViewModels.AppSystem.Roles;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
