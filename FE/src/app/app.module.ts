@@ -52,6 +52,9 @@ import {AgmCoreModule} from "@agm/core";
 import {AboutUsComponent} from "./routes/about-us/about-us.component";
 import {BlogComponent} from "./routes/blog/blog.component";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {OrderListComponent} from "./routes/order-list/order-list.component";
+import {NzResultModule} from "ng-zorro-antd/result";
+import {NzStepsModule} from "ng-zorro-antd/steps";
 
 registerLocaleData(en);
 
@@ -76,45 +79,48 @@ registerLocaleData(en);
     PaymentsComponent,
     NotFoundComponent,
     AboutUsComponent,
-    BlogComponent
+    BlogComponent,
+    OrderListComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        IconsProviderModule,
-        NzLayoutModule,
-        NzMenuModule,
-        NzButtonModule,
-        NzDropDownModule,
-        NzSpinModule,
-        NzDrawerModule,
-        NzDividerModule,
-        NzCardModule,
-        NzAvatarModule,
-        NzSkeletonModule,
-        NzInputModule,
-        NzTableModule,
-        NzInputNumberModule,
-        NzCommentModule,
-        NzFormModule,
-        NzListModule,
-        NzBackTopModule,
-        ReactiveFormsModule,
-        NzCheckboxModule,
-        NzMessageModule,
-        NzModalModule,
-        NzBadgeModule,
-        NzRadioModule,
-        NzSelectModule,
-        AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
-            libraries: ["places", "geometry"]
-        }),
-        NzDatePickerModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    IconsProviderModule,
+    NzLayoutModule,
+    NzMenuModule,
+    NzButtonModule,
+    NzDropDownModule,
+    NzSpinModule,
+    NzDrawerModule,
+    NzDividerModule,
+    NzCardModule,
+    NzAvatarModule,
+    NzSkeletonModule,
+    NzInputModule,
+    NzTableModule,
+    NzInputNumberModule,
+    NzCommentModule,
+    NzFormModule,
+    NzListModule,
+    NzBackTopModule,
+    ReactiveFormsModule,
+    NzCheckboxModule,
+    NzMessageModule,
+    NzModalModule,
+    NzBadgeModule,
+    NzRadioModule,
+    NzSelectModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
+      libraries: ["places", "geometry"]
+    }),
+    NzDatePickerModule,
+    NzResultModule,
+    NzStepsModule
+  ],
   providers: [
     {provide: NZ_I18N, useValue: en_US},
     JwtHelperService,

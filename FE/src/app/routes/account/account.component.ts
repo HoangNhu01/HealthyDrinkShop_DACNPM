@@ -1,28 +1,33 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
-import { IsLoadingService } from '@service-work/is-loading';
-import {Observable} from "rxjs";
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../services/product.service";
-import {Router} from "@angular/router";
-import {NzModalService} from "ng-zorro-antd/modal";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from 'ngx-cookie-service';
 import {NzMessageService} from "ng-zorro-antd/message";
+import { Location } from '@angular/common';
+import {PaymentsComponent} from "../payments/payments.component";
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.less']
 })
-export class AccountComponent {
+export class AccountComponent implements  OnInit{
+  @ViewChild('payments') payments!: PaymentsComponent
+  logged = false;
   constructor(
     protected fb: FormBuilder,
     protected authService: ProductService,
     protected router: Router,
     private cookieService: CookieService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    protected activatedRoute: ActivatedRoute,
+    protected location: Location
   ) {
     this.initForm();
   }
   isLoading = false
+  productPayment: any[] = [];
+  total: number = 0
 
   isLogin : any = true;
   loginForm!: FormGroup;
@@ -33,6 +38,15 @@ export class AccountComponent {
   isShowRePassRegistry = false;
   patternPassword = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
   patternEmail = '"^[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,4}$"'
+  directionalId = 0;
+  ngOnInit() {
+    this.logged = localStorage.getItem('userId') ? true : false
+    this.activatedRoute.params.subscribe((params: any) => {
+      this.directionalId = params['id']
+      this.productPayment = params['product'] ? JSON.parse(params['product']) : [];
+      this.total = params['total'] ? params['total'] : 0
+    })
+  }
 
   initForm(): void {
     this.loginForm = this.fb.group({
@@ -44,7 +58,7 @@ export class AccountComponent {
       lastName: ['', Validators.required],
       dob: ['', Validators.required],
       numberPhone: ['', [Validators.required, Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})\\b')]],
-      email: ['', Validators.required, Validators.pattern(this.patternEmail)],
+      email: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.pattern(this.patternPassword)]],
       rePassword: ['', Validators.required],
@@ -76,13 +90,21 @@ export class AccountComponent {
       }
       this.authService.login(body).toPromise().then((res: any) => {
         if(res && res.isSuccessed) {
+          this.logged = true
           this.saveInfoToLocalStorage(res.resultObj)
-          this.router.navigate(['/']);
+          if (this.directionalId == 1) this.router.navigate(['/order-list']);
+          else if (this.directionalId == 2)
+          {
+            this.payments.openDrawer(true)
+          }
+          else if (!this.directionalId) this.router.navigate(['/']);
+          else this.location.back()
           this.isLoading = false;
           this.message.create('success', 'Đăng nhập thành công');
         }
       } )
         .catch(() => {
+          this.logged = false;
           this.isLoading = false;
           this.message.create('error', 'Đăng nhập thất bại');
         })
@@ -134,8 +156,8 @@ export class AccountComponent {
   }
   checkValidateFormRegistry(): boolean {
     this.registerForm.markAllAsTouched();
-    if (this.registerForm.valid) return false
-    else return true
+    if (this.registerForm.valid) return true
+    else return false
   }
 }
 export function comparePassword(c: AbstractControl) {

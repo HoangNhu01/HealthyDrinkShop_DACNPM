@@ -19,7 +19,7 @@
 
             <label class="screen-reader-text" for="qty">Black Forest Pastry Quantity</label>
             <input [(ngModel)]="quantity" type="number" id="qty" class="input-text qty text" step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric">
-            <button type="submit" name="add-to-cart" value="27545" class="button" (click)="addToCart(detailProduct, quantity)">Add to cart</button>
+            <button type="submit" name="add-to-cart" value="27545" class="button" (click)="addToCart(detailProduct, quantity)">Thêm vào giỏ hàng</button>
           </div>
         </div>
 
@@ -37,14 +37,14 @@
         </ng-template>
       </nz-list>
       <nz-comment class="pt-5">
-        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="user.avatar"></nz-avatar>
+        <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="emptyImage"></nz-avatar>
         <nz-comment-content>
           <nz-form-item>
-            <textarea maxlength="4" placeholder="Mời nhập bình luận của bạn" [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+            <textarea [disabled]="isLogin ? false : true" maxlength="4" [placeholder]="isLogin ? 'Mời nhập bình luận của bạn' : 'Mời đăng nhập để có thể thêm bình luận'" [(ngModel)]="inputValue" nz-input rows="4"></textarea>
           </nz-form-item>
           <nz-form-item>
-            <button style="background-color: #CE3C83" class="color-white button mt-0" nz-button [nzLoading]="submitting" [disabled]="!inputValue">
-              Add Comment
+            <button style="background-color: #CE3C83" class="color-white button mt-0" nz-button [nzLoading]="submitting" (click)="submit()">
+             {{isLogin ? 'Bình luận' : 'Đăng nhập'}}
             </button>
           </nz-form-item>
         </nz-comment-content>
@@ -55,7 +55,7 @@
         <nz-avatar
           nz-comment-avatar
           nzIcon="user"
-          nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          [nzSrc]="emptyImage"
         ></nz-avatar>
         <nz-comment-content>
           <p>
@@ -63,63 +63,6 @@
             Axure), to help people create their product prototypes beautifully and efficiently.
           </p>
         </nz-comment-content>
-        <nz-comment-action>
-        <span
-          nz-tooltip
-          nzTitle="Like"
-          nz-icon
-          nzType="like"
-          [nzTheme]="likes > 0 ? 'twotone' : 'outline'"
-          (click)="like()"
-        ></span>
-          <span class="count like">{{ likes }}</span>
-        </nz-comment-action>
-        <nz-comment-action>
-        <span
-          nz-tooltip
-          nzTitle="Dislike"
-          nz-icon
-          nzType="dislike"
-          [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'"
-          (click)="dislike()"
-        ></span>
-          <span class="count dislike">{{ dislikes }}</span>
-        </nz-comment-action>
-        <nz-comment-action>Reply to</nz-comment-action>
-      </nz-comment>
-      <nz-comment nzAuthor="Tân kiều">
-        <nz-avatar
-          nz-comment-avatar
-          nzIcon="user"
-          nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        ></nz-avatar>
-        <nz-comment-content>
-          <p>
-            I like it!
-          </p>
-        </nz-comment-content>
-        <nz-comment-action>
-        <span
-          nz-tooltip
-          nzTitle="Like"
-          nz-icon
-          nzType="like"
-          [nzTheme]="likes > 0 ? 'twotone' : 'outline'"
-          (click)="like()"
-        ></span>
-          <span class="count like">{{ likes }}</span>
-        </nz-comment-action>
-        <nz-comment-action>
-        <span
-          nz-tooltip
-          nzTitle="Dislike"
-          nz-icon
-          nzType="dislike"
-          [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'"
-          (click)="dislike()"
-        ></span>
-          <span class="count dislike">{{ dislikes }}</span>
-        </nz-comment-action>
         <nz-comment-action>Reply to</nz-comment-action>
       </nz-comment>
     </div>

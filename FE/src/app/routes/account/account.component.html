@@ -1,5 +1,5 @@
 <nz-spin [nzSpinning]="isLoading">
-  <section [ngClass]="isLogin ? 'gradient-form-login' : 'gradient-form-register'"  style="background-color: #eee;">
+  <section *ngIf="!logged" [ngClass]="isLogin ? 'gradient-form-login' : 'gradient-form-register'"  style="background-color: #eee;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-xl-10">
@@ -28,8 +28,7 @@
                         </nz-form-control>
                       </nz-form-item>
                       <nz-form-item>
-                        <label nz-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="rememberMe">Remember
-                          me</label>
+                        <label nz-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="rememberMe">Lưu tài khoản</label>
                       </nz-form-item>
                       <div class="text-center pt-1 mb-5 pb-1">
                         <button class="d-block w-100 btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
@@ -120,7 +119,7 @@
 
                       <div class="text-center pt-1 mb-5 pb-1">
                         <button class="d-block w-100 btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                type="button" (click)="signUp()">Sign Up
+                                type="button" (click)="signUp()">Đăng kí
                         </button>
                       </div>
                       <div class="d-flex align-items-center justify-content-center pb-4">
@@ -157,3 +156,14 @@
 <ng-template #eye2>
   <span (click)="isShowRePassRegistry = !isShowRePassRegistry" nz-icon nzType="eye" nzTheme="outline"></span>
 </ng-template>
+<app-payments #payments [productPayment]="productPayment" [totalMoney]="total" ></app-payments>
+<ng-container *ngIf = "logged">
+  <nz-result
+    nzStatus="success"
+    nzTitle="Bạn đã đăng nhập hệ thống thành công"
+  >
+    <div nz-result-extra>
+      <button style="background-color: #CE3C83" nzSize="large" nzType="primary" nz-button nzShape="round" routerLink="/">Trở về trang chủ</button>
+    </div>
+  </nz-result>
+</ng-container>

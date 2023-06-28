@@ -18,7 +18,6 @@ import {take} from "rxjs";
 export class PaymentsComponent implements OnInit{
   constructor(
     protected router: Router,
-    protected cdr: ChangeDetectorRef,
     protected fb: FormBuilder,
     protected productService: ProductService,
     protected modalService: NzModalService,
@@ -61,9 +60,9 @@ export class PaymentsComponent implements OnInit{
   close() {
     this.visible = false;
   }
-  openDrawer(data: any, isLogin: boolean){
+  openDrawer(isLogin: boolean){
     if(!isLogin) {
-      this.router.navigate(['/account']);
+      this.router.navigate(['/account', 2]);
     }
     else {
       this.visible = true;

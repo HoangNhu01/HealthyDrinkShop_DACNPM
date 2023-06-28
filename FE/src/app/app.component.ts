@@ -5,6 +5,8 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {ProductService} from "./services/product.service";
 import {BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
+import {NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-root',
@@ -13,17 +15,17 @@ import {BehaviorSubject} from "rxjs";
 })
 export class AppComponent extends HeaderComponent implements OnInit{
   constructor(
-    public override message: NzMessageService,
+    protected override modal: NzModalService,
+    protected override router: Router,
+    protected override message: NzMessageService,
     public jwtHelper: JwtHelperService,
-    public productSerice: ProductService,
-    public override cdr: ChangeDetectorRef
     ) {
-    super(message, productSerice, cdr);
+    super(modal, router, message);
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     if (localStorage.getItem('isRememberMe') == 'false' || this.isAuthenticated()) {
-      this.logout();
+      this.removeAccount();
     }
   }
   isAuthenticated(): boolean {

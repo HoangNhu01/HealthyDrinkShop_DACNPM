@@ -6,6 +6,7 @@ import {ProductService} from "../../services/product.service";
 import {PaymentsComponent} from "../payments/payments.component";
 import {ModalButtonOptions, NzModalService} from "ng-zorro-antd/modal";
 import {HeaderComponent} from "../header/header.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -16,9 +17,9 @@ export class CartComponent implements AfterViewInit{
   @ViewChild('payments') payments!: PaymentsComponent
   @ViewChild('header') header!: HeaderComponent
   constructor(
-    protected cdr: ChangeDetectorRef,
     protected productService: ProductService,
-    protected modal: NzModalService
+    protected modal: NzModalService,
+    protected router: Router
   ) {
   }
   @Input() visible = false;
@@ -26,7 +27,7 @@ export class CartComponent implements AfterViewInit{
   listProductCarts: any[] = [];
   productPayments: any[] = [];
 
-  title = 'Cart';
+  title = 'Giỏ hàng';
   total: number = 0;
   unit = environment.unitMoney;
   setOfCheckedId = new Set<number>();
@@ -95,12 +96,13 @@ export class CartComponent implements AfterViewInit{
     const isLogin = localStorage.getItem('name') ? true : false
     this.closeDrawer();
     if (!isLogin) {
+      const productPaymentsJson = JSON.stringify(this.productPayments);
       this.modal.warning({
         nzTitle: 'Chú ý!',
         nzContent: 'Đăng nhập tài khoản người dùng để thanh toán',
-        nzOnOk: () => this.payments.openDrawer([], isLogin)
+        nzOnOk: () => this.router.navigate(['/account',2, productPaymentsJson, this.total])
       })
-    }else this.payments.openDrawer([], isLogin)
+    }else this.payments.openDrawer(isLogin)
   }
 }
 
