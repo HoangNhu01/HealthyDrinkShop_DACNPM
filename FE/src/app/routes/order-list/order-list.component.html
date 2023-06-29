@@ -12,22 +12,22 @@
     <thead>
     <tr>
       <th>STT</th>
-      <th>Sản phẩm</th>
-      <th>Số lượng</th>
-      <th>Tổng tiền</th>
-      <th>Ngày đặt</th>
+      <th>Mã đơn hàng</th>
+      <th>Tổng hóa đơn</th>
+      <th>Tình trạng thanh toán</th>
+      <th class="text-center">Ngày đặt hàng</th>
       <th *ngIf="index == 0 || index == 1" class="text-center">Chức năng</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of listOrderByStatus; index as i ">
       <td>{{i+1}}</td>
-      <td>{{item.totalPrice}}</td>
-      <td>{{item.orderDate}}</td>
-      <td>{{item.orderDate}}</td>
-      <td>{{item.orderDate}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.totalPrice}}VND</td>
+      <td>{{item.paymentStatus ? 'Đã thanh toán': 'Chưa thanh toán'}}</td>
+      <td align="center">{{item.orderDate | date: 'dd/MM/yyyy'}}</td>
       <td align="center" *ngIf="index == 0 || index == 1">
-        <button nz-button nzDanger (click)="cancelOrder(item.id)">Hủy đơn <span class="text-danger fs-5" nz-icon nzType="undo" nzTheme="outline"></span></button>
+        <button nz-button nzDanger (click)="cancelOrder(item.id)">Hủy đơn <span class="text-danger" nz-icon nzType="undo" nzTheme="outline"></span></button>
       </td>
     </tr>
     </tbody>

@@ -15,13 +15,10 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   listComments: any[] = []
   data: any[] = [];
   submitting = false;
-  user = {
-    author: 'Han Solo',
-    avatar: './assets/product/empty.png'
-  };
   inputValue = '';
   @ViewChild('cart') cart!: CartComponent;
-  emptyImage: string = './assets/icon/trend-avatar-1.jpg';
+  emptyImage: string = './assets/product/empty.png';
+  emptyAva: string = './assets/icon/trend-avatar-1.jpg';
   id = ''
   sub : Subscription[] = [];
   detailProduct : any = {}
@@ -29,6 +26,9 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   urlImage: string = './assets/product/';
   unit = environment.unitMoney;
   isLogin = localStorage.getItem('userId') ? true : false
+  visible = false;
+  likes = 0;
+  dislikes = 0;
   constructor(
     private route: ActivatedRoute,
     protected productService: ProductService,
@@ -54,7 +54,10 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     const langid = environment.language;
     if (userId && productId && langid)
       await this.productService.getListComments(userId, productId, langid).toPromise().then((res: any) => {
-        this.listComments = res;
+        if (res && res.isSuccessed) {
+          this.listComments = res.resultObj;
+        }
+
       })
   }
   ngOnDestroy() {
@@ -86,7 +89,21 @@ export class DetailProductComponent implements OnInit, OnDestroy {
         productId: this.detailProduct.id
       }
       this.productService.addComments(body).toPromise().then((res: any) => {
+        if (res && res.isSuccessed) {
+          this.getListComments();
+          this.inputValue = ''
+        }
       })
     }
+  }
+
+  like(): void {
+    // this.likes = 1;
+    // this.dislikes = 0;
+  }
+
+  dislike(): void {
+    // this.likes = 0;
+    // this.dislikes = 1;
   }
 }

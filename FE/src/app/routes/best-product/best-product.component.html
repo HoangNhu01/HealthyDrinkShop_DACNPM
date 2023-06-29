@@ -3,40 +3,15 @@
     <h2 class="section-title text-center mb-4">Sản phẩm bán chạy</h2>
     <div class="row">
       <div class="d-flex products-slider">
-
-        <div class="product-item col-md-3 pl-0">
-          <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/The-CPR-Drink.jpg"></a>
-          <div class="text-comtent text-center text-hover">
-            <h5 class="pt-4"><a routerLink="/detail-product">The CPR Drink</a></h5>
-            <p>Vegetable juice</p>
-            <span class="price colored">$12</span>
+        <ng-container *ngFor="let item of listProductsBestSaller">
+          <div class="product-item col-md-3 pl-0">
+            <a routerLink="/detail-product" class="product-image"><img [src]='getImage(item.thumbnailImage)'></a>
+            <div class="text-comtent text-center text-hover">
+              <h5 class="pt-4"><a (click)="getDetailProduct(item.id)">{{item.name}}</a></h5>
+              <span class="price colored">{{item.price}}VNĐ</span>
+            </div>
           </div>
-        </div>
-        <div class="product-item col-md-3 pl-0">
-          <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Green-Magic.jpg"></a>
-          <div class="text-comtent text-center text-hover">
-            <h5 class="pt-4"><a routerLink="/detail-product">Green Magic</a></h5>
-            <p>Vegetable juice</p>
-            <span class="price colored">$12</span>
-          </div>
-        </div>
-        <div class="product-item col-md-3 pl-0">
-          <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Green-Orange-Punch.jpg"></a>
-          <div class="text-comtent text-center text-hover">
-            <h5 class="pt-4"><a routerLink="/detail-product">Green Orange Punch</a></h5>
-            <p>Vegetable juice</p>
-            <span class="price colored">$12</span>
-          </div>
-        </div>
-        <div class="product-item col-md-3 pl-0">
-          <a routerLink="/detail-product" class="product-image"><img src="../../../assets/product/Tangy-Electrolyte-Drink.jpg"></a>
-          <div class="text-comtent text-center text-hover">
-            <h5 class="pt-4"><a routerLink="/detail-product">Tangy Electrolyte Drink</a></h5>
-            <p>Vegetable juice</p>
-            <span class="price colored">$12</span>
-          </div>
-        </div>
-
+        </ng-container>
       </div>
     </div>
   </div>

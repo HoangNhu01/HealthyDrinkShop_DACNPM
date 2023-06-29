@@ -27,7 +27,7 @@ export class OrderListComponent implements OnInit{
       this.orderService.getListOrderByUserId(userId).toPromise().then((res: any) => {
         this.listOrder = res.resultObj;
           this.listOrderByStatus = this.listOrder.filter((item: any) => {
-            return item.paymentStatus === this.index
+            return item.orderStatus === this.index
           })
       })
     }
@@ -45,12 +45,16 @@ export class OrderListComponent implements OnInit{
         nzContent: 'Bạn có chắc chắn muốn hủy đơn hàng',
         nzOnOk: () => {
           this.orderService.cancelOrderById(id).toPromise().then((res: any) => {
-            if (res) {
-              this.listOrderByStatus = this.listOrderByStatus.filter((item: any) => {
-                return item.id != id
-              })
-              this.message.success('Hủy đơn thành công')
-            }
+            // if (res) {
+            //   this.listOrderByStatus = this.listOrderByStatus.filter((item: any) => {
+            //     return item.id != id
+            //   })
+            //
+            // }
+          })
+          this.message.success('Hủy đơn thành công');
+          this.listOrderByStatus = this.listOrderByStatus.filter((item: any) => {
+            return item.id != id
           })
         }
       })

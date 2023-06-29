@@ -55,6 +55,7 @@ import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {OrderListComponent} from "./routes/order-list/order-list.component";
 import {NzResultModule} from "ng-zorro-antd/result";
 import {NzStepsModule} from "ng-zorro-antd/steps";
+import {NzPopoverModule} from "ng-zorro-antd/popover";
 
 registerLocaleData(en);
 
@@ -82,45 +83,46 @@ registerLocaleData(en);
     BlogComponent,
     OrderListComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    IconsProviderModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzButtonModule,
-    NzDropDownModule,
-    NzSpinModule,
-    NzDrawerModule,
-    NzDividerModule,
-    NzCardModule,
-    NzAvatarModule,
-    NzSkeletonModule,
-    NzInputModule,
-    NzTableModule,
-    NzInputNumberModule,
-    NzCommentModule,
-    NzFormModule,
-    NzListModule,
-    NzBackTopModule,
-    ReactiveFormsModule,
-    NzCheckboxModule,
-    NzMessageModule,
-    NzModalModule,
-    NzBadgeModule,
-    NzRadioModule,
-    NzSelectModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
-      libraries: ["places", "geometry"]
-    }),
-    NzDatePickerModule,
-    NzResultModule,
-    NzStepsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        IconsProviderModule,
+        NzLayoutModule,
+        NzMenuModule,
+        NzButtonModule,
+        NzDropDownModule,
+        NzSpinModule,
+        NzDrawerModule,
+        NzDividerModule,
+        NzCardModule,
+        NzAvatarModule,
+        NzSkeletonModule,
+        NzInputModule,
+        NzTableModule,
+        NzInputNumberModule,
+        NzCommentModule,
+        NzFormModule,
+        NzListModule,
+        NzBackTopModule,
+        ReactiveFormsModule,
+        NzCheckboxModule,
+        NzMessageModule,
+        NzModalModule,
+        NzBadgeModule,
+        NzRadioModule,
+        NzSelectModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyAIso7SHcnVfjP1ygFCJaxlwO_lDQEzlAY',
+            libraries: ["places", "geometry"]
+        }),
+        NzDatePickerModule,
+        NzResultModule,
+        NzStepsModule,
+        NzPopoverModule
+    ],
   providers: [
     {provide: NZ_I18N, useValue: en_US},
     JwtHelperService,

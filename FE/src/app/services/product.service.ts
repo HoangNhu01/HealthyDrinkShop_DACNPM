@@ -8,11 +8,7 @@ import {CookieService} from "ngx-cookie-service";
   providedIn: 'root'
 })
 export class ProductService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': 'Bearer ' + this.cookieService.get('token')
-    })
-  }
+  headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.cookieService.get('token'));
 
   constructor(
     private http: HttpClient,
@@ -32,7 +28,7 @@ export class ProductService {
   }
 
   addProductToCart(id: string, langId: string, quantity: number) {
-    const url = environment.urlAPI + 'api/Orders/' + id + `/${langId}` + '?clientQuantity=' + quantity;
+    const url = environment.urlAPI + 'api/Orders/' + id + `/${langId}` + '/' + quantity;
     return this.http.post(url, {});
   }
 
@@ -72,20 +68,21 @@ export class ProductService {
   }
 
   getListOrderByUserId(userId: string) {
-    const url = environment.urlAPI + 'api/Orders/order-paging?userId=' + userId;
+    const url = environment.urlAPI + 'api/Orders/customer-order?userId=' + userId;
     return this.http.get(url);
   }
 
   cancelOrderById(orderId: string) {
     const url = environment.urlAPI + `api/Orders/${orderId}/4`
-    return this.http.put(url, {}, this.httpOptions);
+    return this.http.put(url, {}, {headers: this.headers});
   }
   getListComments(userId: string, productId: number, langId: string) {
+
     const url = environment.urlAPI + `api/Comments` + `?userId=${userId}&productId=${productId}&languageId=${langId}`
-    return this.http.get(url, this.httpOptions);
+    return this.http.get(url, {headers: this.headers});
   }
   addComments(body: {}) {
     const url = environment.urlAPI + `api/Comments`
-    return this.http.post(url, body, this.httpOptions);
+    return this.http.post(url, body, {headers: this.headers});
   }
 }
