@@ -14,6 +14,7 @@ using eShopSolution.ViewModels.AppSystem.Users;
 using Microsoft.AspNet.SignalR.Client.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow;
@@ -104,6 +105,20 @@ namespace eShopSolution.AdminApp.Controllers
         public IActionResult PageNotFound()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Index");
+
+            var result = await _userApiClient.RegisterUser(request);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = result.Message;
+            }
+            TempData["result"] = result.Message;
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> Index(LoginRequest request)

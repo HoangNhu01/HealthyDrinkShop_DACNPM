@@ -74,7 +74,8 @@ namespace eShopSolution.Application.AppSystem.Users
                     Dob = DateTime.ParseExact(user.Birthday, format, CultureInfo.InvariantCulture),
                     UserName = UserNameConvert.ConvertUnicode(user.Name),
                     PhoneNumber = String.Empty,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    DayCreate = DateTime.Today,
                 };
                 var result = await _userManager.CreateAsync(userIndentity);
                 if (!result.Succeeded)
@@ -109,7 +110,8 @@ namespace eShopSolution.Application.AppSystem.Users
                     Dob = DateTime.Now,
                     UserName = UserNameConvert.ConvertUnicode(user.Name),
                     PhoneNumber = String.Empty,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    DayCreate = DateTime.Now,
                 };
                 var result = await _userManager.CreateAsync(userIndentity);
                 if (!result.Succeeded)
@@ -265,6 +267,10 @@ namespace eShopSolution.Application.AppSystem.Users
             {
                 return new ApiErrorResult<string>("Tài khoản đã tồn tại");
             }
+            if(!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return new ApiErrorResult<string>("Tài khoản chưa được xác thực");
+            }
             if (await _userManager.FindByEmailAsync(request.Email) != null)
             {
                 return new ApiErrorResult<string>("Emai đã tồn tại");
@@ -277,7 +283,8 @@ namespace eShopSolution.Application.AppSystem.Users
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                DayCreate = DateTime.Now
             };
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
@@ -371,7 +378,7 @@ namespace eShopSolution.Application.AppSystem.Users
                 try
                 {
                     await client.SendMailAsync(message);
-                    return new ApiSuccessResult<string>($"Dã đăng kí thành công. Vui lòng xác thực email: {user.Email}");
+                    return new ApiSuccessResult<string>($"Đã đăng kí thành công. Vui lòng xác thực email: {user.Email}");
 
                 }
                 catch (EShopException ex)

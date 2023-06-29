@@ -65,6 +65,7 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (!ModelState.IsValid)
