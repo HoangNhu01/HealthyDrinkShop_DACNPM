@@ -90,7 +90,6 @@ namespace eShopSolution.Application.Sales.Orders
                                                    PaymentStatus = x.PaymentStatus,
                                                    OrderDetails = x.OrderDetails
                                                }).ToListAsync();
-
             return new ApiSuccessResult<List<OrderVm>>()
             {
                 ResultObj = order

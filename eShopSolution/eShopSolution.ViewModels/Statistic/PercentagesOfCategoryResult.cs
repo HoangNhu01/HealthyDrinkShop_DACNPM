@@ -4,10 +4,9 @@ using System.Text;
 
 namespace eShopSolution.ViewModels.Statistic
 {
-    public class RevenueByMonthResult
+    public class PercentagesOfCategoryResult
     {
-        public object OrderCount { get; set; }
+        public object Name { get; set; }
         public object Value { get; set; }
-        public object Month { get; set; }
     }
 }
