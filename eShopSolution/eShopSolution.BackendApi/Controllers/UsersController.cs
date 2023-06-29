@@ -36,6 +36,7 @@ namespace eShopSolution.BackendApi.Controllers
 
             var result = await _userService.Authenticate(request);
 
+
             if (string.IsNullOrEmpty(result.Message) && !result.IsSuccessed)
             {
                 return BadRequest(result);
@@ -51,7 +52,7 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest(ModelState);
 
             var result = await _userService.Register(request);
-            if (!result.IsSuccessed)
+            if (String.IsNullOrEmpty(result.Message))
             {
                 return BadRequest(result);
             }

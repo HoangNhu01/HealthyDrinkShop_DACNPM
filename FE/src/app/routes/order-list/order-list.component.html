@@ -1,0 +1,39 @@
+<div class="pxy">
+  <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
+    <nz-step nzTitle="Đang xác nhận" nzStatus="process" nzIcon="loading"></nz-step>
+    <nz-step nzTitle="Đã xác nhận" nzStatus="process" [nzIcon]="iconCfTemplate"></nz-step>
+    <nz-step nzTitle="Đang giao hàng" nzStatus="process" [nzIcon]="iconCarTemplate"></nz-step>
+    <nz-step nzTitle="Đơn đã giao" nzStatus="finish" [nzIcon]="iconTickTemplate"></nz-step>
+    <nz-step nzTitle="Đơn đã hủy" nzStatus="error"></nz-step>
+  </nz-steps>
+  <nz-divider></nz-divider>
+  <h4 class="fw-bold">Danh sách đơn hàng</h4>
+  <nz-table [nzFrontPagination]="false" #basicTable [nzData]="listOrderByStatus">
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Mã đơn hàng</th>
+      <th>Tổng hóa đơn</th>
+      <th>Tình trạng thanh toán</th>
+      <th class="text-center">Ngày đặt hàng</th>
+      <th *ngIf="index == 0 || index == 1" class="text-center">Chức năng</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of listOrderByStatus; index as i ">
+      <td>{{i+1}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.totalPrice}}VND</td>
+      <td>{{item.paymentStatus ? 'Đã thanh toán': 'Chưa thanh toán'}}</td>
+      <td align="center">{{item.orderDate | date: 'dd/MM/yyyy'}}</td>
+      <td align="center" *ngIf="index == 0 || index == 1">
+        <button nz-button nzDanger (click)="cancelOrder(item.id)">Hủy đơn <span class="text-danger" nz-icon nzType="undo" nzTheme="outline"></span></button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<ng-template #iconCfTemplate><span nz-icon nzType="eye" nzTheme="outline"></span></ng-template>
+<ng-template #iconCarTemplate><span nz-icon nzType="car" nzTheme="outline"></span></ng-template>
+<ng-template #iconTickTemplate><span nz-icon nzType="check-circle" nzTheme="outline"></span></ng-template>
