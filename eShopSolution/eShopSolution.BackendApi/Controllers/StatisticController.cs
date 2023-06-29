@@ -23,5 +23,17 @@ namespace eShopSolution.BackendApi.Controllers
             var rs = await _statisticService.GetRevenueByMonth();
             return Ok(rs);
         }
+        [HttpGet("percentages-of-category")]
+        public async Task<IActionResult> GetPercentagesOfCategory()
+        {
+            var rs = await _statisticService.GetPercentagesOfCategory();
+            return Ok(rs);
+        }
+        [HttpGet("percentages-of-all")]
+        public async Task<IActionResult> GetPercentagesOfAll()
+        {
+            var rs = await _statisticService.GetOrderStatistic();
+            return Ok(rs);
+        }
     }
 }

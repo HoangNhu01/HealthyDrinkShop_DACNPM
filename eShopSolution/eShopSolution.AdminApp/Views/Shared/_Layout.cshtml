@@ -225,12 +225,12 @@
                 </a>
             </li><!-- End Error 404 Page Nav -->
 
-            <li class="nav-item">
+           @* <li class="nav-item">
                 <a class="nav-link collapsed" href="pages-blank.html">
                     <i class="bi bi-file-earmark"></i>
                     <span>Blank</span>
                 </a>
-            </li><!-- End Blank Page Nav -->
+            </li><!-- End Blank Page Nav -->*@
 
         </ul>
 
@@ -317,6 +317,11 @@
                                 </li>`
             var fourthItem = $('#notifications li.notification-item:eq(0)');
             fourthItem.before(html);
+
+            statisticByDateTime();
+            pieChart();
+            reportChart();
+
         });
 
         // Start the connection
