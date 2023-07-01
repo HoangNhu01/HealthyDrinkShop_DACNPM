@@ -291,6 +291,7 @@ namespace eShopSolution.Application.Catalog.Products
             productTranslations.Details = request.Details;
             productTranslations.Product.Price = request.Price;
             productTranslations.Product.Stock = request.Stock;
+            productTranslations.Product.OriginalPrice = request.OPrice;
 
             //Save image
             if (request.ThumbnailImage != null)

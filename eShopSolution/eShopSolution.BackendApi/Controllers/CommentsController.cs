@@ -1,8 +1,11 @@
 ﻿using eShopSolution.Application.Catalog.Categories;
 using eShopSolution.Application.Community.Comments;
+using eShopSolution.BackendApi.Hubs;
 using eShopSolution.ViewModels.Catalog.Categories;
 using eShopSolution.ViewModels.Community.Comments;
+using eShopSolution.ViewModels.Sales;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Threading.Tasks;
@@ -14,11 +17,13 @@ namespace eShopSolution.BackendApi.Controllers
     public class CommentsController : Controller
     {
         private readonly ICommentService _commentService;
+        private IHubContext<OrderHub> _hubContext;
 
         public CommentsController(
-            ICommentService commentService)
+            ICommentService commentService, IHubContext<OrderHub> hubContext)
         {
             _commentService = commentService;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> Index(Guid userId, int productId, string languageId)
@@ -36,7 +41,7 @@ namespace eShopSolution.BackendApi.Controllers
             var apiResult = await _commentService.Create(request);
             if (apiResult.ResultObj == Guid.Empty)
                 return BadRequest();
-
+            await _hubContext.Clients.All.SendAsync("CommentMessage", request);
             return Ok(apiResult);
         }
         [HttpPut]

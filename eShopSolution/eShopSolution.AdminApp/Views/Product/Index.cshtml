@@ -1,4 +1,5 @@
-﻿@using eShopSolution.Utilities.Constants
+﻿@using System.Globalization
+@using eShopSolution.Utilities.Constants
 @using eShopSolution.ViewModels.Catalog.Products
 @using eShopSolution.ViewModels.Common;
 @using Microsoft.AspNetCore.Http
@@ -121,29 +122,29 @@
                     <thead>
                         <tr>
                             <th scope="col">
-                                Mã SP
+                                Id
                             </th>
                             <th scope="col">
-                                Ảnh
+                                Image
                             </th>
                             
                             <th scope="col">
-                                Tên
+                                Name
                             </th>
                             <th scope="col">
-                                Giá gốc
+                                Original Price
                             </th>
                             <th scope="col">
-                                Giá bán
+                                Sale Price
                             </th>
                             <th scope="col">
-                                Số lượng
+                                Stock
                             </th>
                             <th scope="col">
-                                Nổi bật
+                                Special
                             </th>
                             <th scope="col">
-                                Nguyên Liệu
+                                Ingredient
                             </th>
                             <th scope="col">
                                 Action
@@ -161,17 +162,18 @@
                                     <img style="
                                     width: 60px;
                                     height: 60px;
-                                " src="data:image/jpeg;base64,@(item.ThumbnailImage != null ? Convert.ToBase64String(item.ThumbnailImage) : "")" alt="File Image" />
+                                     " src="data:image/jpeg;base64,@(item.ThumbnailImage != null ? Convert.ToBase64String(item.ThumbnailImage) : "")" alt="File Image" />
                                 </td>
                                     
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.OriginalPrice)
+                                    @String.Format(new CultureInfo("vi-VN"), "{0:C}",item.Price)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
+                                    @String.Format(new CultureInfo("vi-VN"), "{0:C}",item.OriginalPrice)
+
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Stock)

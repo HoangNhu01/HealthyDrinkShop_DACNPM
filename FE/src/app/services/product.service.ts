@@ -69,7 +69,7 @@ export class ProductService {
 
   getListOrderByUserId(userId: string) {
     const url = environment.urlAPI + 'api/Orders/customer-order?userId=' + userId;
-    return this.http.get(url);
+    return this.http.get(url, {headers: this.headers});
   }
 
   cancelOrderById(orderId: string) {

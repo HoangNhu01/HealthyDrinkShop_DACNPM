@@ -35,7 +35,7 @@ namespace eShopSolution.AdminApp.Controllers
             return View(result.ResultObj);
         }
 
-        // GET: OrderController/Details/5
+        // GET: OrderController/Detail/5
         public async Task<IActionResult> Detail(Guid id)
         {
             var result = await _orderApiClient.GetById(id);

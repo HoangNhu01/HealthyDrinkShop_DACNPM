@@ -34,7 +34,7 @@ namespace eShopSolution.Application.Sales.Orders
                 ShipEmail = request.Email,
                 ShipPhoneNumber = request.PhoneNumber,
                 ShipName = request.UserName,
-                Status = (Data.Enums.OrderStatus)1,
+                Status = (Data.Enums.OrderStatus)0,
                 PaymentStatus = (PaymentStatus)request.PaymentStatus,
                 TotalPrice = request.TotalPrice,
                 OrderDetails = new List<OrderDetail>(),

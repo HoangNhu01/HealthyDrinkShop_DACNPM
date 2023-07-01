@@ -72,7 +72,10 @@
                         </div>*@
 
                         <div class="card-body">
-                            <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                            <h5 class="card-title">
+                                Sales
+                                <span>| This Month</span>
+                            </h5>
 
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -133,7 +136,6 @@
                                     dataType: 'json',
                                     success: function (data) {
                                         // Handle the response data
-                                        console.log(data);
                                         innerHtmlText(".order", data.order.cout, data.order.orderPercentage);
                                         innerHtmlText(".revenue", data.revenue.cout, data.revenue.revenuePercentage);
                                         innerHtmlText(".user", data.user.cout, data.user.userPercentage);
@@ -183,7 +185,6 @@
                                         dataType: 'json',
                                         success: function (data) {
                                             // Handle the response data
-                                            console.log(data);
                                             document.addEventListener("DOMContentLoaded", () => {
                                                 new ApexCharts(document.querySelector("#reportsChart"), {
                                                     series: [{
@@ -225,7 +226,7 @@
                                                         width: 2
                                                     },
                                                     xaxis: {
-                                                        type: 'datetime',
+                                                        type: 'date',
                                                         categories: data.map((item, index) => {
                                                             return item.month.toString();
                                                         })
@@ -258,6 +259,7 @@
                 <div class="col-12">
                     <div class="card recent-sales overflow-auto">
 
+                        
                         <div class="filter">
                             <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -284,8 +286,43 @@
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
+                                <tbody id="user-order" class="user">
+                                    <script>
+                                        var userOrder = function () {
+                                            var userOrder = document.querySelector(`#user-order`)
+
+                                            $.ajax({
+                                                url: "https://localhost:5001/api/Statistic/user-order",
+                                                method: 'GET',
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    // Handle the response data
+
+
+                                                    data.forEach(element => {
+
+                                                        var html = `<tr>
+                                                                       <th scope="row"><a href="/Order/Detail/${element.id}" >${element.id.slice(0, 12)}</a></th>
+                                                                       <td>${element.name}</td>
+                                                                       <td><a href="/Order/Detail/${element.id}" class="text-primary">${element.product}</a></td>
+                                                                       <td>${element.payments}</td>
+                                                                       <td><span class="badge bg-success">${element.status}</span></td>
+                                                                    </tr>`
+                                                        userOrder.innerHTML += (html);
+
+                                                    });
+
+                                                },
+                                                error: function (error) {
+                                                    // Handle any errors
+                                                    console.error(error);
+                                                }
+                                            });
+                                        };
+                                        userOrder();
+
+                            </script>
+                                    @*<tr>
                                         <th scope="row"><a href="#">#2457</a></th>
                                         <td>Brandon Jacob</td>
                                         <td><a href="#" class="text-primary">At praesentium minu</a></td>
@@ -319,10 +356,10 @@
                                         <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
                                         <td>$165</td>
                                         <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
+                                    </tr>*@
                                 </tbody>
                             </table>
-
+                           
                         </div>
 
                     </div>
@@ -357,8 +394,43 @@
                                         <th scope="col">Revenue</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
+                                <tbody id="product-order">
+                                     <script>
+                                var productOrder = function () {
+                                    var productOrder = document.querySelector(`#product-order`)
+
+                                    $.ajax({
+                                        url: "https://localhost:5001/api/Statistic/product-order",
+                                        method: 'GET',
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            // Handle the response data
+
+
+                                            data.forEach(element => {
+
+                                                var html = `<tr>
+                                                                        <th scope="row"><a href="#"><img src="data:image/jpeg;base64,${element.image}" alt=""></a></th>
+                                                                        <td><a href="#" class="text-primary fw-bold">${element.name}</a></td>
+                                                                        <td>${element.price}</td>
+                                                                        <td class="fw-bold">${element.sold}</td>
+                                                                        <td>$${element.revenue}</td>
+                                                            </tr>`
+                                                productOrder.innerHTML += (html);
+
+                                            });
+
+                                        },
+                                        error: function (error) {
+                                            // Handle any errors
+                                            console.error(error);
+                                        }
+                                    });
+                                };
+                                productOrder();
+
+                            </script>
+                                    @*<tr>
                                         <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
                                         <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
                                         <td>$64</td>
@@ -392,10 +464,10 @@
                                         <td>$79</td>
                                         <td class="fw-bold">41</td>
                                         <td>$3,239</td>
-                                    </tr>
+                                    </tr>*@
                                 </tbody>
                             </table>
-
+                           
                         </div>
 
                     </div>
@@ -579,7 +651,7 @@
                                 dataType: 'json',
                                 success: function (data) {
                                     // Handle the response data
-                                    console.log(data);
+
                                     document.addEventListener("DOMContentLoaded", () => {
                                         echarts.init(document.querySelector("#trafficChart")).setOption({
                                             tooltip: {
@@ -611,7 +683,7 @@
                                                 data: data.map((item, index) => {
                                                     return {
                                                         value: item.value,
-                                                        name: item.name
+                                                        name: item.name.name
                                                     };
                                                 })
 
@@ -651,7 +723,7 @@
                     <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
 
                     <div class="news">
-                        <div class="post-item clearfix">
+                        @*<div class="post-item clearfix">
                             <img src="assets/img/news-1.jpg" alt="">
                             <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
                             <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
@@ -680,9 +752,36 @@
                             <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
                             <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
                         </div>
-
+*@
                     </div><!-- End sidebar recent posts-->
+                    <script>
+                        const currentDate = new Date();
+                        const year = currentDate.getFullYear();
+                        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(currentDate.getDate()).padStart(2, '0');
+                        const formattedDate = `${year}-${month}-${day-1}`;
 
+
+                        var news = document.querySelector('.news');
+                        fetch(`https://newsapi.org/v2/everything?q=healthy-food&from=${formattedDate}&sortBy=publishedAt&apiKey=b64beca9d4254325bb1a6b257619ecda`)
+                            .then(response => response.json())
+                            .then(data => {
+                                for(let i = 0; i <= 4; i++ ){
+
+                                    var html = ` <div class="post-item clearfix">
+                                                    <img src="${data.articles[i].urlToImage}" alt="">
+                                                     <h4><a href="${data.articles[i].url}">${data.articles[i].title} target="_blank"</a></h4>
+                                                     <p>${data.articles[i].description}</p>
+                                                </div>`
+                                    news.innerHTML +=(html);
+                                }
+                            })
+                            .catch(error => {
+                                
+                                console.error(error);
+                            });
+
+                    </script>
                 </div>
             </div><!-- End News & Updates -->
 

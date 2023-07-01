@@ -13,5 +13,7 @@ namespace eShopSolution.Application.Catalog.Statistic
 
         public Task<List<PercentagesOfCategoryResult>> GetPercentagesOfCategory(/*string fromDate, string toDate*/);
         public Task<object> GetOrderStatistic(/*string fromDate, string toDate*/);
+        public Task<object> GetUserOrder(/*string fromDate, string toDate*/);
+        public Task<object> GetProductOrder(/*string fromDate, string toDate*/);
     }
 }

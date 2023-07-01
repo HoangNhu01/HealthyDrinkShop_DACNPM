@@ -49,7 +49,12 @@ namespace eShopSolution.Application.AppSystem.Users
 
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
+
             var user = await _userManager.FindByNameAsync(request.UserName);
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                return new ApiErrorResult<string>("Tài khoản chưa được xác thực");
+            }
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, request.RememberMe);
@@ -142,6 +147,7 @@ namespace eShopSolution.Application.AppSystem.Users
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim("UserId",user.Id.ToString()),
+                new Claim("PhoneNumber", user.PhoneNumber.ToString())
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -267,10 +273,7 @@ namespace eShopSolution.Application.AppSystem.Users
             {
                 return new ApiErrorResult<string>("Tài khoản đã tồn tại");
             }
-            if(!await _userManager.IsEmailConfirmedAsync(user))
-            {
-                return new ApiErrorResult<string>("Tài khoản chưa được xác thực");
-            }
+            
             if (await _userManager.FindByEmailAsync(request.Email) != null)
             {
                 return new ApiErrorResult<string>("Emai đã tồn tại");

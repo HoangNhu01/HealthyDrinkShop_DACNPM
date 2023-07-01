@@ -10,5 +10,10 @@ namespace eShopSolution.AdminApp.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage", apiResult);
         }
+        public async Task CommentMessage(ApiResult<string> apiResult)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", apiResult);
+        }
+
     }
 }

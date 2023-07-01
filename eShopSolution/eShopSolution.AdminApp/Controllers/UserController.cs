@@ -89,7 +89,7 @@ namespace eShopSolution.AdminApp.Controllers
             if (result.IsSuccessed)
             {
                 var user = result.ResultObj;
-                var updateRequest = new UserUpdateRequest()
+                var updateRequest = new UserVm()
                 {
                     Dob = user.Dob,
                     Email = user.Email,
@@ -101,7 +101,9 @@ namespace eShopSolution.AdminApp.Controllers
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
-        }
+        } 
+
+        
 
         [HttpPost]
         public async Task<IActionResult> Edit(UserUpdateRequest request)

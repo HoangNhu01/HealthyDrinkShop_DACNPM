@@ -5,7 +5,7 @@
       <div class="d-flex products-slider">
         <ng-container *ngFor="let item of listProductsBestSaller">
           <div class="product-item col-md-3 pl-0">
-            <a routerLink="/detail-product" class="product-image"><img [src]='getImage(item.thumbnailImage)'></a>
+            <a (click)="getDetailProduct(item.id)" class="product-image"><img [src]='getImage(item.thumbnailImage)'></a>
             <div class="text-comtent text-center text-hover">
               <h5 class="pt-4"><a (click)="getDetailProduct(item.id)">{{item.name}}</a></h5>
               <span class="price colored">{{item.price}}VNĐ</span>

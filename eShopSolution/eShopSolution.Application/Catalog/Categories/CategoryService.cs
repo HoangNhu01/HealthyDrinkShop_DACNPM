@@ -85,7 +85,7 @@ namespace eShopSolution.Application.Catalog.Categories
         public async Task<ApiResult<CategoryVm>> GetById(string languageId, int id)
         {
             var query = _context.CategoryTranslations.Include(x => x.Category).ThenInclude(x =>x.ProductInCategories).ThenInclude(x => x.Product)
-                                                     .FirstOrDefault(x => x.Id == id && x.LanguageId == languageId);
+                                                     .FirstOrDefault(x => x.CategoryId == id && x.LanguageId == languageId);
             //var query = from c in _context.Categories
             //            join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
             //            where ct.LanguageId == languageId && c.Id == id

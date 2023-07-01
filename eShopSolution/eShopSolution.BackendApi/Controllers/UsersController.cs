@@ -52,12 +52,12 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest(ModelState);
 
             var result = await _userService.Register(request);
-            if (String.IsNullOrEmpty(result.Message))
+            if (!result.IsSuccessed)
             {
-                return BadRequest(result);
+                return Ok(result);
             }
             var rs = await _userService.SendConfirmEmail(result.ResultObj);
-            if (!rs.IsSuccessed)
+            if (!rs.IsSuccessed && String.IsNullOrEmpty(rs.Message))
             {
                 return BadRequest(result);
             }

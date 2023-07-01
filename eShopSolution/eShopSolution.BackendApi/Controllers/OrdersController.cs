@@ -201,7 +201,6 @@ namespace eShopSolution.BackendApi.Controllers
             }
             return BadRequest();
         }
-        [Authorize]
         [HttpGet("customer-order")]
         public async Task<IActionResult> GetByUserId(Guid userId)
         {

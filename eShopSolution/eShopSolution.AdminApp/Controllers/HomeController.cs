@@ -32,6 +32,42 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return View();
         }
+        public IActionResult FAQ()
+        {
+            
+            if (TempData["img"] != null)
+            {
+                ViewBag.UserImage = TempData["img"];
+            }
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            
+            if (TempData["img"] != null)
+            {
+                ViewBag.UserImage = TempData["img"];
+            }
+            return View();
+        }
+        public IActionResult Profile()
+        {
+            
+            if (TempData["img"] != null)
+            {
+                ViewBag.UserImage = TempData["img"];
+            }
+            return View();
+        }
+         public IActionResult Content()
+        {
+            
+            if (TempData["img"] != null)
+            {
+                ViewBag.UserImage = TempData["img"];
+            }
+            return View();
+        }
 
         public IActionResult Privacy()
         {

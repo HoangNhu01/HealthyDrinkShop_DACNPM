@@ -126,8 +126,8 @@
                                     @for (var i = 0; i < Model.SelectCategories.Categories.Count; i++)
                                     {
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck1" asp-for="SelectCategories.Categories[i].Selected">
-                                            <label class="form-check-label" for="gridCheck1">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck@(Model.SelectCategories.Categories[i].Name)" asp-for="SelectCategories.Categories[i].Selected">
+                                    <label class="form-check-label" for="gridCheck@(Model.SelectCategories.Categories[i].Name)">
                                                 @Model.SelectCategories.Categories[i].Name
                                             </label>
                                             <input type="hidden" asp-for="SelectCategories.Categories[i].Id" />
@@ -143,8 +143,8 @@
                                 @for (var i = 0; i < Model.SelectIngredients.Ingredients.Count; i++)
                                     {
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck1" asp-for="SelectIngredients.Ingredients[i].Selected">
-                                                <label class="form-check-label" for="gridCheck1">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck@(Model.SelectIngredients.Ingredients[i].Name)" asp-for="SelectIngredients.Ingredients[i].Selected">
+                                    <label class="form-check-label" for="gridCheck@(Model.SelectIngredients.Ingredients[i].Name)">
                                                 @Model.SelectIngredients.Ingredients[i].Name
                                                 </label>
                                             <input type="hidden" asp-for="SelectIngredients.Ingredients[i].Id" />

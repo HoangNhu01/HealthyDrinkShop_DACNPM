@@ -34,6 +34,18 @@ namespace eShopSolution.BackendApi.Controllers
         {
             var rs = await _statisticService.GetOrderStatistic();
             return Ok(rs);
+        } 
+        [HttpGet("user-order")]
+        public async Task<IActionResult> GetUserOrder()
+        {
+            var rs = await _statisticService.GetUserOrder();
+            return Ok(rs);
+        } 
+        [HttpGet("product-order")]
+        public async Task<IActionResult> GetProductOrder()
+        {
+            var rs = await _statisticService.GetProductOrder();
+            return Ok(rs);
         }
     }
 }

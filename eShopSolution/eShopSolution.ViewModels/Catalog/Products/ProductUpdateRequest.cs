@@ -16,6 +16,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public int Stock { set; get; }
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+        public decimal OPrice { set; get; }
 
         public decimal Price { set; get; }
         public IFormFile ThumbnailImage { get; set; }

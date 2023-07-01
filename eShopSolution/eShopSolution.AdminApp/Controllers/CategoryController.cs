@@ -61,7 +61,7 @@ namespace eShopSolution.AdminApp.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
+        public async Task<IActionResult> Create(CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);

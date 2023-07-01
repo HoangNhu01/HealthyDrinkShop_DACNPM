@@ -44,7 +44,7 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         // GET: CategoryController/Create
-        [HttpGet("created-ingredients")]
+        [HttpGet]
         public async Task<ActionResult> Create()
         {           
             return View(new IngredientCreateRequest());

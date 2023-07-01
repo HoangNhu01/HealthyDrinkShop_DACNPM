@@ -264,6 +264,7 @@ namespace eShopSolution.AdminApp.Controllers
                 SeoTitle = product.SeoTitle,
                 Price = product.Price,
                 Stock = product.Stock,
+                OPrice = product.OriginalPrice
             };
             return View(editVm);
         }
