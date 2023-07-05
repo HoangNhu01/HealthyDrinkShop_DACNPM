@@ -73,13 +73,22 @@ namespace eShopSolution.Data.Extensions
             // any guid
             var roleId = new Guid("8D04DCE2-969A-435D-BBA4-DF3F325983DC");
             var adminId = new Guid("69BD714F-9576-45BA-B5B7-F00649BE00DE");
-            modelBuilder.Entity<AppRole>().HasData(new AppRole
-            {
-                Id = roleId,
-                Name = "admin",
-                NormalizedName = "admin",
-                Description = "Administrator role"
-            });
+            modelBuilder.Entity<AppRole>().HasData(
+                new AppRole
+                {
+                    Id = roleId,
+                    Name = "admin",
+                    NormalizedName = "admin",
+                    Description = "Administrator role"
+                }, 
+                new AppRole
+                {
+                    Id = new Guid("69BD714F-9576-45BA-B5B7-F00649BE00DA"),
+                    Name = "user",
+                    NormalizedName = "user",
+                    Description = "User role"
+                }
+                );
 
             var hasher = new PasswordHasher<AppUser>();
             modelBuilder.Entity<AppUser>().HasData(new AppUser
