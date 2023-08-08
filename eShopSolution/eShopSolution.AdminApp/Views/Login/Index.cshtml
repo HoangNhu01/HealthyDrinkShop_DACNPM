@@ -15,6 +15,8 @@
     <title>Đăng nhập hệ thống</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+	  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<style>
 		
 			@@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -280,7 +282,7 @@
     
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-			<form action="~/Login/RegisterUser" method="post">
+			<form action="https://localhost:5001/api/Users" method="post" id="contactForm1">
 				<h1>Create Account</h1>
 				<div class="social-container">
 					<a href="https://www.facebook.com/dialog/oauth?client_id=@(ViewBag.Fbsetting.FacebookAppId)&redirect_uri=@(ViewBag.Fbsetting.FacebookRedirectUri)&&response_type=code&scope=email"
@@ -291,7 +293,7 @@
 					   class="social"><i class="fab fa-google-plus-g"></i></a>
 					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
-				<div asp-validation-summary="All" class="text-danger">@TempData["result"]</div>
+				<div id="message" class="text-danger"></div>
 				<span>or use your email for registration</span>
 				<input type="text" name="FirstName" placeholder="FirstName" required />
 				<input type="text" name="LastName" placeholder="LastName" required />
@@ -305,6 +307,7 @@
 				<button id="register-user">Sign Up</button>
 			</form>
 	</div>
+
 	<div class="form-container sign-in-container">
 			<form asp-action="Index" asp-controller="Login" method="post">
 			<h1>Sign in</h1>
@@ -317,7 +320,7 @@
 				   class="social"><i class="fab fa-google-plus-g"></i></a>
 					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
-				<div asp-validation-summary="All" class="text-danger"></div>
+				<div asp-validation-summary="All" class="text-danger">@TempData["result"]</div>
 
 			<span>or use your account</span>
 				<input asp-for ="UserName" type="text"  placeholder="Username" />
@@ -387,6 +390,41 @@
 
 		password.onchange = validatePassword;
 		confirm_password.onkeyup = validatePassword;
+
+		var frm = $('#contactForm1');
+		frm.submit(function (e) {
+			
+			e.preventDefault();
+			var formData = {
+				firstName: $('input[name="FirstName"]').val(),
+				password: $('input[name="PassWord"]').val(),
+				confirmPassword: $('input[name="ConfirmPassword"]').val(),
+				lastName: $('input[name="LastName"]').val(),
+				dob: $('input[name="Dob"]').val(),
+				email: $('input[name="Email"]').val(),
+				userName: $('input[name="UserName"]').val(),
+				phoneNumber: $('input[name="PhoneNumber"]').val(),
+				
+				
+			};
+			console.log(formData)
+			$.ajax({
+				type: frm.attr('method'),
+				url: frm.attr('action'),
+				data: JSON.stringify(formData)	,
+				headers: {
+				  'Accept': 'application/json',
+				  'Content-Type': 'application/json'
+				},
+				success: function (data) {
+					$('#message').text(`${data.message}`)
+				},
+				error: function (data) {
+					console.log('An error occurred.');
+					console.log(data);
+				},
+			});
+		});
 	</script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

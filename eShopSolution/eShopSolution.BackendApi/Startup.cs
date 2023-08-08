@@ -32,6 +32,7 @@ using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using StackExchange.Redis;
 using eShopSolution.Application.Catalog.Statistic;
+using eShopSolution.BackendApi.QueueServices;
 
 namespace eShopSolution.BackendApi
 {
@@ -93,7 +94,15 @@ namespace eShopSolution.BackendApi
                 });
             }); ;
 
-            
+            if (Configuration["MessageQueueSetting:Enabled"] == "true")
+            {
+                services.AddQueueService();
+
+                if (Configuration["MessageQueueSetting:EnablePublisher"] == "true")
+                {
+                    services.AddHostedService<OrderPublisherService>();
+                }
+            }
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {

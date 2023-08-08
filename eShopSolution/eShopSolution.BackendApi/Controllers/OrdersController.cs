@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using StackExchange.Redis;
+using QueueEngine.Interfaces;
+using QueueEngine.Models.QueueData;
 
 namespace eShopSolution.BackendApi.Controllers
 {
@@ -33,6 +35,7 @@ namespace eShopSolution.BackendApi.Controllers
         //private readonly IMemoryCache _cache;
         private readonly IConnectionMultiplexer _redisConnection;
         private readonly IIpAdrress _ipAdrress;
+        private IQueueService<OrderQueue> _queueService;
         private IHubContext<OrderHub> _hubContext;
 
 
@@ -173,6 +176,19 @@ namespace eShopSolution.BackendApi.Controllers
 
                 string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
                 await redisDb.StringSetAsync(cartKey, cartJsonConvert);
+                _queueService.PushQueue(new OrderQueue
+                {
+                    OrderId = data.ResultObj,
+                    UserId = checkOutRequest.UserId,
+                    Address = checkOutRequest.Address,
+                    Email = checkOutRequest.Email,
+                    OrderDate = checkOutRequest.OrderDate,
+                    PaymentStatus = checkOutRequest.PaymentStatus,
+                    CartItems = cartItems,
+                    PhoneNumber = checkOutRequest.PhoneNumber,
+                    TotalPrice = checkOutRequest.TotalPrice,
+                    UserName = checkOutRequest.UserName,
+                }) ;
                 await _hubContext.Clients.All.SendAsync("OrderCheckOut", checkOutRequest);
 
                 return Ok(cartItems);

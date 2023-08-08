@@ -113,11 +113,7 @@ namespace eShopSolution.AdminApp.Controllers
                 return RedirectToAction("Index");
 
             var result = await _userApiClient.RegisterUser(request);
-            if (result.IsSuccessed)
-            {
-                TempData["result"] = result.Message;
-            }
-            TempData["result"] = result.Message;
+            TempData["result"] = result;
             return RedirectToAction("Index");
         }
         [HttpPost]
