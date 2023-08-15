@@ -49,7 +49,7 @@ namespace EmailService
                         var settingPath = _configuration.GetSection("MessageQueueSetting:GoogleQueueSetting");
                         settingPath.Bind(googleSetting);
 
-                        return QueueEngineFactory.CreateGoogleSubscriber(provider, googleSetting, "EmailQueueSub", MesageHandler);
+                        return QueueEngineFactory.CreateGoogleSubscriber(provider, googleSetting, "EmailQueue-sub", MesageHandler);
 
                         //
                 }

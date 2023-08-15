@@ -32,9 +32,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BFB66743-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShopSolution.Test", "EShopSolution.Test\EShopSolution.Test.csproj", "{C53E5053-D092-4663-BEA1-5A17F5391C0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolutiom.QueueEngine", "eShopSolutiom.QueueEngine\eShopSolutiom.QueueEngine.csproj", "{3B9DFECC-AAAE-4D3A-A155-9E53548F9285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolutiom.QueueEngine", "eShopSolutiom.QueueEngine\eShopSolutiom.QueueEngine.csproj", "{3B9DFECC-AAAE-4D3A-A155-9E53548F9285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.EmailServiec.Test", "eShopSolution.EmailServiec.Test\eShopSolution.EmailServiec.Test.csproj", "{A2FB282E-0146-4C2C-9143-8A449F4059E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.EmailServiec.Test", "eShopSolution.EmailServiec.Test\eShopSolution.EmailServiec.Test.csproj", "{A2FB282E-0146-4C2C-9143-8A449F4059E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.ApiGateWay", "eShopSolution.ApiGateWay\eShopSolution.ApiGateWay.csproj", "{9370D591-0C63-4B46-B5B6-286774432A48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +84,10 @@ Global
 		{A2FB282E-0146-4C2C-9143-8A449F4059E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2FB282E-0146-4C2C-9143-8A449F4059E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2FB282E-0146-4C2C-9143-8A449F4059E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9370D591-0C63-4B46-B5B6-286774432A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9370D591-0C63-4B46-B5B6-286774432A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9370D591-0C63-4B46-B5B6-286774432A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9370D591-0C63-4B46-B5B6-286774432A48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{2AEAA4DE-39D6-432C-9E2A-687B5CF42C68} = {574D7F72-4FCD-4EEF-A1E0-8A59B78FEBF0}
 		{C53E5053-D092-4663-BEA1-5A17F5391C0F} = {BFB66743-2853-4626-9C63-2EDC7DC54C21}
 		{A2FB282E-0146-4C2C-9143-8A449F4059E3} = {574D7F72-4FCD-4EEF-A1E0-8A59B78FEBF0}
+		{9370D591-0C63-4B46-B5B6-286774432A48} = {574D7F72-4FCD-4EEF-A1E0-8A59B78FEBF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE6DCA36-5079-4285-8DF5-8F8DC5B50570}

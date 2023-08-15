@@ -42,6 +42,7 @@ namespace eShopSolution.BackendApi.Controllers
         public OrdersController(IProductService productService, 
                                 IConnectionMultiplexer redisConnection,
                                 IUserService userService, IOrderService orderService,
+                                IQueueService<OrderQueue> queueService,
                                 IIpAdrress ipAdrress, IHubContext<OrderHub> hubContext)
         {
             _productService = productService;
@@ -50,7 +51,7 @@ namespace eShopSolution.BackendApi.Controllers
             _userService = userService;
             _orderService = orderService;
             _ipAdrress = ipAdrress; 
-
+            _queueService = queueService;
             _hubContext = hubContext;
         }
         [HttpPost("{id}/{languageId}/{clientQuantity}")]
@@ -176,19 +177,26 @@ namespace eShopSolution.BackendApi.Controllers
 
                 string cartJsonConvert = JsonConvert.SerializeObject(cartItems);
                 await redisDb.StringSetAsync(cartKey, cartJsonConvert);
-                _queueService.PushQueue(new OrderQueue
+                try
                 {
-                    OrderId = data.ResultObj,
-                    UserId = checkOutRequest.UserId,
-                    Address = checkOutRequest.Address,
-                    Email = checkOutRequest.Email,
-                    OrderDate = checkOutRequest.OrderDate,
-                    PaymentStatus = checkOutRequest.PaymentStatus,
-                    CartItems = cartItems,
-                    PhoneNumber = checkOutRequest.PhoneNumber,
-                    TotalPrice = checkOutRequest.TotalPrice,
-                    UserName = checkOutRequest.UserName,
-                }) ;
+                    _queueService.PushQueue(new OrderQueue
+                    {
+                        OrderId = data.ResultObj,
+                        UserId = checkOutRequest.UserId,
+                        Address = checkOutRequest.Address,
+                        Email = checkOutRequest.Email,
+                        OrderDate = checkOutRequest.OrderDate,
+                        PaymentStatus = checkOutRequest.PaymentStatus,
+                        CartItems = cartItems,
+                        PhoneNumber = checkOutRequest.PhoneNumber,
+                        TotalPrice = checkOutRequest.TotalPrice,
+                        UserName = checkOutRequest.UserName,
+                    });
+                }
+                catch(EShopException ex)
+                {
+
+                }
                 await _hubContext.Clients.All.SendAsync("OrderCheckOut", checkOutRequest);
 
                 return Ok(cartItems);

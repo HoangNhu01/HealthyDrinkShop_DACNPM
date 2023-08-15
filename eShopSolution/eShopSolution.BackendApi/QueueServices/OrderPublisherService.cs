@@ -66,7 +66,6 @@ namespace eShopSolution.BackendApi.QueueServices
                 List<IQueuePublisher<OrderQueue>> queuePublishers = new List<IQueuePublisher<OrderQueue>>();
                 var providerSetting = _configuration["MessageQueueSetting:Provider"];
                 var provider = Common.ParseEnum<QueueProvider>(providerSetting);
-
                 switch (provider)
                 {
                     case QueueProvider.GOOGLE:
