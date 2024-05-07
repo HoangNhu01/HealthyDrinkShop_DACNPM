@@ -1,4 +1,4 @@
-# stt30_HealthyDrinkShop_DACNPM
+# stt30_HealthyDrinkShop
 Green &amp; Clean - Web Application for healthy drink fanatic
 ## BE
 ## Technologies
